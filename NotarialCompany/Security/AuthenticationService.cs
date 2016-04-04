@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
 
@@ -33,6 +31,7 @@ namespace NotarialCompany.Security
         //    dbScope.Save(credentials);
         //    await dbScope.SaveChangesAsync();
         //}
+
         public User CurrentUser { get; private set; }
         public void GenerateCredentials(User user)
         {
