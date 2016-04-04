@@ -14,6 +14,6 @@ namespace NotarialCompany.Models
         public Employee Employee { get; set; }
         public int ClientId { get; set; }
         public Client Client { get; set; }
-        public ICollection<Services> Services { get; set; }
+        public ICollection<Service> Services { get; set; }
     }
 }
