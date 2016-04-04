@@ -10,6 +10,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 	DECLARE @action as char(1);
+	DECLARE @outPath NVARCHAR(100) = 'D:\Logs\AuditNotarialCompany.txt';
 	DECLARE @outText NVARCHAR(100);
 	DECLARE @query NVARCHAR(1000);
 
@@ -36,7 +37,7 @@ BEGIN
 		SELECT @outText = 'deleted [id=' + CAST([Id] AS varchar) + ', Name= ' + [Name] + '] ' + CAST(GETDATE() AS varchar)
 		FROM deleted
 
-	SET @query = 'master..xp_cmdshell ''echo ' + @outText + ' >> D:\Study\semester.6\AuditNotarialCompany.txt'' '
+	SET @query = 'master..xp_cmdshell ''echo ' + @outText + ' >> ' + @outPath + '' 
 	EXEC (@query)
 END
 GO
