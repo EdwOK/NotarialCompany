@@ -11,6 +11,7 @@ namespace NotarialCompany.Configuration
             Mapper.Initialize(cfg =>
             {
                 cfg.AddProfile(new UserProfile());
+                cfg.AddProfile(new ServicesProfile());
             });
         }
     }
@@ -24,7 +25,8 @@ namespace NotarialCompany.Configuration
                 .ForMember(u => u.Username, opts => opts.MapFrom(src => (string) src[1]))
                 .ForMember(u => u.RoleId, opts => opts.MapFrom(src => (int) src[4]))
                 .ForMember(u => u.EmployeeId, opts => opts.MapFrom(src => (int) src[5]))
-                .ForMember(u => u.Role, opts => opts.MapFrom(src => new Role {Id = (int) src[6],Name = (string) src[7]}))
+                .ForMember(u => u.Role,
+                    opts => opts.MapFrom(src => new Role {Id = (int) src[6], Name = (string) src[7]}))
                 .ForMember(u => u.Employee, opts => opts.MapFrom(src =>
                     new Employee
                     {
@@ -44,6 +46,18 @@ namespace NotarialCompany.Configuration
                             Commission = (int) src[19]
                         }
                     }));
+        }
+    }
+
+    public class ServicesProfile : Profile
+    {
+        protected override void Configure()
+        {
+            CreateMap<object[], Service>()
+                .ForMember(u => u.Id, opts => opts.MapFrom(src => (int) src[0]))
+                .ForMember(u => u.Name, opts => opts.MapFrom(src => (string) src[1]))
+                .ForMember(u => u.Description, opts => opts.MapFrom(src => (string) src[2]))
+                .ForMember(u => u.Cost, opts => opts.MapFrom(src => (decimal) src[3]));
         }
     }
 }

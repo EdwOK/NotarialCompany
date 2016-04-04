@@ -102,3 +102,17 @@ BEGIN
 	INNER JOIN [EmployeesPositions] ON [EmployeesPositions].[Id] = [Employees].[EmployeesPositionId]
 	WHERE [Username] = @username AND [Password] = @password
 END
+GO
+
+IF OBJECT_ID('[Sevices.GetServices]') IS NOT NULL
+	DROP PROCEDURE [Sevices.GetServices]
+GO
+
+CREATE PROCEDURE [Sevices.GetServices]
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SELECT *
+	FROM [Services]
+END
+GO

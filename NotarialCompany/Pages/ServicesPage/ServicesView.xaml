@@ -4,11 +4,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
     xmlns:local="clr-namespace:NotarialCompany.Pages.ServicesPage"
     DataContext="{Binding ServicesViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d" 
-    d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Label>Serv</Label>
-    </Grid>
+    d:DesignHeight="1000" d:DesignWidth="1000">
+    <DockPanel>
+        <Label DockPanel.Dock="Top">Services</Label>
+        <xcdg:DataGridControl ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedServise}" AutoCreateColumns="False"> 
+            <xcdg:DataGridControl.Columns>
+                <xcdg:Column Width="30" FieldName="Id" Title="Id" IsMainColumn="True" AllowGroup="False">
+                    <xcdg:Column.CellContentTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding}" Command="{Binding Path=DataContext.OpenDetailsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type xcdg:DataGridControl}}}"></Button>
+                        </DataTemplate>
+                    </xcdg:Column.CellContentTemplate>
+                </xcdg:Column>
+                <xcdg:Column FieldName="Name" Title="Name" Width="600" ReadOnly="True"></xcdg:Column>
+                <xcdg:Column FieldName="Cost" Title="Cost" ReadOnly="True"></xcdg:Column>
+            </xcdg:DataGridControl.Columns>
+        </xcdg:DataGridControl>
+    </DockPanel>
 </UserControl>

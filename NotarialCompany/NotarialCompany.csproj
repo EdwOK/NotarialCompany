@@ -15,6 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,7 +28,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -146,7 +146,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeesPosition.cs" />
     <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\Services.cs" />
+    <Compile Include="Models\Service.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Pages\DealsPage\DealsView.xaml.cs">
       <DependentUpon>DealsView.xaml</DependentUpon>
@@ -155,10 +155,14 @@
     <Compile Include="Pages\LoginPage\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ServicesPage\ServiceDetailsVewModel.cs" />
     <Compile Include="Pages\ServicesPage\ServicesView.xaml.cs">
       <DependentUpon>ServicesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ServicesPage\ServicesViewModel.cs" />
+    <Compile Include="Pages\ServicesPage\ServiseDetatailsVew.xaml.cs">
+      <DependentUpon>ServiseDetatailsVew.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Security\AuthenticationService.cs" />
     <Compile Include="Security\IAuthenticationService.cs" />
     <Compile Include="MainViewModel.cs" />
@@ -224,6 +228,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ServicesPage\ServiseDetatailsVew.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Styles\Buttons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -243,8 +251,10 @@
     <Resource Include="Resources\Images\deals.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Images\employees.png" />
     <Resource Include="Resources\Images\employees_postions.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\employees.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -20,7 +20,7 @@
                     <TextBlock VerticalAlignment="Center">Clients</TextBlock>
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource GrayButton}">
+            <Button Style="{StaticResource GrayButton}" Command="{Binding OpenServicesCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="Resources/Images/services.png" Width="32" Height="32" Margin="0,0,5,0"/>
                     <TextBlock VerticalAlignment="Center">Services</TextBlock>
