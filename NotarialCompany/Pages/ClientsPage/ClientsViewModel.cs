@@ -19,9 +19,9 @@ namespace NotarialCompany.Pages.ClientsPage
             Clients = dbScope.GetClients();
         }
 
-        public List<Models.Client> Clients { get; set; }
+        public List<Client> Clients { get; set; }
 
-        public Models.Client SelectedClient { get; set; }
+        public Client SelectedClient { get; set; }
 
         public ICommand OpenClientCommand { get; set; }
 
