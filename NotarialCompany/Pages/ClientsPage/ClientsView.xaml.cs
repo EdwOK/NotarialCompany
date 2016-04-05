@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NotarialCompany.Pages.ServicesPage
+namespace NotarialCompany.Pages.ClientsPage
 {
     /// <summary>
-    /// Interaction logic for ServiseDetatailsVew.xaml
+    /// Логика взаимодействия для ClientsView.xaml
     /// </summary>
-    public partial class ServiseDetatailsVew : UserControl
+    public partial class ClientsView : UserControl
     {
-        public ServiseDetatailsVew()
+        public ClientsView()
         {
             InitializeComponent();
         }

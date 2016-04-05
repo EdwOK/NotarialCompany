@@ -104,15 +104,26 @@ BEGIN
 END
 GO
 
-IF OBJECT_ID('[Sevices.GetServices]') IS NOT NULL
-	DROP PROCEDURE [Sevices.GetServices]
+IF OBJECT_ID('[Services.GetServices]') IS NOT NULL
+	DROP PROCEDURE [Services.GetServices]
 GO
 
-CREATE PROCEDURE [Sevices.GetServices]
+CREATE PROCEDURE [Services.GetServices]
 AS
 BEGIN
 	SET NOCOUNT ON;
-	SELECT *
-	FROM [Services]
+	SELECT * FROM [Services]
+END
+GO
+
+IF OBJECT_ID('Clients.GetClients]') IS NOT NULL
+	DROP PROCEDURE [Clients.GetClients]
+GO
+
+CREATE PROCEDURE [Clients.GetClients]
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SELECT * FROM [Clients]
 END
 GO

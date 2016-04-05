@@ -4,6 +4,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using NotarialCompany.Pages.ClientsPage;
 using NotarialCompany.Pages.DealsPage;
 using NotarialCompany.Pages.LoginPage;
 using NotarialCompany.Pages.ServicesPage;
@@ -23,6 +24,7 @@ namespace NotarialCompany
 
             OpenDealsCommand = new RelayCommand(OpenDealsCommandExecute);
             OpenServicesCommand = new RelayCommand(OpenServicesCommandExecute);
+            OpenClientsCommand = new RelayCommand(OpenClientsCommandExecute);
 
             Messenger.Default.Register<int>(this, i =>
             {
@@ -41,7 +43,8 @@ namespace NotarialCompany
 
         public ICommand OpenServicesCommand { get; set; }
         public ICommand OpenDealsCommand { get; set; }
-
+        public ICommand OpenClientsCommand { get; set; }
+        
 
         private void OpenServicesCommandExecute()
         {
@@ -51,6 +54,11 @@ namespace NotarialCompany
         private void OpenDealsCommandExecute()
         {
             CurrentContent = new DealsView();
+        }
+
+        private void OpenClientsCommandExecute()
+        {
+            CurrentContent = new ClientsView();
         }
     }
 }

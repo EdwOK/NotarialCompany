@@ -10,7 +10,6 @@ namespace NotarialCompany.DataAccess
 {
     public class DbScope
     {
-
         private static readonly ConnectionStringSettings Settings  =
             ConfigurationManager.ConnectionStrings["NotarialCompanyDatabaseConnectionString"];
 
@@ -31,10 +30,10 @@ namespace NotarialCompany.DataAccess
             }
         }
 
-        public List<Service> GetServices()
+        public List<Client> GetClients()
         {
             using (var connection = new SqlConnection(Settings.ConnectionString))
-            using (var command = new SqlCommand(StoredProceduresNames.SevicesGetServices, connection) {CommandType = CommandType.StoredProcedure})
+            using (var command = new SqlCommand(StoredProceduresNames.ÑlientsGetClients, connection) {CommandType = CommandType.StoredProcedure})
             using (var dataAdapter = new SqlDataAdapter(command))
             {
                 var dataSet = new DataSet();
@@ -42,18 +41,36 @@ namespace NotarialCompany.DataAccess
 
                 DataTable dataTable = dataSet.Tables["Table"];
 
-                var services = new List<Service>(
+                var list = new List<Client>(
+                    from DataRow row in dataTable.Rows
+                    select Mapper.Map<object[], Client>(row.ItemArray));
+                return list;
+            }
+        }
+
+        public List<Service> GetServices()
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.ServicesGetServices, connection) { CommandType = CommandType.StoredProcedure })
+            using (var dataAdapter = new SqlDataAdapter(command))
+            {
+                var dataSet = new DataSet();
+                dataAdapter.Fill(dataSet, "Table");
+
+                DataTable dataTable = dataSet.Tables["Table"];
+
+                var list = new List<Service>(
                     from DataRow row in dataTable.Rows
                     select Mapper.Map<object[], Service>(row.ItemArray));
-                return services;
+                return list;
             }
         }
 
         private static class StoredProceduresNames
         {
             public const string UsersGetUserByUsernameAndPassword = "[Users.GetUserByUsernameAndPassword]";
-            public const string SevicesGetServices = "[Sevices.GetServices]";
+            public const string ServicesGetServices = "[Services.GetServices]";
+            public const string ÑlientsGetClients = "[Clients.GetClients]";
         }
     }
-
 }
