@@ -14,7 +14,7 @@
                     <TextBlock VerticalAlignment="Center">Deals</TextBlock>
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource GrayButton}" Command="{Binding OpenServicesCommand}">
+            <Button Style="{StaticResource GrayButton}" Command="{Binding OpenClientsCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="Resources/Images/clients.png" Width="32" Height="32" Margin="0,0,5,0"/>
                     <TextBlock VerticalAlignment="Center">Clients</TextBlock>

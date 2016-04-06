@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using NotarialCompany.DataAccess;
+using NotarialCompany.Models;
 
 namespace NotarialCompany.Pages.ServicesPage
 {
@@ -22,9 +19,9 @@ namespace NotarialCompany.Pages.ServicesPage
             Services = dbScope.GetServices();
         }
 
-        public List<Models.Service> Services { get; set; }
+        public List<Service> Services { get; set; }
 
-        public Models.Service SelectedServise { get; set; }
+        public Service SelectedServise { get; set; }
 
         public ICommand OpenDetailsCommand { get; set; }
 

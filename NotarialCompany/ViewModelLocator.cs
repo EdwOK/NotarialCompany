@@ -1,6 +1,7 @@
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using NotarialCompany.DataAccess;
+using NotarialCompany.Pages.ClientsPage;
 using NotarialCompany.Pages.DealsPage;
 using NotarialCompany.Pages.LoginPage;
 using NotarialCompany.Pages.ServicesPage;
@@ -23,9 +24,10 @@ namespace NotarialCompany
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<ClientsViewModel>();
             SimpleIoc.Default.Register<DealsViewModel>();
             SimpleIoc.Default.Register<ServicesViewModel>();
-            SimpleIoc.Default.Register<ServiceDetailsVewModel>();
+            SimpleIoc.Default.Register<ServiceDetailsViewModel>();
 
             SimpleIoc.Default.Register<IAuthenticationService, AuthenticationService>();
             SimpleIoc.Default.Register<DbScope>();
@@ -33,9 +35,10 @@ namespace NotarialCompany
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
         public LoginViewModel LoginViewModel => ServiceLocator.Current.GetInstance<LoginViewModel>();
+        public ClientsViewModel ClientsViewModel => ServiceLocator.Current.GetInstance<ClientsViewModel>();
         public DealsViewModel DealsViewModel => ServiceLocator.Current.GetInstance<DealsViewModel>();
         public ServicesViewModel ServicesViewModel => ServiceLocator.Current.GetInstance<ServicesViewModel>();
-        public ServiceDetailsVewModel ServiceDetailsVewModel => ServiceLocator.Current.GetInstance<ServiceDetailsVewModel>();
+        public ServiceDetailsViewModel ServiceDetailsViewModel => ServiceLocator.Current.GetInstance<ServiceDetailsViewModel>();
 
         public static void Cleanup()
         {

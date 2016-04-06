@@ -1,6 +1,6 @@
 ﻿namespace NotarialCompany.Pages.ServicesPage
 {
-    public class ServiceDetailsVewModel
+    public class ServiceDetailsViewModel
     {
 
     }

@@ -12,6 +12,7 @@ namespace NotarialCompany.Configuration
             {
                 cfg.AddProfile(new UserProfile());
                 cfg.AddProfile(new ServicesProfile());
+                cfg.AddProfile(new ClientsProfile());
             });
         }
     }
@@ -58,6 +59,21 @@ namespace NotarialCompany.Configuration
                 .ForMember(u => u.Name, opts => opts.MapFrom(src => (string) src[1]))
                 .ForMember(u => u.Description, opts => opts.MapFrom(src => (string) src[2]))
                 .ForMember(u => u.Cost, opts => opts.MapFrom(src => (decimal) src[3]));
+        }
+    }
+
+    public class ClientsProfile : Profile
+    {
+        protected override void Configure()
+        {
+            CreateMap<object[], Client>()
+                .ForMember(u => u.Id, opts => opts.MapFrom(src => (int) src[0]))
+                .ForMember(u => u.FirstName, opts => opts.MapFrom(src => (string) src[1]))
+                .ForMember(u => u.SecondName, opts => opts.MapFrom(src => (string) src[2]))
+                .ForMember(u => u.MiddleName, opts => opts.MapFrom(src => (string) src[3]))
+                .ForMember(u => u.Occupation, opts => opts.MapFrom(src => (string) src[4]))
+                .ForMember(u => u.Address, opts => opts.MapFrom(src => (string) src[5]))
+                .ForMember(u => u.PhoneNumber, opts => opts.MapFrom(src => (string) src[6]));
         }
     }
 }
