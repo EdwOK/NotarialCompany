@@ -5,7 +5,7 @@
     xmlns:local="clr-namespace:NotarialCompany"
     xmlns:converters="http://schemas.kent.boogaart.com/converters"
     DataContext="{Binding Main, Source={StaticResource Locator}}"
-    Title="Simple MVVM Example" Height="500" Width="800">
+    Title="Notarial Company" Height="500" Width="800">
     <DockPanel>
         <WrapPanel DockPanel.Dock="Top" Visibility="{Binding IsAuthenticated, Converter={converters:BooleanToVisibilityConverter}}">
             <Button Style="{StaticResource GrayButton}" Command="{Binding OpenDealsCommand}">
@@ -39,6 +39,6 @@
                 </StackPanel>
             </Button>
         </WrapPanel>
-        <ContentPresenter Content="{Binding CurrentContent}"></ContentPresenter>
+        <ContentPresenter Content="{Binding CurrentView}"></ContentPresenter>
     </DockPanel>
 </Window>

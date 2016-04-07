@@ -58,7 +58,9 @@ namespace NotarialCompany.Configuration
                 .ForMember(u => u.Id, opts => opts.MapFrom(src => (int) src[0]))
                 .ForMember(u => u.Name, opts => opts.MapFrom(src => (string) src[1]))
                 .ForMember(u => u.Description, opts => opts.MapFrom(src => (string) src[2]))
-                .ForMember(u => u.Cost, opts => opts.MapFrom(src => (decimal) src[3]));
+                .ForMember(u => u.Cost, opts => opts.MapFrom(src => (decimal) src[3]))
+                .ReverseMap()
+                .ConstructUsing(x => new object[] {x.Id, x.Name, x.Description, x.Cost});
         }
     }
 

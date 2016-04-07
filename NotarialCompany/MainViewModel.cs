@@ -4,6 +4,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using NotarialCompany.MessagesArgs;
 using NotarialCompany.Pages.ClientsPage;
 using NotarialCompany.Pages.DealsPage;
 using NotarialCompany.Pages.LoginPage;
@@ -15,50 +16,49 @@ namespace NotarialCompany
     public class MainViewModel : ViewModelBase
     {
         private readonly IAuthenticationService authenticationService;
-        private ContentControl currentContent;
+        private ContentControl currentView;
+        private ServicesView s = new ServicesView();
 
         public MainViewModel(IAuthenticationService authenticationService)
         {
             this.authenticationService = authenticationService;
-            CurrentContent = new LoginView();
+            CurrentView = new LoginView();
 
             OpenDealsCommand = new RelayCommand(OpenDealsCommandExecute);
             OpenServicesCommand = new RelayCommand(OpenServicesCommandExecute);
             OpenClientsCommand = new RelayCommand(OpenClientsCommandExecute);
-
-            Messenger.Default.Register<int>(this, i =>
+            Messenger.Default.Register<OpenViewArgs>(this, args =>
             {
-                CurrentContent = new DealsView();
+                CurrentView = args.View;
                 RaisePropertyChanged(() => IsAuthenticated);
             });
         }
 
         public bool IsAuthenticated => authenticationService.IsAuthenticated();
 
-        public ContentControl CurrentContent
+        public ContentControl CurrentView
         {
-            get { return currentContent; }
-            set { Set(ref currentContent, value); }
+            get { return currentView; }
+            set { Set(ref currentView, value); }
         }
 
         public ICommand OpenServicesCommand { get; set; }
         public ICommand OpenDealsCommand { get; set; }
         public ICommand OpenClientsCommand { get; set; }
         
-
         private void OpenServicesCommandExecute()
         {
-            CurrentContent = new ServicesView();
+            CurrentView = new ServicesView();
         }
 
         private void OpenDealsCommandExecute()
         {
-            CurrentContent = new DealsView();
+            CurrentView = new DealsView();
         }
 
         private void OpenClientsCommandExecute()
         {
-            CurrentContent = new ClientsView();
+            CurrentView = new ClientsView();
         }
     }
 }

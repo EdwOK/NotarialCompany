@@ -116,7 +116,7 @@ BEGIN
 END
 GO
 
-IF OBJECT_ID('Clients.GetClients]') IS NOT NULL
+IF OBJECT_ID('[Clients.GetClients]') IS NOT NULL
 	DROP PROCEDURE [Clients.GetClients]
 GO
 
@@ -126,4 +126,28 @@ BEGIN
 	SET NOCOUNT ON;
 	SELECT * FROM [Clients]
 END
+GO
+
+
+IF OBJECT_ID('[Services.CreateOrUpdateService]') IS NOT NULL
+	DROP PROCEDURE [Services.CreateOrUpdateService]
+GO
+
+
+CREATE PROCEDURE [Services.CreateOrUpdateService]
+	@id INT,
+    @name NVARCHAR(100),
+    @description NVARCHAR(500),
+    @cost MONEY
+AS
+	IF @id = 0
+	BEGIN
+		INSERT INTO [Services]
+		VALUES (@name, @description, @cost)
+		RETURN
+	END
+
+	UPDATE [Services] 
+	SET [Name] = @name, [Description] = @description, [Cost] = @cost
+	WHERE [Services].[Id] = @id
 GO

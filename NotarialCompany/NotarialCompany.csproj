@@ -141,6 +141,8 @@
     </ApplicationDefinition>
     <Compile Include="Configuration\AutoMapperConfig.cs" />
     <Compile Include="DataAccess\DbScope.cs" />
+    <Compile Include="MessagesArgs\OpenViewArgs.cs" />
+    <Compile Include="MessagesArgs\SendViewModelParamArgs.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Deal.cs" />
     <Compile Include="Models\Employee.cs" />

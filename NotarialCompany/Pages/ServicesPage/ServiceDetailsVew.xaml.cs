@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace NotarialCompany.Pages.ServicesPage
 {
     /// <summary>
-    /// Interaction logic for ServiceDetailVew.xaml
+    /// Interaction logic for ServiceDetailsView.xaml
     /// </summary>
-    public partial class ServiceDetailVew : UserControl
+    public partial class ServiceDetailsView : UserControl
     {
-        public ServiceDetailVew()
+        public ServiceDetailsView()
         {
             InitializeComponent();
         }

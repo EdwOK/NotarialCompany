@@ -1,8 +1,11 @@
 ﻿using System.ComponentModel;
+using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using NotarialCompany.MessagesArgs;
+using NotarialCompany.Pages.ServicesPage;
 using NotarialCompany.Security;
 
 namespace NotarialCompany.Pages.LoginPage
@@ -41,7 +44,7 @@ namespace NotarialCompany.Pages.LoginPage
                 ErrorMessage = "Username or Password is incorrect";
                 return;
             }
-            Messenger.Default.Send<int>(0);
+            Messenger.Default.Send(new OpenViewArgs(new ServicesView(), nameof(ServicesViewModel)));
         }
 
         public string this[string columnName]

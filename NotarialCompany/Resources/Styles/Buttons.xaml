@@ -8,7 +8,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="Border" CornerRadius="3" BorderThickness="1" Padding="6">
+                    <Border x:Name="Border" CornerRadius="3" BorderThickness="1" Margin="2,2,2,2">
                         <Border.BorderBrush>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                 <GradientStop Color="#FF94BF49" Offset="0" />
@@ -60,7 +60,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="Border" CornerRadius="4" BorderThickness="1" Background="Transparent" Margin="2,2,2,2">
+                    <Border x:Name="Border" CornerRadius="3" BorderThickness="1" Background="Transparent" Margin="2,2,2,2">
                         <Border.BorderBrush>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                 <GradientStop Color="#FF9B9B9B" Offset="0" />
@@ -89,6 +89,41 @@
                                         <GradientStop Color="#FF898989" Offset="0" />
                                         <GradientStop Color="#FF9B9B9B" Offset="1.0" />
                                     </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ContentPresenter" Property="TextBlock.Foreground" Value="White"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Opacity" Value="0.6"/>
+                            <Setter TargetName="ContentPresenter" Property="Opacity" Value="0.8"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="{x:Type Button}" x:Key="TitleButton">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Border" CornerRadius="14" BorderThickness="1"  Height="34" MinWidth="110">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#345883"></SolidColorBrush>
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <SolidColorBrush Color="White"></SolidColorBrush>
+                        </Border.Background>
+                        <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 5" TextBlock.Foreground="#345883" TextBlock.FontWeight="Light" TextBlock.FontSize="13"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="#345883"></SolidColorBrush>
                                 </Setter.Value>
                             </Setter>
                             <Setter TargetName="ContentPresenter" Property="TextBlock.Foreground" Value="White"></Setter>
