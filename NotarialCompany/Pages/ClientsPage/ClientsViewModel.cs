@@ -1,33 +1,44 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using NotarialCompany.DataAccess;
+using NotarialCompany.MessagesArgs;
 using NotarialCompany.Models;
 
 namespace NotarialCompany.Pages.ClientsPage
 {
-    public class ClientsViewModel : ViewModelBase
+    public class ClientsViewModel : BasePageViewModel
     {
-        private readonly DbScope dbScope;
+        private List<Client> clients;
 
-        public ClientsViewModel(DbScope dbScope)
+        public ClientsViewModel(DbScope dbScope) : base(dbScope)
         {
-            OpenClientCommand = new RelayCommand(OpenClientsCommandExecute);
-
-            this.dbScope = dbScope;
-            Clients = dbScope.GetClients();
         }
 
-        public List<Client> Clients { get; set; }
+        public List<Client> Clients
+        {
+            get { return clients; }
+            set { Set(ref clients, value); }
+        }
 
         public Client SelectedClient { get; set; }
 
-        public ICommand OpenClientCommand { get; set; }
-
-        private void OpenClientsCommandExecute()
+        protected override void LoadedCommandExecute()
         {
-            var a = 5;
+            Clients = DbScope.GetClients();
+        }
+
+        protected override void OpenDetailsViewCommandExecute()
+        {
+            Messenger.Default.Send(new OpenViewArgs(new ClientDetailsView(), nameof(ClientDetailsViewModel)));
+            Messenger.Default.Send(new SendViewModelParamArgs<Client>(new ClientsView(), nameof(ClientsViewModel),
+                nameof(ClientDetailsViewModel), SelectedClient));
+        }
+
+        protected override void AddNewItemCommandExecute()
+        {
+            Messenger.Default.Send(new OpenViewArgs(new ClientDetailsView(), nameof(ClientDetailsViewModel)));
+            Messenger.Default.Send(new SendViewModelParamArgs<Client>(new ClientsView(), nameof(ClientsViewModel),
+                nameof(ClientDetailsViewModel), new Client()));
         }
     }
 }

@@ -151,3 +151,31 @@ AS
 	SET [Name] = @name, [Description] = @description, [Cost] = @cost
 	WHERE [Services].[Id] = @id
 GO
+
+
+IF OBJECT_ID('[Clients.CreateOrUpdateClient]') IS NOT NULL
+	DROP PROCEDURE [Clients.CreateOrUpdateClient]
+GO
+
+
+CREATE PROCEDURE [Clients.CreateOrUpdateClient]
+	@id INT,
+	@firstName NVARCHAR(30),
+	@secondName NVARCHAR(30),
+	@middleName NVARCHAR(30),
+	@occupation NVARCHAR(30),
+	@address NVARCHAR(150),
+	@phoneNumber NVARCHAR(15)
+AS
+	IF @id = 0
+	BEGIN
+		INSERT INTO [Clients]
+		VALUES (@firstName,	@secondName, @middleName, @occupation, @address, @phoneNumber)
+		RETURN
+	END
+
+	UPDATE [Clients] 
+	SET [FirstName] = @firstName, [SecondName] = @secondName, [MiddleName] = @middleName, [Occupation] = @occupation, 
+		[Address] = @address, [PhoneNumber] = @phoneNumber
+	WHERE [Clients].[Id] = @id
+GO

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -7,7 +6,6 @@ using GalaSoft.MvvmLight.Messaging;
 using NotarialCompany.DataAccess;
 using NotarialCompany.MessagesArgs;
 using NotarialCompany.Models;
-using NotarialCompany.Pages.LoginPage;
 
 namespace NotarialCompany.Pages.ServicesPage
 {

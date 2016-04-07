@@ -75,7 +75,9 @@ namespace NotarialCompany.Configuration
                 .ForMember(u => u.MiddleName, opts => opts.MapFrom(src => (string) src[3]))
                 .ForMember(u => u.Occupation, opts => opts.MapFrom(src => (string) src[4]))
                 .ForMember(u => u.Address, opts => opts.MapFrom(src => (string) src[5]))
-                .ForMember(u => u.PhoneNumber, opts => opts.MapFrom(src => (string) src[6]));
+                .ForMember(u => u.PhoneNumber, opts => opts.MapFrom(src => (string) src[6]))
+                .ReverseMap()
+                .ConstructUsing(x => new object[] {x.Id, x.FirstName, x.SecondName, x.MiddleName, x.Occupation, x.Address, x.PhoneNumber});
         }
     }
 }
