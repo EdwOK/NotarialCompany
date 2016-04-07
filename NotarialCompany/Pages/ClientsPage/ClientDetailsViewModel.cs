@@ -1,24 +1,48 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Controls;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using NotarialCompany.Common;
 using NotarialCompany.DataAccess;
 using NotarialCompany.MessagesArgs;
 using NotarialCompany.Models;
-using NotarialCompany.Pages.ServicesPage;
 
 namespace NotarialCompany.Pages.ClientsPage
 {
-    public class ClientDetailsViewModel : BaseDetailsViewModel, IDataErrorInfo
+    public class ClientDetailsViewModel : ValidationViewModel
     {
-        public ClientDetailsViewModel(DbScope dbScope) : base(dbScope)
+        private readonly DbScope dbScope;
+
+        private ContentControl parentView;
+        private string parentViewModelName;
+
+        public ClientDetailsViewModel(DbScope dbScope) 
         {
+            this.dbScope = dbScope;
+
+            SaveCommand = new RelayCommand(SaveCommandExecute);
+            NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
+
+            ValidatingProperties = new List<string>
+            {
+                nameof(FirstName),
+                nameof(SecondName),
+                nameof(MiddleName),
+                nameof(Occupation),
+                nameof(Address),
+                nameof(PhoneNumber)
+            };
+
             Messenger.Default.Register<SendViewModelParamArgs<Client>>(this, args =>
             {
                 if (args.ChildViewModelName != nameof(ClientDetailsViewModel))
                 {
                     return;
                 }
-                ParentView = args.ParentView;
-                ParentViewModelName = args.ParentViewModelName;
+                parentView = args.ParentView;
+                parentViewModelName = args.ParentViewModelName;
 
                 Client = args.Parameter ?? new Client();
 
@@ -32,6 +56,9 @@ namespace NotarialCompany.Pages.ClientsPage
         }
 
         public Client Client { get; set; }
+
+        public ICommand SaveCommand { get; set; }
+        public ICommand NavigateBackCommand { get; set; }
 
         public string FirstName
         {
@@ -69,36 +96,48 @@ namespace NotarialCompany.Pages.ClientsPage
             set { Client.PhoneNumber = value; }
         }
 
-        protected override void SaveCommandExecute()
+        protected override string GetValidationError(string propertyName)
         {
-            DbScope.UpdateClient(Client);
-            base.SaveCommandExecute();
-        }
-
-        public string this[string columnName]
-        {
-            get
+            if (propertyName == nameof(FirstName) && string.IsNullOrWhiteSpace(FirstName))
             {
-                if (columnName == nameof(FirstName) && string.IsNullOrWhiteSpace(FirstName))
-                {
-                    return "FirstName is required";
-                }
-                if (columnName == nameof(SecondName) && string.IsNullOrWhiteSpace(SecondName))
-                {
-                    return "SecondName is required";
-                }
-                if (columnName == nameof(Occupation) && string.IsNullOrWhiteSpace(Occupation))
-                {
-                    return "Occupation is required";
-                }
-                if (columnName == nameof(PhoneNumber) && string.IsNullOrWhiteSpace(PhoneNumber))
-                {
-                    return "PhoneNumber is required";
-                }
-                return string.Empty;
+                return "FirstName is required";
             }
+            if (propertyName == nameof(SecondName) && string.IsNullOrWhiteSpace(SecondName))
+            {
+                return "SecondName is required";
+            }
+            if (propertyName == nameof(MiddleName) && string.IsNullOrWhiteSpace(MiddleName))
+            {
+                return "MiddleName is required";
+            }
+            if (propertyName == nameof(Occupation) && string.IsNullOrWhiteSpace(Occupation))
+            {
+                return "Occupation is required";
+            }
+            if (propertyName == nameof(Address) && string.IsNullOrWhiteSpace(Address))
+            {
+                return "Address is required";
+            }
+            if (propertyName == nameof(PhoneNumber) && string.IsNullOrWhiteSpace(PhoneNumber))
+            {
+                return "PhoneNumber is required";
+            }
+            return null;
         }
 
-        public string Error => string.Empty;
+        private void SaveCommandExecute()
+        {
+            if (EnableValidationAndGetError() != null)
+            {
+                return;
+            }
+            dbScope.UpdateClient(Client);
+            NavigateBackCommandExecute();
+        }
+
+        private void NavigateBackCommandExecute()
+        {
+            Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
+        }
     }
 }

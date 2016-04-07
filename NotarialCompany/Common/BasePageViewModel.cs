@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using NotarialCompany.DataAccess;
 
-namespace NotarialCompany.Pages
+namespace NotarialCompany.Common
 {
     public abstract class BasePageViewModel : ViewModelBase
     {

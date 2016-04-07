@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GalaSoft.MvvmLight.Messaging;
+using NotarialCompany.Common;
 using NotarialCompany.DataAccess;
 using NotarialCompany.MessagesArgs;
 using NotarialCompany.Models;

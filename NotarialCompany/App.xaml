@@ -1,12 +1,21 @@
-<Application x:Class="NotarialCompany.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:NotarialCompany" StartupUri="MainWindow.xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d1p1:Ignorable="d" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
+<Application 
+    x:Class="NotarialCompany.App" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:local="clr-namespace:NotarialCompany" 
+    StartupUri="MainWindow.xaml" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    d1p1:Ignorable="d" 
+    xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="clr-namespace:NotarialCompany.Common.Converters">
   <Application.Resources>
         <ResourceDictionary>
             <local:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
+            <converters:NullToTrueConverter x:Key="NullToTrueConverter"></converters:NullToTrueConverter>
             
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Buttons.xaml"></ResourceDictionary>
-                <ResourceDictionary Source="Resources/Styles/TextBoxs.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources/Styles/Buttons.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>

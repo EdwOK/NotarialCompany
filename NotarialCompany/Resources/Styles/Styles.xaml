@@ -4,14 +4,39 @@
     xmlns:local="clr-namespace:NotarialCompany.Resources.Styles"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
 
-    <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
+    <Style TargetType="{x:Type Control}" x:Key="IncreasedFontStyle">
         <Setter Property="FontSize" Value="18" />
     </Style>
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}"></Style>
-    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}"></Style>
-    <Style TargetType="{x:Type xctk:WatermarkTextBox}" BasedOn="{StaticResource BaseStyle}"></Style>
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource IncreasedFontStyle}"></Style>
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource IncreasedFontStyle}"></Style>
+    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource IncreasedFontStyle}"></Style>
+    <Style TargetType="{x:Type xctk:WatermarkTextBox}" BasedOn="{StaticResource IncreasedFontStyle}"></Style>
 
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="18" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}" x:Key="TextBoxValidationStyle" BasedOn="{StaticResource IncreasedFontStyle}">
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <DockPanel LastChildFill="true">
+                        <Border 
+                            Background="Red" 
+                            DockPanel.Dock="right" 
+                            Margin="5,0,0,0" 
+                            Width="20" 
+                            Height="20" 
+                            CornerRadius="10" 
+                            ToolTip="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                            <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center" FontWeight="Bold" Foreground="white"/>
+                        </Border>
+                        <AdornedElementPlaceholder Name="customAdorner" VerticalAlignment="Center" >
+                            <Border BorderBrush="red" BorderThickness="1" />
+                        </AdornedElementPlaceholder>
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

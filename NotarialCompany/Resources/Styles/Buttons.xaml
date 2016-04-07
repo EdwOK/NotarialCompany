@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:NotarialCompany.Resources.Styles">
-    
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
     <Style TargetType="{x:Type Button}" x:Key="GreenButton">
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
@@ -21,7 +20,7 @@
                                 <GradientStop Color="#FF94BF49" Offset="1.0" />
                             </LinearGradientBrush>
                         </Border.Background>
-                        <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 5" TextBlock.Foreground="White" TextBlock.FontWeight="SemiBold" TextBlock.FontSize="13"/>
+                        <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 5" TextBlock.Foreground="White" TextBlock.FontWeight="SemiBold" TextBlock.FontSize="18"/>
                     </Border>
 
                     <ControlTemplate.Triggers>
@@ -67,7 +66,7 @@
                                 <GradientStop Color="#FF929292" Offset="1.0" />
                             </LinearGradientBrush>
                         </Border.BorderBrush>
-                        <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 5" TextBlock.Foreground="#666666" TextBlock.FontWeight="SemiBold" TextBlock.FontSize="13" />
+                        <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 5" TextBlock.Foreground="#666666" TextBlock.FontWeight="SemiBold" TextBlock.FontSize="18" />
                     </Border>
 
                     <ControlTemplate.Triggers>
@@ -102,7 +101,8 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+
     <Style TargetType="{x:Type Button}" x:Key="TitleButton">
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Margin" Value="10,0,10,0"/>
@@ -137,5 +137,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
 </ResourceDictionary>
