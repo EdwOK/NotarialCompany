@@ -139,10 +139,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Converters\NullToTrueConverter.cs" />
+    <Compile Include="Common\ValidationViewModel.cs" />
     <Compile Include="Configuration\AutoMapperConfig.cs" />
     <Compile Include="DataAccess\DbScope.cs" />
-    <Compile Include="MessagesArgs\OpenViewArgs.cs" />
-    <Compile Include="MessagesArgs\SendViewModelParamArgs.cs" />
+    <Compile Include="Common\MessagesArgs\OpenViewArgs.cs" />
+    <Compile Include="Common\MessagesArgs\SendViewModelParamArgs.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Deal.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -247,10 +249,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Styles\Styles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Styles\TextBoxs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using NotarialCompany.Common;
 using NotarialCompany.DataAccess;
 using NotarialCompany.MessagesArgs;
 using NotarialCompany.Models;
 
 namespace NotarialCompany.Pages.ServicesPage
 {
-    public class ServiceDetailsViewModel : ViewModelBase, IDataErrorInfo
+    public class ServiceDetailsViewModel : ValidationViewModel
     {
         private readonly DbScope dbScope;
 
@@ -24,6 +26,8 @@ namespace NotarialCompany.Pages.ServicesPage
 
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
+
+            ValidatingProperties = new List<string> {nameof(Name), nameof(Description)};
 
             Messenger.Default.Register<SendViewModelParamArgs<Service>>(this, args =>
             {
@@ -65,8 +69,25 @@ namespace NotarialCompany.Pages.ServicesPage
             set { Service.Cost = value; }
         }
 
+        protected override string GetValidationError(string propertyName)
+        {
+            if (propertyName == nameof(Name) && string.IsNullOrWhiteSpace(Name))
+            {
+                return "Name is required";
+            }
+            if (propertyName == nameof(Description) && string.IsNullOrWhiteSpace(Description))
+            {
+                return "Description is required";
+            }
+            return null;
+        }
+
         private void SaveCommandExecute()
         {
+            if (EnableValidationAndGetError() != null)
+            {
+                return;
+            }
             dbScope.UpdateService(Service);
             NavigateBackCommandExecute();
         }
@@ -75,23 +96,5 @@ namespace NotarialCompany.Pages.ServicesPage
         {
             Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
         }
-
-        public string this[string columnName]
-        {
-            get
-            {
-                if (columnName == nameof(Name) && string.IsNullOrWhiteSpace(Name))
-                {
-                    return "Name is required";
-                }
-                if (columnName == nameof(Description) && string.IsNullOrWhiteSpace(Description))
-                {
-                    return "Description is required";
-                }
-                return string.Empty;
-            }
-        }
-
-        public string Error => string.Empty;
     }
 }

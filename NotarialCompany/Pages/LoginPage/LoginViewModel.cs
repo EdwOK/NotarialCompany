@@ -1,24 +1,28 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using NotarialCompany.Common;
 using NotarialCompany.MessagesArgs;
 using NotarialCompany.Pages.ServicesPage;
 using NotarialCompany.Security;
 
 namespace NotarialCompany.Pages.LoginPage
 {
-    public class LoginViewModel : ViewModelBase, IDataErrorInfo
+    public class LoginViewModel : ValidationViewModel
     {
         private readonly IAuthenticationService authenticationService;
 
-        private string errorMessage;
+        private string loginErrorMessage;
 
         public LoginViewModel(IAuthenticationService authenticationService)
         {
             this.authenticationService = authenticationService;
+
+            ValidatingProperties = new List<string> {nameof(Login), nameof(Password)};
 
             LoginCommand = new RelayCommand(LoginCommandExecute);
         }
@@ -27,42 +31,42 @@ namespace NotarialCompany.Pages.LoginPage
 
         public string Password { get; set; }
 
-        public string ErrorMessage
+        public string LoginErrorMessage
         {
-            get { return errorMessage; }
-            set { Set(ref errorMessage, value); }
+            get { return loginErrorMessage; }
+            set { Set(ref loginErrorMessage, value); }
         }
 
-        public bool HasError => ErrorMessage != null; 
+        public bool HasLoginError => LoginErrorMessage != null;
 
         public ICommand LoginCommand { get; set; }
 
         private void LoginCommandExecute()
         {
+            if (EnableValidationAndGetError() != null)
+            {
+                return;
+            }
+
             if (!authenticationService.ValidatePassword(Login, Password))
             {
-                ErrorMessage = "Username or Password is incorrect";
+                LoginErrorMessage = "Username or Password is incorrect";
                 return;
             }
             Messenger.Default.Send(new OpenViewArgs(new ServicesView(), nameof(ServicesViewModel)));
         }
 
-        public string this[string columnName]
+        protected override string GetValidationError(string propertyName)
         {
-            get
+            if (propertyName == nameof(Login) && string.IsNullOrWhiteSpace(Login))
             {
-                if (columnName == nameof(Login) && string.IsNullOrWhiteSpace(Login))
-                {
-                    return "Login is required";
-                }
-                if (columnName == nameof(Password) && string.IsNullOrWhiteSpace(Password))
-                {
-                    return "Password is required";
-                }
-                return string.Empty;
+                return "Login is required";
             }
+            if (propertyName == nameof(Password) && string.IsNullOrWhiteSpace(Password))
+            {
+                return "Password is required";
+            }
+            return null;
         }
-
-        public string Error => string.Empty;
     }
 }
