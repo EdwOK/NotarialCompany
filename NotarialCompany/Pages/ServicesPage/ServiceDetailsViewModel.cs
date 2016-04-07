@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
@@ -10,7 +11,7 @@ using NotarialCompany.Models;
 
 namespace NotarialCompany.Pages.ServicesPage
 {
-    public class ServiceDetailsViewModel : ViewModelBase
+    public class ServiceDetailsViewModel : ViewModelBase, IDataErrorInfo
     {
         private readonly DbScope dbScope;
 
@@ -34,7 +35,10 @@ namespace NotarialCompany.Pages.ServicesPage
                 parentViewModelName = args.ParentViewModelName;
 
                 Service = args.Parameter ?? new Service();
-                RaisePropertyChanged(() => Service);
+
+                RaisePropertyChanged(() => Name);
+                RaisePropertyChanged(() => Description);
+                RaisePropertyChanged(() => Cost);
             });
         }
 
@@ -42,6 +46,24 @@ namespace NotarialCompany.Pages.ServicesPage
 
         public ICommand SaveCommand { get; set; }
         public ICommand NavigateBackCommand { get; set; }
+
+        public string Name
+        {
+            get { return Service?.Name; }
+            set { Service.Name = value; }
+        }
+
+        public string Description
+        {
+            get { return Service?.Description; }
+            set { Service.Description = value; }
+        }
+
+        public decimal Cost
+        {
+            get { return Service?.Cost ?? 0; }
+            set { Service.Cost = value; }
+        }
 
         private void SaveCommandExecute()
         {
@@ -53,5 +75,23 @@ namespace NotarialCompany.Pages.ServicesPage
         {
             Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
         }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == nameof(Name) && string.IsNullOrWhiteSpace(Name))
+                {
+                    return "Name is required";
+                }
+                if (columnName == nameof(Description) && string.IsNullOrWhiteSpace(Description))
+                {
+                    return "Description is required";
+                }
+                return string.Empty;
+            }
+        }
+
+        public string Error => string.Empty;
     }
 }

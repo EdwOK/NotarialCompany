@@ -8,10 +8,10 @@
         <Setter Property="FontSize" Value="18" />
     </Style>
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}"></Style>
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}"></Style>
     <Style TargetType="{x:Type xctk:WatermarkTextBox}" BasedOn="{StaticResource BaseStyle}"></Style>
 
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="18" />
     </Style>
-
 </ResourceDictionary>
