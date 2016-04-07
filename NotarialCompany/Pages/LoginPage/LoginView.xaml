@@ -10,8 +10,8 @@
     mc:Ignorable="d" 
     d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="250">
-        <xctk:WatermarkTextBox Name="Login" Watermark="Login" Margin="0,0,0,15" Text="{Binding Login, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
-        <xctk:WatermarkTextBox Name="Password" Watermark="Password" Margin="0,0,0,5" Text="{Binding Password, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+        <xctk:WatermarkTextBox Style="{StaticResource ValidateTextBox}" Name="Login" Watermark="Login" Margin="0,0,0,15" Text="{Binding Login, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+        <xctk:WatermarkTextBox Style="{StaticResource ValidateTextBox}" Name="Password" Watermark="Password" Margin="0,0,0,5" Text="{Binding Password, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
         <Label Content="{Binding ErrorMessage, Mode=TwoWay}" Margin="0,0,0,5" Foreground="Red" Visibility="{Binding HasError, Converter={con:BooleanToVisibilityConverter IsReversed=True}}" />
         <Button Content="Login" Command="{Binding LoginCommand}" IsDefault="True">
             <Button.Style>
