@@ -48,6 +48,5 @@ namespace NotarialCompany.Common
         {
             return null;
         }
-
     }
 }

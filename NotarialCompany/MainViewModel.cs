@@ -17,7 +17,6 @@ namespace NotarialCompany
     {
         private readonly IAuthenticationService authenticationService;
         private ContentControl currentView;
-        private ServicesView s = new ServicesView();
 
         public MainViewModel(IAuthenticationService authenticationService)
         {

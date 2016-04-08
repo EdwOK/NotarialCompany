@@ -83,12 +83,30 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public void UpdateClient(Client client)
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.ClientsUpdateService, connection) { CommandType = CommandType.StoredProcedure })
+            {
+                connection.Open();
+                SqlCommandBuilder.DeriveParameters(command);
+
+                var serviseRecord = Mapper.Map<Client, object[]>(client);
+                for (var i = 0; i < serviseRecord.Length; i++)
+                {
+                    command.Parameters[i + 1].Value = serviseRecord[i];
+                }
+                command.ExecuteNonQuery();
+            }
+        }
+
         private static class StoredProceduresNames
         {
             public const string UsersGetUserByUsernameAndPassword = "[Users.GetUserByUsernameAndPassword]";
             public const string ServicesGetServices = "[Services.GetServices]";
-            public const string ÑlientsGetClients = "[Clients.GetClients]";
             public const string ServicesUpdateService = "[Services.CreateOrUpdateService]";
+            public const string ÑlientsGetClients = "[Clients.GetClients]";
+            public const string ClientsUpdateService = "[Clients.CreateOrUpdateClient]";
         }
     }
 }

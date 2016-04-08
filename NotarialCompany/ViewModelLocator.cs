@@ -1,4 +1,3 @@
-using System;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using NotarialCompany.DataAccess;
@@ -26,6 +25,7 @@ namespace NotarialCompany
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<ClientsViewModel>();
+            SimpleIoc.Default.Register<ClientDetailsViewModel>();
             SimpleIoc.Default.Register<DealsViewModel>();
             SimpleIoc.Default.Register<ServicesViewModel>();
             SimpleIoc.Default.Register<ServiceDetailsViewModel>();
@@ -37,6 +37,7 @@ namespace NotarialCompany
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
         public LoginViewModel LoginViewModel => ServiceLocator.Current.GetInstance<LoginViewModel>();
         public ClientsViewModel ClientsViewModel => ServiceLocator.Current.GetInstance<ClientsViewModel>();
+        public ClientDetailsViewModel ClientDetailsViewModel => ServiceLocator.Current.GetInstance<ClientDetailsViewModel>();
         public DealsViewModel DealsViewModel => ServiceLocator.Current.GetInstance<DealsViewModel>();
         public ServicesViewModel ServicesViewModel => ServiceLocator.Current.GetInstance<ServicesViewModel>();
         public ServiceDetailsViewModel ServiceDetailsViewModel => ServiceLocator.Current.GetInstance<ServiceDetailsViewModel>();

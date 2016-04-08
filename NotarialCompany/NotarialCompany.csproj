@@ -152,10 +152,15 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Common\BasePageViewModel.cs" />
+    <Compile Include="Pages\ClientsPage\ClientDetailsViewModel.cs" />
     <Compile Include="Pages\ClientsPage\ClientsView.xaml.cs">
       <DependentUpon>ClientsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ClientsPage\ClientsViewModel.cs" />
+    <Compile Include="Pages\ClientsPage\ClientDetailsVew.xaml.cs">
+      <DependentUpon>ClientDetailsVew.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\DealsPage\DealsView.xaml.cs">
       <DependentUpon>DealsView.xaml</DependentUpon>
     </Compile>
@@ -227,6 +232,10 @@
     <Page Include="Pages\ClientsPage\ClientsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ClientsPage\ClientDetailsVew.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\DealsPage\DealsView.xaml">
       <SubType>Designer</SubType>

@@ -22,11 +22,11 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,10,10,10" FontWeight="Bold">Services Details</Label>
         <Label Grid.Row="1" Grid.Column="0" Margin="10,10,10,10">Name</Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="0,10,0,10" Text="{Binding Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValidationStyle}"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="0,10,0,10" Text="{Binding Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValidationStyle}"/>
         <Label Grid.Row="2" Grid.Column="0" Margin="10,10,10,10">Cost</Label>
-        <TextBox Grid.Row="2" Grid.Column="1" Margin="0,10,0,10" Text="{Binding Cost, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="0,10,0,10" Text="{Binding Cost, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Row="3" Grid.Column="0" Margin="10,10,10,10">Description</Label>
-        <TextBox Grid.Row="3" Grid.Column="1" Margin="0,10,0,10" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding Description, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValidationStyle}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Margin="0,10,0,10" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding Description, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValidationStyle}"/>
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Style="{StaticResource GrayButton}" Command="{Binding NavigateBackCommand}">Cancel</Button>
             <Button Style="{StaticResource GreenButton}" Command="{Binding SaveCommand}">Save</Button>
