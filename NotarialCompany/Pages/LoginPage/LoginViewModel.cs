@@ -6,7 +6,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using NotarialCompany.Common;
-using NotarialCompany.MessagesArgs;
+using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.Pages.ServicesPage;
 using NotarialCompany.Security;
 
@@ -47,6 +47,8 @@ namespace NotarialCompany.Pages.LoginPage
             {
                 return;
             }
+
+            AllowValidation = false;
 
             if (!authenticationService.ValidatePassword(Login, Password))
             {

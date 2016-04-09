@@ -28,7 +28,7 @@
         <Label Grid.Row="3" Grid.Column="0" Margin="10,10,10,10">Salt</Label>
         <TextBox Grid.Row="3" Grid.Column="1" Margin="0,10,0,10" Text="{Binding Salt, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValidationStyle}"/>
         <Label Grid.Row="4" Grid.Column="0" Margin="10,10,10,10">Role</Label>
-        <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,10,0,10" ItemsSource="{Binding Roles}" SelectedItem="{Binding Role, Mode=TwoWay}"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,10,0,10" ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Style="{StaticResource GrayButton}" Command="{Binding NavigateBackCommand}">Cancel</Button>
             <Button Style="{StaticResource GreenButton}" Command="{Binding SaveCommand}">Save</Button>

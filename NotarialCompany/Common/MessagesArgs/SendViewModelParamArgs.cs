@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace NotarialCompany.MessagesArgs
+namespace NotarialCompany.Common.MessagesArgs
 {
     public class SendViewModelParamArgs<T>
     {

@@ -1,4 +1,4 @@
-﻿CreateOrUpdateUser--IF OBJECT_ID('[Deals.AddDeal]') IS NOT NULL
+﻿--IF OBJECT_ID('[Deals.AddDeal]') IS NOT NULL
 --	DROP PROCEDURE [Deals.AddDeal]
 --GO
 --IF OBJECT_ID('[Clients.AddClient]') IS NOT NULL
