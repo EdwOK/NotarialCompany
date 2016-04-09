@@ -4,8 +4,8 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using NotarialCompany.Common;
+using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
-using NotarialCompany.MessagesArgs;
 using NotarialCompany.Models;
 
 namespace NotarialCompany.Pages.ServicesPage
@@ -32,6 +32,8 @@ namespace NotarialCompany.Pages.ServicesPage
                 {
                     return;
                 }
+                AllowValidation = false;
+
                 parentView = args.ParentView;
                 parentViewModelName = args.ParentViewModelName;
 

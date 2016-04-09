@@ -4,8 +4,8 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using NotarialCompany.Common;
+using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
-using NotarialCompany.MessagesArgs;
 using NotarialCompany.Models;
 using NotarialCompany.Pages.ServicesPage;
 
@@ -15,15 +15,13 @@ namespace NotarialCompany.Pages.UsersPage
     {
         private readonly DbScope dbScope;
 
-        private List<Role> roles;
-         
         private ContentControl parentView;
         private string parentViewModelName;
 
         public UserDetailsViewModel(DbScope dbScope)
         {
             this.dbScope = dbScope;
-            this.roles = dbScope.GetRoles();
+            this.Roles = dbScope.GetRoles();
 
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
@@ -36,15 +34,19 @@ namespace NotarialCompany.Pages.UsersPage
                 {
                     return;
                 }
+
+                AllowValidation = false;
+
                 parentView = args.ParentView;
                 parentViewModelName = args.ParentViewModelName;
 
                 User = args.Parameter ?? new User();
+                SelectedRole = Roles.Find(r => r.Id == User.RoleId);
 
                 RaisePropertyChanged(() => Username);
                 RaisePropertyChanged(() => Password);
                 RaisePropertyChanged(() => Salt);
-                RaisePropertyChanged(() => Role);
+                RaisePropertyChanged(() => SelectedRole);
             });
         }
 
@@ -78,17 +80,9 @@ namespace NotarialCompany.Pages.UsersPage
             set { User.Employee = value; }
         }
 
-        public Role Role
-        {
-            get { return User?.Role; }
-            set { User.Role = value; }
-        }
+        public Role SelectedRole { get; set; }
 
-        public List<Role> Roles
-        {
-            get { return roles; }
-            set { roles = value; }
-        }
+        public List<Role> Roles { get; set; }
 
         public List<Employee> Employees { get; set; }
          
