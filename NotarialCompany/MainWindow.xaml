@@ -38,6 +38,12 @@
                     <TextBlock VerticalAlignment="Center">Positions</TextBlock>
                 </StackPanel>
             </Button>
+            <Button Style="{StaticResource GrayButton}" Command="{Binding OpenUsersCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Resources/Images/clients.png" Width="32" Height="32" Margin="0,0,5,0"/>
+                    <TextBlock VerticalAlignment="Center">Users</TextBlock>
+                </StackPanel>
+            </Button>
         </WrapPanel>
         <ContentPresenter Content="{Binding CurrentView}"></ContentPresenter>
     </DockPanel>

@@ -10,15 +10,15 @@
     d:DesignHeight="300" d:DesignWidth="1000">
     <Grid VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="150"></ColumnDefinition>
-            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="Auto" MinWidth="150"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,10,10,10" FontWeight="Bold">Services Details</Label>
         <Label Grid.Row="1" Grid.Column="0" Margin="10,10,10,10">Name</Label>

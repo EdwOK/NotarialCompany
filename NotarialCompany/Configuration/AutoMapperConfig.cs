@@ -12,6 +12,7 @@ namespace NotarialCompany.Configuration
             {
                 cfg.AddProfile(new UserProfile());
                 cfg.AddProfile(new ServicesProfile());
+                cfg.AddProfile(new RolesProfile());
                 cfg.AddProfile(new ClientsProfile());
             });
         }
@@ -24,6 +25,8 @@ namespace NotarialCompany.Configuration
             CreateMap<object[], User>()
                 .ForMember(u => u.Id, opts => opts.MapFrom(src => (int) src[0]))
                 .ForMember(u => u.Username, opts => opts.MapFrom(src => (string) src[1]))
+                .ForMember(u => u.Password, opts => opts.MapFrom(src => (string) src[2]))
+                .ForMember(u => u.Salt, opts => opts.MapFrom(src => (string) src[3]))
                 .ForMember(u => u.RoleId, opts => opts.MapFrom(src => (int) src[4]))
                 .ForMember(u => u.EmployeeId, opts => opts.MapFrom(src => (int) src[5]))
                 .ForMember(u => u.Role,
@@ -46,7 +49,9 @@ namespace NotarialCompany.Configuration
                             Salary = (decimal) src[18],
                             Commission = (int) src[19]
                         }
-                    }));
+                    }))
+                .ReverseMap()
+                .ConstructUsing(x => new object[] {x.Id, x.Username, x.Password, x.Salt, x.RoleId, x.EmployeeId });
         }
     }
 
@@ -78,6 +83,18 @@ namespace NotarialCompany.Configuration
                 .ForMember(u => u.PhoneNumber, opts => opts.MapFrom(src => (string) src[6]))
                 .ReverseMap()
                 .ConstructUsing(x => new object[] {x.Id, x.FirstName, x.SecondName, x.MiddleName, x.Occupation, x.Address, x.PhoneNumber});
+        }
+    }
+
+    public class RolesProfile : Profile
+    {
+        protected override void Configure()
+        {
+            CreateMap<object[], Role>()
+                .ForMember(u => u.Id, opts => opts.MapFrom(src => (int)src[0]))
+                .ForMember(u => u.Name, opts => opts.MapFrom(src => (string)src[1]))
+                .ReverseMap()
+                .ConstructUsing(x => new object[] { x.Id, x.Name });
         }
     }
 }

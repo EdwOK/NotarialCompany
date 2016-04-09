@@ -5,6 +5,7 @@ using NotarialCompany.Pages.ClientsPage;
 using NotarialCompany.Pages.DealsPage;
 using NotarialCompany.Pages.LoginPage;
 using NotarialCompany.Pages.ServicesPage;
+using NotarialCompany.Pages.UsersPage;
 using NotarialCompany.Security;
 
 namespace NotarialCompany
@@ -24,11 +25,17 @@ namespace NotarialCompany
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
+
+            SimpleIoc.Default.Register<UsersViewModel>();
+            SimpleIoc.Default.Register<UserDetailsViewModel>();
+
             SimpleIoc.Default.Register<ClientsViewModel>();
             SimpleIoc.Default.Register<ClientDetailsViewModel>();
-            SimpleIoc.Default.Register<DealsViewModel>();
+
             SimpleIoc.Default.Register<ServicesViewModel>();
             SimpleIoc.Default.Register<ServiceDetailsViewModel>();
+
+            SimpleIoc.Default.Register<DealsViewModel>();
 
             SimpleIoc.Default.Register<IAuthenticationService, AuthenticationService>();
             SimpleIoc.Default.Register<DbScope>();
@@ -36,11 +43,17 @@ namespace NotarialCompany
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
         public LoginViewModel LoginViewModel => ServiceLocator.Current.GetInstance<LoginViewModel>();
+
+        public UsersViewModel UsersViewModel => ServiceLocator.Current.GetInstance<UsersViewModel>();
+        public UserDetailsViewModel UserDetailsViewModel => ServiceLocator.Current.GetInstance<UserDetailsViewModel>();
+
         public ClientsViewModel ClientsViewModel => ServiceLocator.Current.GetInstance<ClientsViewModel>();
         public ClientDetailsViewModel ClientDetailsViewModel => ServiceLocator.Current.GetInstance<ClientDetailsViewModel>();
-        public DealsViewModel DealsViewModel => ServiceLocator.Current.GetInstance<DealsViewModel>();
+
         public ServicesViewModel ServicesViewModel => ServiceLocator.Current.GetInstance<ServicesViewModel>();
         public ServiceDetailsViewModel ServiceDetailsViewModel => ServiceLocator.Current.GetInstance<ServiceDetailsViewModel>();
+
+        public DealsViewModel DealsViewModel => ServiceLocator.Current.GetInstance<DealsViewModel>();
 
         public static void Cleanup()
         {

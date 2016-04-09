@@ -26,7 +26,7 @@
                 <xcdg:Column Width="30" FieldName="Id" Title="Id" IsMainColumn="True" AllowGroup="False">
                     <xcdg:Column.CellContentTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type xcdg:DataGridControl}}}"></Button>
+                            <Button Content="{Binding}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type xcdg:DataGridControl}}}"/>
                         </DataTemplate>
                     </xcdg:Column.CellContentTemplate>
                 </xcdg:Column>
