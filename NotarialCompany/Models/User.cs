@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NotarialCompany.Models
+﻿namespace NotarialCompany.Models
 {
     public class User
     {

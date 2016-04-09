@@ -26,16 +26,16 @@
                 <xcdg:Column Width="30" FieldName="Id" Title="Id" IsMainColumn="True" AllowGroup="False">
                     <xcdg:Column.CellContentTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type xcdg:DataGridControl}}}"></Button>
+                            <Button Content="{Binding}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type xcdg:DataGridControl}}}"/>
                         </DataTemplate>
                     </xcdg:Column.CellContentTemplate>
                 </xcdg:Column>
-                <xcdg:Column FieldName="FirstName" Title="FirstName" ReadOnly="True"></xcdg:Column>
-                <xcdg:Column FieldName="SecondName" Title="SecondName" ReadOnly="True"></xcdg:Column>
-                <xcdg:Column FieldName="MiddleName" Title="MiddleName" ReadOnly="True"></xcdg:Column>
-                <xcdg:Column FieldName="Occupation" Title="Occupation" ReadOnly="True"></xcdg:Column>
-                <xcdg:Column FieldName="Address" Title="Address" ReadOnly="True"></xcdg:Column>
-                <xcdg:Column FieldName="PhoneNumber" Title="PhoneNumber" ReadOnly="True"></xcdg:Column>
+                <xcdg:Column FieldName="FirstName" Title="FirstName" ReadOnly="True"/>
+                <xcdg:Column FieldName="SecondName" Title="SecondName" ReadOnly="True"/>
+                <xcdg:Column FieldName="MiddleName" Title="MiddleName" ReadOnly="True"/>
+                <xcdg:Column FieldName="Occupation" Title="Occupation" ReadOnly="True"/>
+                <xcdg:Column FieldName="Address" Title="Address" ReadOnly="True"/>
+                <xcdg:Column FieldName="PhoneNumber" Title="PhoneNumber" ReadOnly="True"/>
             </xcdg:DataGridControl.Columns>
         </xcdg:DataGridControl>
     </DockPanel>

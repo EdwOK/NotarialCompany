@@ -30,6 +30,26 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        #region Gets methods
+
+        public List<User> GetUsers()
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.UsersGetUsers, connection) { CommandType = CommandType.StoredProcedure })
+            using (var dataAdapter = new SqlDataAdapter(command))
+            {
+                var dataSet = new DataSet();
+                dataAdapter.Fill(dataSet, "Table");
+
+                DataTable dataTable = dataSet.Tables["Table"];
+
+                var list = new List<User>(
+                    from DataRow row in dataTable.Rows
+                    select Mapper.Map<object[], User>(row.ItemArray));
+                return list;
+            }
+        }
+
         public List<Client> GetClients()
         {
             using (var connection = new SqlConnection(Settings.ConnectionString))
@@ -66,6 +86,28 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public List<Role> GetRoles()
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.RolesGetRoles, connection) { CommandType = CommandType.StoredProcedure })
+            using (var dataAdapter = new SqlDataAdapter(command))
+            {
+                var dataSet = new DataSet();
+                dataAdapter.Fill(dataSet, "Table");
+
+                DataTable dataTable = dataSet.Tables["Table"];
+
+                var list = new List<Role>(
+                    from DataRow row in dataTable.Rows
+                    select Mapper.Map<object[], Role>(row.ItemArray));
+                return list;
+            }
+        }
+
+        #endregion
+
+        #region Updates methods
+
         public void UpdateService(Service service)
         {
             using (var connection = new SqlConnection(Settings.ConnectionString))
@@ -86,7 +128,7 @@ namespace NotarialCompany.DataAccess
         public void UpdateClient(Client client)
         {
             using (var connection = new SqlConnection(Settings.ConnectionString))
-            using (var command = new SqlCommand(StoredProceduresNames.ClientsUpdateService, connection) { CommandType = CommandType.StoredProcedure })
+            using (var command = new SqlCommand(StoredProceduresNames.ClientsUpdateClient, connection) { CommandType = CommandType.StoredProcedure })
             {
                 connection.Open();
                 SqlCommandBuilder.DeriveParameters(command);
@@ -100,13 +142,38 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public void UpdateUser(User user)
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.UsersUpdateUser, connection) { CommandType = CommandType.StoredProcedure })
+            {
+                connection.Open();
+                SqlCommandBuilder.DeriveParameters(command);
+
+                var serviseRecord = Mapper.Map<User, object[]>(user);
+                for (var i = 0; i < serviseRecord.Length; i++)
+                {
+                    command.Parameters[i + 1].Value = serviseRecord[i];
+                }
+                command.ExecuteNonQuery();
+            }
+        }
+
+        #endregion
+
         private static class StoredProceduresNames
         {
+            public const string UsersGetUsers = "[Users.GetUsers]";
+            public const string UsersUpdateUser = "[Users.CreateOrUpdateUser]";
             public const string UsersGetUserByUsernameAndPassword = "[Users.GetUserByUsernameAndPassword]";
+
             public const string ServicesGetServices = "[Services.GetServices]";
             public const string ServicesUpdateService = "[Services.CreateOrUpdateService]";
+
             public const string ÑlientsGetClients = "[Clients.GetClients]";
-            public const string ClientsUpdateService = "[Clients.CreateOrUpdateClient]";
+            public const string ClientsUpdateClient = "[Clients.CreateOrUpdateClient]";
+
+            public const string RolesGetRoles = "[Roles.GetRoles]";
         }
     }
 }

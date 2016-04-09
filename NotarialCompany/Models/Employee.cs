@@ -13,5 +13,10 @@ namespace NotarialCompany.Models
         public DateTime EmploymentDate { get; set; }
         public int EmployeesPositionId { get; set; }
         public EmployeesPosition EmployeesPosition { get; set; }
+
+        public override string ToString()
+        {
+            return $"{LastName} {FirstName} {MiddleName}";
+        }
     }
 }

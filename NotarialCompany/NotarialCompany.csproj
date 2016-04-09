@@ -176,6 +176,14 @@
     <Compile Include="Pages\ServicesPage\ServiceDetailsVew.xaml.cs">
       <DependentUpon>ServiceDetailsVew.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\UsersPage\UserDetailsView.xaml.cs">
+      <DependentUpon>UserDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UsersPage\UserDetailsViewModel.cs" />
+    <Compile Include="Pages\UsersPage\UsersView.xaml.cs">
+      <DependentUpon>UsersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UsersPage\UsersViewModel.cs" />
     <Compile Include="Security\AuthenticationService.cs" />
     <Compile Include="Security\IAuthenticationService.cs" />
     <Compile Include="MainViewModel.cs" />
@@ -250,6 +258,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ServicesPage\ServiceDetailsVew.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\UsersPage\UserDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\UsersPage\UsersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,4 @@
-﻿--IF OBJECT_ID('[Deals.AddDeal]') IS NOT NULL
+﻿CreateOrUpdateUser--IF OBJECT_ID('[Deals.AddDeal]') IS NOT NULL
 --	DROP PROCEDURE [Deals.AddDeal]
 --GO
 --IF OBJECT_ID('[Clients.AddClient]') IS NOT NULL
@@ -95,13 +95,51 @@ CREATE PROCEDURE [Users.GetUserByUsernameAndPassword]
 AS
 BEGIN
 	SET NOCOUNT ON;
-	SELECT *
-	FROM [Users] 
+	SELECT * FROM [Users] 
 	INNER JOIN [Roles] ON [Roles].[Id] = [Users].[RoleId]
-	INNER JOIN [Employees] ON [Roles].[Id] = [Users].[RoleId]
+	INNER JOIN [Employees] ON [Employees].[Id] = [Users].[EmployeeId]
 	INNER JOIN [EmployeesPositions] ON [EmployeesPositions].[Id] = [Employees].[EmployeesPositionId]
 	WHERE [Username] = @username AND [Password] = @password
 END
+GO
+
+IF OBJECT_ID('[Users.GetUsers]') IS NOT NULL
+	DROP PROCEDURE [Users.GetUsers]
+GO
+
+CREATE PROCEDURE [Users.GetUsers]
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SELECT * FROM [Users] 
+	INNER JOIN [Roles] ON [Roles].[Id] = [Users].[RoleId]
+	INNER JOIN [Employees] ON [Employees].[Id] = [Users].[EmployeeId]
+	INNER JOIN [EmployeesPositions] ON [EmployeesPositions].[Id] = [Employees].[EmployeesPositionId]
+END
+GO
+
+IF OBJECT_ID('[Users.CreateOrUpdateUser]') IS NOT NULL
+	DROP PROCEDURE [Users.CreateOrUpdateUser]
+GO
+
+CREATE PROCEDURE [Users.CreateOrUpdateUser]
+	@id INT,
+    @username NVARCHAR(30),
+    @password NVARCHAR(20),
+    @salt NVARCHAR(20),
+    @roleId INT,
+    @employeeId INT
+AS
+	IF @id = 0
+	BEGIN
+		INSERT INTO [Users]
+		VALUES (@username, @password, @salt, @roleId, @employeeId)
+		RETURN
+	END
+
+	UPDATE [Users] 
+	SET [Username] = @username, [Password] = @password, [Salt] = @salt, [RoleId] = @roleId, [EmployeeId] = @employeeId
+	WHERE [Users].[Id] = @id
 GO
 
 IF OBJECT_ID('[Services.GetServices]') IS NOT NULL
@@ -178,4 +216,16 @@ AS
 	SET [FirstName] = @firstName, [SecondName] = @secondName, [MiddleName] = @middleName, [Occupation] = @occupation, 
 		[Address] = @address, [PhoneNumber] = @phoneNumber
 	WHERE [Clients].[Id] = @id
+GO
+
+IF OBJECT_ID('[Roles.GetRoles]') IS NOT NULL
+	DROP PROCEDURE [Roles.GetRoles]
+GO
+
+CREATE PROCEDURE [Roles.GetRoles]
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SELECT * FROM [Roles]
+END
 GO

@@ -9,6 +9,7 @@ using NotarialCompany.Pages.ClientsPage;
 using NotarialCompany.Pages.DealsPage;
 using NotarialCompany.Pages.LoginPage;
 using NotarialCompany.Pages.ServicesPage;
+using NotarialCompany.Pages.UsersPage;
 using NotarialCompany.Security;
 
 namespace NotarialCompany
@@ -26,6 +27,8 @@ namespace NotarialCompany
             OpenDealsCommand = new RelayCommand(OpenDealsCommandExecute);
             OpenServicesCommand = new RelayCommand(OpenServicesCommandExecute);
             OpenClientsCommand = new RelayCommand(OpenClientsCommandExecute);
+            OpenUsersCommand = new RelayCommand(OpenUsersCommandExecute);
+
             Messenger.Default.Register<OpenViewArgs>(this, args =>
             {
                 CurrentView = args.View;
@@ -44,7 +47,13 @@ namespace NotarialCompany
         public ICommand OpenServicesCommand { get; set; }
         public ICommand OpenDealsCommand { get; set; }
         public ICommand OpenClientsCommand { get; set; }
-        
+        public ICommand OpenUsersCommand { get; set; }
+
+        public void OpenUsersCommandExecute()
+        {
+            CurrentView = new UsersView();
+        }
+
         private void OpenServicesCommandExecute()
         {
             CurrentView = new ServicesView();
