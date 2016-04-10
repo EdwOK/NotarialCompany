@@ -137,26 +137,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style TargetType="{x:Type Button}" x:Key="SettingsButton">
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 5" />
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="DarkGray" />
-                            <Setter Property="Foreground" Value="Black" />
-                            <Setter Property="Button.Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect Color="Black" Direction="360" ShadowDepth="0" BlurRadius="4" Opacity="0.5" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 </ResourceDictionary>

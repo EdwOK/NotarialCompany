@@ -7,7 +7,8 @@
     DataContext="{Binding Main, Source={StaticResource Locator}}"
     Title="Notarial Company" Height="600" Width="900">
     <DockPanel>
-        <DockPanel DockPanel.Dock="Top" Visibility="{Binding IsAuthenticated, Converter={converters:BooleanToVisibilityConverter}}">
+        <!--<DockPanel DockPanel.Dock="Top" Visibility="{Binding IsAuthenticated, Converter={converters:BooleanToVisibilityConverter}}">-->
+        <DockPanel DockPanel.Dock="Top">
             <WrapPanel HorizontalAlignment="Left" Orientation="Horizontal">
                 <Button Style="{StaticResource GrayButton}" Command="{Binding OpenDealsCommand}">
                     <StackPanel Orientation="Horizontal">
@@ -47,11 +48,7 @@
                 </Button>
             </WrapPanel>
             <WrapPanel HorizontalAlignment="Right">
-                <Button Style="{StaticResource SettingsButton}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="Resources/Images/settings.png" Width="32" Height="32" Margin="0,0,5,0"/>
-                    </StackPanel>
-                </Button>
+                <ComboBox Style="{StaticResource SettingsComboBox}"/>
             </WrapPanel>
         </DockPanel>
         <ContentPresenter Content="{Binding CurrentView}"/>
