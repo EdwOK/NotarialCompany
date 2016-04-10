@@ -68,8 +68,8 @@ CREATE TABLE [dbo].[Roles] (
 CREATE TABLE [dbo].[Users] (
     [Id] [int] NOT NULL IDENTITY,
     [Username] [nvarchar](30) NOT NULL,
-    [Password] [nvarchar](20) NOT NULL,
-    [Salt] [nvarchar](20) NOT NULL,
+    [Password] [nvarchar](MAX) NOT NULL,
+    [Salt] [nvarchar](MAX) NOT NULL,
     [RoleId] [int] NOT NULL,
     [EmployeeId] [int] NOT NULL,
     CONSTRAINT [PK_dbo.Users] PRIMARY KEY ([Id])
