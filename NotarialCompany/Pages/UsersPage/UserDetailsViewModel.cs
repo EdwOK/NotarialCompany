@@ -7,26 +7,30 @@ using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
-using NotarialCompany.Pages.ServicesPage;
+using NotarialCompany.Security;
 
 namespace NotarialCompany.Pages.UsersPage
 {
     public class UserDetailsViewModel : ValidationViewModel
     {
         private readonly DbScope dbScope;
+        private readonly IAuthenticationService authenticationService;
 
         private ContentControl parentView;
         private string parentViewModelName;
 
-        public UserDetailsViewModel(DbScope dbScope)
+        public UserDetailsViewModel(DbScope dbScope, IAuthenticationService authenticationService)
         {
             this.dbScope = dbScope;
+            this.authenticationService = authenticationService;
+
             this.Roles = dbScope.GetRoles();
+            this.Employees = dbScope.GetEmployees();
 
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
 
-            ValidatingProperties = new List<string> {nameof(Username), nameof(Password), nameof(Salt)};
+            ValidatingProperties = new List<string> { nameof(Username), nameof(Password) };
 
             Messenger.Default.Register<SendViewModelParamArgs<User>>(this, args =>
             {
@@ -42,11 +46,12 @@ namespace NotarialCompany.Pages.UsersPage
 
                 User = args.Parameter ?? new User();
                 SelectedRole = Roles.Find(r => r.Id == User.RoleId);
+                SelectedEmployee = Employees.Find(e => e.Id == User.EmployeeId);
 
                 RaisePropertyChanged(() => Username);
                 RaisePropertyChanged(() => Password);
-                RaisePropertyChanged(() => Salt);
                 RaisePropertyChanged(() => SelectedRole);
+                RaisePropertyChanged(() => SelectedEmployee);
             });
         }
 
@@ -68,17 +73,7 @@ namespace NotarialCompany.Pages.UsersPage
             set { User.Password = value; }
         }
 
-        public string Salt
-        {
-            get { return User?.Salt; }
-            set { User.Salt = value; }
-        }
-
-        public Employee Employee
-        {
-            get { return User?.Employee; }
-            set { User.Employee = value; }
-        }
+        public Employee SelectedEmployee { get; set; }
 
         public Role SelectedRole { get; set; }
 
@@ -96,10 +91,6 @@ namespace NotarialCompany.Pages.UsersPage
             {
                 return "Password is required";
             }
-            if (propertyName == nameof(Salt) && string.IsNullOrWhiteSpace(Salt))
-            {
-                return "Salt is required";
-            }
             return null;
         }
 
@@ -110,10 +101,14 @@ namespace NotarialCompany.Pages.UsersPage
                 return;
             }
 
-            User.EmployeeId = User.Employee.Id;
-            User.RoleId = User.RoleId;
+            User.Employee = SelectedEmployee;
+            User.EmployeeId = SelectedEmployee.Id;
 
-            dbScope.UpdateUser(User);
+            User.Role = SelectedRole;
+            User.RoleId = SelectedRole.Id;
+
+            var saveUser = authenticationService.GenerateCredentials(User);
+            dbScope.UpdateUser(saveUser);
             NavigateBackCommandExecute();
         }
 

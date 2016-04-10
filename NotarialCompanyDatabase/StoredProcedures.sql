@@ -89,9 +89,12 @@ IF OBJECT_ID('[Users.GetUserByUsernameAndPassword]') IS NOT NULL
 	DROP PROCEDURE [Users.GetUserByUsernameAndPassword]
 GO
 
-CREATE PROCEDURE [Users.GetUserByUsernameAndPassword]
-	@username NVARCHAR(30),
-	@password NVARCHAR(20)
+IF OBJECT_ID('[Users.UsersGetUserByUsername]') IS NOT NULL
+	DROP PROCEDURE [Users.UsersGetUserByUsername]
+GO
+
+CREATE PROCEDURE [Users.UsersGetUserByUsername]
+	@username NVARCHAR(30)
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -99,7 +102,7 @@ BEGIN
 	INNER JOIN [Roles] ON [Roles].[Id] = [Users].[RoleId]
 	INNER JOIN [Employees] ON [Employees].[Id] = [Users].[EmployeeId]
 	INNER JOIN [EmployeesPositions] ON [EmployeesPositions].[Id] = [Employees].[EmployeesPositionId]
-	WHERE [Username] = @username AND [Password] = @password
+	WHERE [Username] = @username
 END
 GO
 
@@ -125,8 +128,8 @@ GO
 CREATE PROCEDURE [Users.CreateOrUpdateUser]
 	@id INT,
     @username NVARCHAR(30),
-    @password NVARCHAR(20),
-    @salt NVARCHAR(20),
+    @password NVARCHAR(MAX),
+    @salt NVARCHAR(MAX),
     @roleId INT,
     @employeeId INT
 AS
@@ -227,5 +230,18 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	SELECT * FROM [Roles]
+END
+GO
+
+IF OBJECT_ID('[Employees.GetEmployees]') IS NOT NULL
+	DROP PROCEDURE [Employees.GetEmployees]
+GO
+
+CREATE PROCEDURE [Employees.GetEmployees]
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SELECT * FROM [Employees]
+	INNER JOIN [EmployeesPositions] ON [EmployeesPositions].[Id] = [Employees].[EmployeesPositionId]
 END
 GO

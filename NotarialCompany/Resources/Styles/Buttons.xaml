@@ -111,10 +111,10 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="Border" CornerRadius="14" BorderThickness="1"  Height="34" MinWidth="110">
                         <Border.BorderBrush>
-                            <SolidColorBrush Color="#345883"></SolidColorBrush>
+                            <SolidColorBrush Color="#345883"/>
                         </Border.BorderBrush>
                         <Border.Background>
-                            <SolidColorBrush Color="White"></SolidColorBrush>
+                            <SolidColorBrush Color="White"/>
                         </Border.Background>
                         <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 5" TextBlock.Foreground="#345883" TextBlock.FontWeight="Light" TextBlock.FontSize="13"/>
                     </Border>
@@ -123,7 +123,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Border" Property="Background">
                                 <Setter.Value>
-                                    <SolidColorBrush Color="#345883"></SolidColorBrush>
+                                    <SolidColorBrush Color="#345883"/>
                                 </Setter.Value>
                             </Setter>
                             <Setter TargetName="ContentPresenter" Property="TextBlock.Foreground" Value="White"></Setter>
@@ -137,5 +137,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>

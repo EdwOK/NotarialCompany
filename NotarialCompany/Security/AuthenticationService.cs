@@ -7,46 +7,34 @@ using NotarialCompany.Models;
 
 namespace NotarialCompany.Security
 {
-    internal class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly DbScope dbScope;
-        private readonly Encoding encoding = Encoding.Unicode;
+        private readonly Encoding encoding = Encoding.Default;
 
         public AuthenticationService(DbScope dbScope)
         {
             this.dbScope = dbScope;
         }
 
-        //public void GenerateCredentials(User user)
-        //{
-        //    var existingCredentials = await dbScope.SingleOrDefaultAsync<UserCredential>(user.Id);
-        //    var credentials = existingCredentials ?? new UserCredential
-        //    {
-        //        Id = user.Id,
-        //        User = user
-        //    };
-        //    credentials.Salt = GenerateNewSalt();
-        //    credentials.Password = GenerateHash(user.Password, credentials.Salt);
-
-        //    dbScope.Save(credentials);
-        //    await dbScope.SaveChangesAsync();
-        //}
-
         public User CurrentUser { get; private set; }
-        public void GenerateCredentials(User user)
+
+        public User GenerateCredentials(User user)
         {
-            throw new NotImplementedException();
+            user.Salt = GenerateNewSalt(32);
+            user.Password = GenerateHash(user.Password, user.Salt);
+            return user;
         }
 
         public bool ValidatePassword(string username, string password)
         {
-            CurrentUser = dbScope.GetUserByUsernameAndPassword(username, password);
-            return CurrentUser != null;
+            CurrentUser = dbScope.GetUserByUsername(username);
+            return CurrentUser != null && CompareHash(password, CurrentUser.Password, CurrentUser.Salt);
         }
 
         public void Logout()
         {
-            throw new NotImplementedException();
+            CurrentUser = null;
         }
 
         public bool IsAuthenticated()
@@ -54,20 +42,26 @@ namespace NotarialCompany.Security
             return CurrentUser != null;
         }
 
+        private bool CompareHash(string attemptedPassword, string hash, string salt)
+        {
+            return hash == GenerateHash(attemptedPassword, salt);
+        }
 
         private string GenerateHash(string password, string salt)
         {
             var algorithm = new SHA256Managed();
-            return encoding.GetString(algorithm.ComputeHash(encoding.GetBytes(password + salt)));
+            var unhashedBytes = encoding.GetBytes(string.Concat(salt, password));
+            var hashedBytes = algorithm.ComputeHash(unhashedBytes);
+            return Convert.ToBase64String(hashedBytes);
         }
 
-        private string GenerateNewSalt()
+        private string GenerateNewSalt(int length)
         {
             using (var rng = new RNGCryptoServiceProvider())
             {
-                var buff = new byte[64];
+                var buff = new byte[length];
                 rng.GetBytes(buff);
-                return encoding.GetString(buff);
+                return Convert.ToBase64String(buff);
             }
         }
     }
