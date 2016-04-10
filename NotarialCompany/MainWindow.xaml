@@ -4,10 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:NotarialCompany"
     xmlns:converters="http://schemas.kent.boogaart.com/converters"
+    xmlns:controls="clr-namespace:NotarialCompany.Controls"
     DataContext="{Binding Main, Source={StaticResource Locator}}"
     Title="Notarial Company" Height="600" Width="900">
     <DockPanel>
-        <DockPanel DockPanel.Dock="Top" Visibility="{Binding IsAuthenticated, Converter={converters:BooleanToVisibilityConverter}}">
+        <DockPanel DockPanel.Dock="Top" >
             <WrapPanel HorizontalAlignment="Left" Orientation="Horizontal">
                 <Button Style="{StaticResource GrayButton}" Command="{Binding OpenDealsCommand}">
                     <StackPanel Orientation="Horizontal">
@@ -47,7 +48,22 @@
                 </Button>
             </WrapPanel>
             <WrapPanel HorizontalAlignment="Right">
-                <ComboBox Style="{StaticResource SettingsComboBox}" />
+                <controls:DropdownButtonControl ContextMenuService.IsEnabled="False" Style="{StaticResource GrayButton}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Resources/Images/settings.png" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 7"/>
+                            <Path x:Name="BtnArrow" Margin="4" VerticalAlignment="Center" Width="6" Fill="#FF527DB5" Stretch="Uniform" HorizontalAlignment="Right" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "/>
+                        </StackPanel>
+                        </Button.Content>
+                        <Button.ContextMenu>
+                        <ContextMenu >
+                            <MenuItem Header="Menu 1" Command="{Binding OpenDealsCommand}"/>
+                            <MenuItem Header="Menu 1"/>
+                            <MenuItem Header="Menu 1"/>
+                            <MenuItem Header="Menu 1"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </controls:DropdownButtonControl>
             </WrapPanel>
         </DockPanel>
         <ContentPresenter Content="{Binding CurrentView}"/>

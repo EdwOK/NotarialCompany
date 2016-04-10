@@ -142,6 +142,7 @@
     <Compile Include="Common\Converters\NullToTrueConverter.cs" />
     <Compile Include="Common\ValidationViewModel.cs" />
     <Compile Include="Configuration\AutoMapperConfig.cs" />
+    <Compile Include="Controls\DropdownButtonControl.cs" />
     <Compile Include="DataAccess\DbScope.cs" />
     <Compile Include="Common\MessagesArgs\OpenViewArgs.cs" />
     <Compile Include="Common\MessagesArgs\SendViewModelParamArgs.cs" />

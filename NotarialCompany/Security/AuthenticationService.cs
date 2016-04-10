@@ -28,8 +28,13 @@ namespace NotarialCompany.Security
 
         public bool ValidatePassword(string username, string password)
         {
-            CurrentUser = dbScope.GetUserByUsername(username);
-            return CurrentUser != null && CompareHash(password, CurrentUser.Password, CurrentUser.Salt);
+            User user = dbScope.GetUserByUsername(username);
+            if (user != null && CompareHash(password, user.Password, user.Salt))
+            {
+                CurrentUser = user;
+                return true;
+            }
+            return false;
         }
 
         public void Logout()
