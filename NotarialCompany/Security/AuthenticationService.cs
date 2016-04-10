@@ -7,7 +7,7 @@ using NotarialCompany.Models;
 
 namespace NotarialCompany.Security
 {
-    internal class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly DbScope dbScope;
         private readonly Encoding encoding = Encoding.Default;
@@ -21,16 +21,15 @@ namespace NotarialCompany.Security
 
         public void GenerateCredentials(User user)
         {
-            user.Salt = GenerateNewSalt();
+            user.Salt = GenerateNewSalt(64);
             user.Password = GenerateHash(user.Password, user.Salt);
-
             dbScope.UpdateUser(user);
         }
 
         public bool ValidatePassword(string username, string password)
         {
             CurrentUser = dbScope.GetUserByUsernameAndPassword(username, password);
-            return CurrentUser != null;
+            return CurrentUser != null && CompareHash(password, CurrentUser.Password, CurrentUser.Salt);
         }
 
         public void Logout()
@@ -43,19 +42,26 @@ namespace NotarialCompany.Security
             return CurrentUser != null;
         }
 
-        private string GenerateHash(string password, string salt)
+        private bool CompareHash(string attemptedPassword, string hash, string salt)
         {
-            var algorithm = new SHA1Managed();
-            return encoding.GetString(algorithm.ComputeHash(encoding.GetBytes(password + salt)));
+            return hash == GenerateHash(attemptedPassword, salt);
         }
 
-        private string GenerateNewSalt()
+        private string GenerateHash(string password, string salt)
+        {
+            var algorithm = new SHA512Managed();
+            var unhashedBytes = encoding.GetBytes(string.Concat(salt, password));
+            var hashedBytes = algorithm.ComputeHash(unhashedBytes);
+            return Convert.ToBase64String(hashedBytes);
+        }
+
+        private string GenerateNewSalt(int length)
         {
             using (var rng = new RNGCryptoServiceProvider())
             {
-                var buff = new byte[64];
+                var buff = new byte[length];
                 rng.GetBytes(buff);
-                return encoding.GetString(buff);
+                return Convert.ToBase64String(buff);
             }
         }
     }
