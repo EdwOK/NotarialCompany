@@ -13,6 +13,7 @@ namespace NotarialCompany.Configuration
                 cfg.AddProfile(new UserProfile());
                 cfg.AddProfile(new ServicesProfile());
                 cfg.AddProfile(new RolesProfile());
+                cfg.AddProfile(new EmployeesProfile());
                 cfg.AddProfile(new ClientsProfile());
             });
         }
@@ -51,7 +52,7 @@ namespace NotarialCompany.Configuration
                         }
                     }))
                 .ReverseMap()
-                .ConstructUsing(x => new object[] {x.Id, x.Username, x.Password, x.Salt, x.RoleId, x.EmployeeId });
+                .ConstructUsing(x => new object[] { x.Id, x.Username, x.Password, x.Salt, x.RoleId, x.EmployeeId });
         }
     }
 
@@ -82,7 +83,18 @@ namespace NotarialCompany.Configuration
                 .ForMember(u => u.Address, opts => opts.MapFrom(src => (string) src[5]))
                 .ForMember(u => u.PhoneNumber, opts => opts.MapFrom(src => (string) src[6]))
                 .ReverseMap()
-                .ConstructUsing(x => new object[] {x.Id, x.FirstName, x.SecondName, x.MiddleName, x.Occupation, x.Address, x.PhoneNumber});
+                .ConstructUsing(
+                    x =>
+                        new object[]
+                        {
+                            x.Id,
+                            x.FirstName,
+                            x.SecondName,
+                            x.MiddleName,
+                            x.Occupation,
+                            x.Address,
+                            x.PhoneNumber
+                        });
         }
     }
 
@@ -95,6 +107,44 @@ namespace NotarialCompany.Configuration
                 .ForMember(u => u.Name, opts => opts.MapFrom(src => (string)src[1]))
                 .ReverseMap()
                 .ConstructUsing(x => new object[] { x.Id, x.Name });
+        }
+    }
+
+    public class EmployeesProfile : Profile
+    {
+        protected override void Configure()
+        {
+            CreateMap<object[], Employee>()
+                .ForMember(u => u.Id, opts => opts.MapFrom(src => (int) src[0]))
+                .ForMember(u => u.FirstName, opts => opts.MapFrom(src => (string) src[1]))
+                .ForMember(u => u.LastName, opts => opts.MapFrom(src => (string) src[2]))
+                .ForMember(u => u.MiddleName, opts => opts.MapFrom(src => (string) src[3]))
+                .ForMember(u => u.Address, opts => opts.MapFrom(src => (string) src[4]))
+                .ForMember(u => u.PhoneNumber, opts => opts.MapFrom(src => (string) src[5]))
+                .ForMember(u => u.EmploymentDate, opts => opts.MapFrom(src => (DateTime) src[6]))
+                .ForMember(u => u.EmployeesPositionId, opts => opts.MapFrom(src => (int) src[7]))
+                .ForMember(u => u.EmployeesPosition, opts => opts.MapFrom(src =>
+                    new EmployeesPosition
+                    {
+                        Id = (int) src[8],
+                        Postition = (string) src[9],
+                        Salary = (decimal) src[10],
+                        Commission = (int) src[11]
+                    }))
+                .ReverseMap()
+                .ConstructUsing(
+                    x =>
+                        new object[]
+                        {
+                            x.Id,
+                            x.FirstName,
+                            x.LastName,
+                            x.MiddleName,
+                            x.Address,
+                            x.PhoneNumber,
+                            x.EmploymentDate,
+                            x.EmployeesPositionId
+                        });
         }
     }
 }

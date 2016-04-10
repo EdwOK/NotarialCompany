@@ -5,46 +5,55 @@
     xmlns:local="clr-namespace:NotarialCompany"
     xmlns:converters="http://schemas.kent.boogaart.com/converters"
     DataContext="{Binding Main, Source={StaticResource Locator}}"
-    Title="Notarial Company" Height="500" Width="800">
+    Title="Notarial Company" Height="600" Width="900">
     <DockPanel>
-        <WrapPanel DockPanel.Dock="Top" Visibility="{Binding IsAuthenticated, Converter={converters:BooleanToVisibilityConverter}}">
-            <Button Style="{StaticResource GrayButton}" Command="{Binding OpenDealsCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="Resources/Images/deals.png" Width="32" Height="32" Margin="0,0,5,0"/>
-                    <TextBlock VerticalAlignment="Center">Deals</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource GrayButton}" Command="{Binding OpenClientsCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="Resources/Images/clients.png" Width="32" Height="32" Margin="0,0,5,0"/>
-                    <TextBlock VerticalAlignment="Center">Clients</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource GrayButton}" Command="{Binding OpenServicesCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="Resources/Images/services.png" Width="32" Height="32" Margin="0,0,5,0"/>
-                    <TextBlock VerticalAlignment="Center">Services</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource GrayButton}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="Resources/Images/employees.png" Width="32" Height="32" Margin="0,0,5,0"/>
-                    <TextBlock VerticalAlignment="Center">Employees</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource GrayButton}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="Resources/Images/employees_postions.png" Width="32" Height="32" Margin="0,0,5,0"/>
-                    <TextBlock VerticalAlignment="Center">Positions</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource GrayButton}" Command="{Binding OpenUsersCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="Resources/Images/clients.png" Width="32" Height="32" Margin="0,0,5,0"/>
-                    <TextBlock VerticalAlignment="Center">Users</TextBlock>
-                </StackPanel>
-            </Button>
-        </WrapPanel>
-        <ContentPresenter Content="{Binding CurrentView}"></ContentPresenter>
+        <DockPanel DockPanel.Dock="Top" Visibility="{Binding IsAuthenticated, Converter={converters:BooleanToVisibilityConverter}}">
+            <WrapPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                <Button Style="{StaticResource GrayButton}" Command="{Binding OpenDealsCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/Images/deals.png" Width="32" Height="32" Margin="0,0,5,0"/>
+                        <TextBlock VerticalAlignment="Center">Deals</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource GrayButton}" Command="{Binding OpenClientsCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/Images/clients.png" Width="32" Height="32" Margin="0,0,5,0"/>
+                        <TextBlock VerticalAlignment="Center">Clients</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource GrayButton}" Command="{Binding OpenServicesCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/Images/services.png" Width="32" Height="32" Margin="0,0,5,0"/>
+                        <TextBlock VerticalAlignment="Center">Services</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource GrayButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/Images/employees.png" Width="32" Height="32" Margin="0,0,5,0"/>
+                        <TextBlock VerticalAlignment="Center">Employees</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource GrayButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/Images/employees_postions.png" Width="32" Height="32" Margin="0,0,5,0"/>
+                        <TextBlock VerticalAlignment="Center">Positions</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource GrayButton}" Command="{Binding OpenUsersCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/Images/clients.png" Width="32" Height="32" Margin="0,0,5,0"/>
+                        <TextBlock VerticalAlignment="Center">Users</TextBlock>
+                    </StackPanel>
+                </Button>
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Right">
+                <Button Style="{StaticResource SettingsButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/Images/settings.png" Width="32" Height="32" Margin="0,0,5,0"/>
+                    </StackPanel>
+                </Button>
+            </WrapPanel>
+        </DockPanel>
+        <ContentPresenter Content="{Binding CurrentView}"/>
     </DockPanel>
 </Window>

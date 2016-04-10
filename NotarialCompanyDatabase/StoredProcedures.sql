@@ -229,3 +229,16 @@ BEGIN
 	SELECT * FROM [Roles]
 END
 GO
+
+IF OBJECT_ID('[Employees.GetEmployees]') IS NOT NULL
+	DROP PROCEDURE [Employees.GetEmployees]
+GO
+
+CREATE PROCEDURE [Employees.GetEmployees]
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SELECT * FROM [Employees]
+	INNER JOIN [EmployeesPositions] ON [EmployeesPositions].[Id] = [Employees].[EmployeesPositionId]
+END
+GO

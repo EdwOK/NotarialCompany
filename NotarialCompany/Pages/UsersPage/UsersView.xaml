@@ -31,8 +31,7 @@
                 </xcdg:Column>
                 <xcdg:Column FieldName="Username" Title="UserName" ReadOnly="True"/>
                 <xcdg:Column FieldName="Password" Title="Password" ReadOnly="True"/>
-                <xcdg:Column FieldName="Salt" Title="Salt" ReadOnly="True"/>
-                <xcdg:Column FieldName="Role" Title="SelectedRole" ReadOnly="True"/>
+                <xcdg:Column FieldName="Role" Title="Role" ReadOnly="True"/>
                 <xcdg:Column FieldName="Employee" Width="250" Title="Employee" ReadOnly="True"/>
                 <xcdg:Column FieldName="Employee.EmployeesPosition.Postition" Width="150" Title="Postition" ReadOnly="True"/>
             </xcdg:DataGridControl.Columns>

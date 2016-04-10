@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:NotarialCompany.Pages.UsersPage"
              DataContext="{Binding UserDetailsViewModel, Source={StaticResource Locator}}"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="1000">
+             d:DesignHeight="350" d:DesignWidth="1000">
     <Grid VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" MinWidth="150"/>
@@ -25,10 +25,10 @@
         <TextBox Grid.Row="1" Grid.Column="1" Margin="0,10,0,10" Text="{Binding Username, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValidationStyle}"/>
         <Label Grid.Row="2" Grid.Column="0" Margin="10,10,10,10">Password</Label>
         <TextBox Grid.Row="2" Grid.Column="1" Margin="0,10,0,10" Text="{Binding Password, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Grid.Row="3" Grid.Column="0" Margin="10,10,10,10">Salt</Label>
-        <TextBox Grid.Row="3" Grid.Column="1" Margin="0,10,0,10" Text="{Binding Salt, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValidationStyle}"/>
-        <Label Grid.Row="4" Grid.Column="0" Margin="10,10,10,10">Role</Label>
-        <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,10,0,10" ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="3" Grid.Column="0" Margin="10,10,10,10">Role</Label>
+        <ComboBox Grid.Row="3" Grid.Column="1" Margin="0,10,0,10" ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="4" Grid.Column="0" Margin="10,10,10,10">Employee</Label>
+        <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,10,0,10" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Style="{StaticResource GrayButton}" Command="{Binding NavigateBackCommand}">Cancel</Button>
             <Button Style="{StaticResource GreenButton}" Command="{Binding SaveCommand}">Save</Button>

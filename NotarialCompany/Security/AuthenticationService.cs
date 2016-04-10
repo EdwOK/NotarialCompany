@@ -10,32 +10,21 @@ namespace NotarialCompany.Security
     internal class AuthenticationService : IAuthenticationService
     {
         private readonly DbScope dbScope;
-        private readonly Encoding encoding = Encoding.Unicode;
+        private readonly Encoding encoding = Encoding.Default;
 
         public AuthenticationService(DbScope dbScope)
         {
             this.dbScope = dbScope;
         }
 
-        //public void GenerateCredentials(User user)
-        //{
-        //    var existingCredentials = await dbScope.SingleOrDefaultAsync<UserCredential>(user.Id);
-        //    var credentials = existingCredentials ?? new UserCredential
-        //    {
-        //        Id = user.Id,
-        //        User = user
-        //    };
-        //    credentials.Salt = GenerateNewSalt();
-        //    credentials.Password = GenerateHash(user.Password, credentials.Salt);
-
-        //    dbScope.Save(credentials);
-        //    await dbScope.SaveChangesAsync();
-        //}
-
         public User CurrentUser { get; private set; }
+
         public void GenerateCredentials(User user)
         {
-            throw new NotImplementedException();
+            user.Salt = GenerateNewSalt();
+            user.Password = GenerateHash(user.Password, user.Salt);
+
+            dbScope.UpdateUser(user);
         }
 
         public bool ValidatePassword(string username, string password)
@@ -54,10 +43,9 @@ namespace NotarialCompany.Security
             return CurrentUser != null;
         }
 
-
         private string GenerateHash(string password, string salt)
         {
-            var algorithm = new SHA256Managed();
+            var algorithm = new SHA1Managed();
             return encoding.GetString(algorithm.ComputeHash(encoding.GetBytes(password + salt)));
         }
 

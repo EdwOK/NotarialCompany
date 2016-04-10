@@ -104,6 +104,24 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public List<Employee> GetEmployees()
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.EmployeesGetEmployees, connection) { CommandType = CommandType.StoredProcedure })
+            using (var dataAdapter = new SqlDataAdapter(command))
+            {
+                var dataSet = new DataSet();
+                dataAdapter.Fill(dataSet, "Table");
+
+                DataTable dataTable = dataSet.Tables["Table"];
+
+                var list = new List<Employee>(
+                    from DataRow row in dataTable.Rows
+                    select Mapper.Map<object[], Employee>(row.ItemArray));
+                return list;
+            }
+        }
+
         #endregion
 
         #region Updates methods
@@ -174,6 +192,7 @@ namespace NotarialCompany.DataAccess
             public const string ClientsUpdateClient = "[Clients.CreateOrUpdateClient]";
 
             public const string RolesGetRoles = "[Roles.GetRoles]";
+            public const string EmployeesGetEmployees = "[Employees.GetEmployees]";
         }
     }
 }
