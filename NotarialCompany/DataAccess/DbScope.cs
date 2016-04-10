@@ -13,14 +13,13 @@ namespace NotarialCompany.DataAccess
         private static readonly ConnectionStringSettings Settings  =
             ConfigurationManager.ConnectionStrings["NotarialCompanyDatabaseConnectionString"];
 
-        public User GetUserByUsernameAndPassword(string username, string password)
+        public User GetUserByUsername(string username)
         {
             using (var connection = new SqlConnection(Settings.ConnectionString))
-            using (var command = new SqlCommand(StoredProceduresNames.UsersGetUserByUsernameAndPassword, connection) { CommandType = CommandType.StoredProcedure })
+            using (var command = new SqlCommand(StoredProceduresNames.UsersGetUserByUsername, connection) { CommandType = CommandType.StoredProcedure })
             using (var dataAdapter = new SqlDataAdapter(command))
             {
                 command.Parameters.Add(new SqlParameter("@username", username));
-                command.Parameters.Add(new SqlParameter("@password", password));
 
                 var dataSet = new DataSet();
                 dataAdapter.Fill(dataSet, "Table");
@@ -183,7 +182,7 @@ namespace NotarialCompany.DataAccess
         {
             public const string UsersGetUsers = "[Users.GetUsers]";
             public const string UsersUpdateUser = "[Users.CreateOrUpdateUser]";
-            public const string UsersGetUserByUsernameAndPassword = "[Users.GetUserByUsernameAndPassword]";
+            public const string UsersGetUserByUsername = "[Users.UsersGetUserByUsername]";
 
             public const string ServicesGetServices = "[Services.GetServices]";
             public const string ServicesUpdateService = "[Services.CreateOrUpdateService]";

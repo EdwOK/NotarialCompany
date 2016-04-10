@@ -7,20 +7,22 @@ using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
-using NotarialCompany.Pages.ServicesPage;
+using NotarialCompany.Security;
 
 namespace NotarialCompany.Pages.UsersPage
 {
     public class UserDetailsViewModel : ValidationViewModel
     {
         private readonly DbScope dbScope;
+        private readonly IAuthenticationService authenticationService;
 
         private ContentControl parentView;
         private string parentViewModelName;
 
-        public UserDetailsViewModel(DbScope dbScope)
+        public UserDetailsViewModel(DbScope dbScope, IAuthenticationService authenticationService)
         {
             this.dbScope = dbScope;
+            this.authenticationService = authenticationService;
 
             this.Roles = dbScope.GetRoles();
             this.Employees = dbScope.GetEmployees();
@@ -105,7 +107,8 @@ namespace NotarialCompany.Pages.UsersPage
             User.Role = SelectedRole;
             User.RoleId = SelectedRole.Id;
 
-            dbScope.UpdateUser(User);
+            var saveUser = authenticationService.GenerateCredentials(User);
+            dbScope.UpdateUser(saveUser);
             NavigateBackCommandExecute();
         }
 

@@ -19,17 +19,17 @@ namespace NotarialCompany.Security
 
         public User CurrentUser { get; private set; }
 
-        public void GenerateCredentials(User user)
+        public User GenerateCredentials(User user)
         {
-            user.Salt = GenerateNewSalt(64);
+            user.Salt = GenerateNewSalt(32);
             user.Password = GenerateHash(user.Password, user.Salt);
-            dbScope.UpdateUser(user);
+            return user;
         }
 
         public bool ValidatePassword(string username, string password)
         {
-            CurrentUser = dbScope.GetUserByUsernameAndPassword(username, password);
-            return CurrentUser != null && !CompareHash(password, CurrentUser.Password, CurrentUser.Salt);
+            CurrentUser = dbScope.GetUserByUsername(username);
+            return CurrentUser != null && CompareHash(password, CurrentUser.Password, CurrentUser.Salt);
         }
 
         public void Logout()
@@ -49,7 +49,7 @@ namespace NotarialCompany.Security
 
         private string GenerateHash(string password, string salt)
         {
-            var algorithm = new SHA512Managed();
+            var algorithm = new SHA256Managed();
             var unhashedBytes = encoding.GetBytes(string.Concat(salt, password));
             var hashedBytes = algorithm.ComputeHash(unhashedBytes);
             return Convert.ToBase64String(hashedBytes);

@@ -6,7 +6,7 @@ namespace NotarialCompany.Security
     {
         User CurrentUser { get; }
 
-        void GenerateCredentials(User user);
+        User GenerateCredentials(User user);
 
         bool ValidatePassword(string username, string password);
 
