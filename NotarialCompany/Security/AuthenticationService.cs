@@ -29,12 +29,12 @@ namespace NotarialCompany.Security
         public bool ValidatePassword(string username, string password)
         {
             CurrentUser = dbScope.GetUserByUsernameAndPassword(username, password);
-            return CurrentUser != null && CompareHash(password, CurrentUser.Password, CurrentUser.Salt);
+            return CurrentUser != null && !CompareHash(password, CurrentUser.Password, CurrentUser.Salt);
         }
 
         public void Logout()
         {
-            throw new NotImplementedException();
+            CurrentUser = null;
         }
 
         public bool IsAuthenticated()
