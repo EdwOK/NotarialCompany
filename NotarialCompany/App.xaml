@@ -10,12 +10,12 @@
     xmlns:converters="clr-namespace:NotarialCompany.Common.Converters">
   <Application.Resources>
         <ResourceDictionary>
-            <local:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-            <converters:NullToTrueConverter x:Key="NullToTrueConverter"></converters:NullToTrueConverter>
+            <local:ViewModelLocator x:Key="Locator" d:IsDataSource="True"/>
+            <converters:NullToTrueConverter x:Key="NullToTrueConverter"/>
             
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml"></ResourceDictionary>
-                <ResourceDictionary Source="Resources/Styles/Buttons.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/Buttons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>
