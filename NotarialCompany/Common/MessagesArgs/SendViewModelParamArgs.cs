@@ -1,10 +1,11 @@
 ﻿using System.Windows.Controls;
+using MahApps.Metro.Controls;
 
 namespace NotarialCompany.Common.MessagesArgs
 {
     public class SendViewModelParamArgs<T>
     {
-        public SendViewModelParamArgs(ContentControl parentView, string parentViewModelName, string childViewModelName, T parameter)
+        public SendViewModelParamArgs(MetroContentControl parentView, string parentViewModelName, string childViewModelName, T parameter)
         {
             ParentView = parentView;
             ChildViewModelName = childViewModelName;
@@ -12,7 +13,7 @@ namespace NotarialCompany.Common.MessagesArgs
             ParentViewModelName = parentViewModelName;
         }
 
-        public ContentControl ParentView { get; private set; }
+        public MetroContentControl ParentView { get; private set; }
 
         public string ParentViewModelName { get; private set; }
 

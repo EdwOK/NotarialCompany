@@ -7,7 +7,7 @@
     xmlns:converters="http://schemas.kent.boogaart.com/converters"
     xmlns:controls="clr-namespace:NotarialCompany.Controls"
     DataContext="{Binding Main, Source={StaticResource Locator}}"
-    Title="Notarial Company" Height="600" Width="900">
+    Title="Notarial Company" Height="600" Width="900" WindowStartupLocation="CenterScreen">
     <DockPanel>
         <DockPanel DockPanel.Dock="Top" Visibility="{Binding IsAuthenticated, Converter={converters:BooleanToVisibilityConverter}}">
             <WrapPanel HorizontalAlignment="Left" Orientation="Horizontal">
@@ -64,6 +64,6 @@
                 </controls:DropdownButtonControl>
             </WrapPanel>
         </DockPanel>
-        <ContentPresenter Content="{Binding CurrentView}"/>
+        <Controls:MetroContentControl Content="{Binding CurrentView}"/>
     </DockPanel>
 </Controls:MetroWindow>

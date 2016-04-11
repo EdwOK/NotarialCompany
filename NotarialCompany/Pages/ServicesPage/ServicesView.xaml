@@ -1,4 +1,4 @@
-﻿<UserControl 
+﻿<controls:MetroContentControl 
     x:Class="NotarialCompany.Pages.ServicesPage.ServicesView"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,6 +8,7 @@
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
     xmlns:local="clr-namespace:NotarialCompany.Pages.ServicesPage"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
     DataContext="{Binding ServicesViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d" 
     d:DesignHeight="1000" d:DesignWidth="1000">
@@ -35,4 +36,5 @@
             </xcdg:DataGridControl.Columns>
         </xcdg:DataGridControl>
     </DockPanel>
-</UserControl>
+</controls:MetroContentControl>
+

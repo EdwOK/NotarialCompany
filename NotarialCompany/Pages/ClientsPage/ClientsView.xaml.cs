@@ -12,13 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 
 namespace NotarialCompany.Pages.ClientsPage
 {
     /// <summary>
     /// Логика взаимодействия для ClientsView.xaml
     /// </summary>
-    public partial class ClientsView : UserControl
+    public partial class ClientsView : MetroContentControl
     {
         public ClientsView()
         {
