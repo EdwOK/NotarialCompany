@@ -19,7 +19,7 @@
         </i:Interaction.Triggers>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Label Margin="10,10,0,10" VerticalAlignment="Center">Clients</Label>
-            <Button Margin="10,10,0,10" Style="{StaticResource TitleButton}" Command="{Binding AddNewItemCommand}">Add New</Button>
+            <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}">Add New</Button>
         </StackPanel>
         <xcdg:DataGridControl ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" AutoCreateColumns="False">
             <xcdg:DataGridControl.Columns>

@@ -1,7 +1,8 @@
-﻿<Window 
+﻿<Controls:MetroWindow 
     x:Class="NotarialCompany.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:local="clr-namespace:NotarialCompany"
     xmlns:converters="http://schemas.kent.boogaart.com/converters"
     xmlns:controls="clr-namespace:NotarialCompany.Controls"
@@ -10,37 +11,37 @@
     <DockPanel>
         <DockPanel DockPanel.Dock="Top" Visibility="{Binding IsAuthenticated, Converter={converters:BooleanToVisibilityConverter}}">
             <WrapPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                <Button Style="{StaticResource GrayButton}" Command="{Binding OpenDealsCommand}">
+                <Button Command="{Binding OpenDealsCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/deals.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Deals</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource GrayButton}" Command="{Binding OpenClientsCommand}">
+                <Button Command="{Binding OpenClientsCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/clients.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Clients</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource GrayButton}" Command="{Binding OpenServicesCommand}">
+                <Button Command="{Binding OpenServicesCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/services.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Services</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource GrayButton}">
+                <Button >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/employees.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Employees</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource GrayButton}">
+                <Button>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/employees_postions.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Positions</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource GrayButton}" Command="{Binding OpenUsersCommand}">
+                <Button Command="{Binding OpenUsersCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/clients.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Users</TextBlock>
@@ -48,7 +49,7 @@
                 </Button>
             </WrapPanel>
             <WrapPanel HorizontalAlignment="Right">
-                <controls:DropdownButtonControl ContextMenuService.IsEnabled="False" Style="{StaticResource GrayButton}">
+                <controls:DropdownButtonControl ContextMenuService.IsEnabled="False">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Resources/Images/settings.png" Width="32" Height="32" />
@@ -65,4 +66,4 @@
         </DockPanel>
         <ContentPresenter Content="{Binding CurrentView}"/>
     </DockPanel>
-</Window>
+</Controls:MetroWindow>
