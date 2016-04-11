@@ -8,7 +8,7 @@
     DataContext="{Binding Main, Source={StaticResource Locator}}"
     Title="Notarial Company" Height="600" Width="900">
     <DockPanel>
-        <DockPanel DockPanel.Dock="Top" >
+        <DockPanel DockPanel.Dock="Top" Visibility="{Binding IsAuthenticated, Converter={converters:BooleanToVisibilityConverter}}">
             <WrapPanel HorizontalAlignment="Left" Orientation="Horizontal">
                 <Button Style="{StaticResource GrayButton}" Command="{Binding OpenDealsCommand}">
                     <StackPanel Orientation="Horizontal">
@@ -51,16 +51,13 @@
                 <controls:DropdownButtonControl ContextMenuService.IsEnabled="False" Style="{StaticResource GrayButton}">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="Resources/Images/settings.png" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 7"/>
-                            <Path x:Name="BtnArrow" Margin="4" VerticalAlignment="Center" Width="6" Fill="#FF527DB5" Stretch="Uniform" HorizontalAlignment="Right" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "/>
+                            <Image Source="Resources/Images/settings.png" Width="32" Height="32" />
                         </StackPanel>
-                        </Button.Content>
-                        <Button.ContextMenu>
-                        <ContextMenu >
-                            <MenuItem Header="Menu 1" Command="{Binding OpenDealsCommand}"/>
-                            <MenuItem Header="Menu 1"/>
-                            <MenuItem Header="Menu 1"/>
-                            <MenuItem Header="Menu 1"/>
+                    </Button.Content>
+                    <Button.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Profile" Command="{Binding OpenDealsCommand}"/>
+                            <MenuItem Header="Logout" Command="{Binding OpenClientsCommand}"/>
                         </ContextMenu>
                     </Button.ContextMenu>
                 </controls:DropdownButtonControl>
