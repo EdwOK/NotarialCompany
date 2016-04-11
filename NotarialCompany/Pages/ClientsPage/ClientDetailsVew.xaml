@@ -37,8 +37,8 @@
         <Label Grid.Row="6" Grid.Column="0" Margin="10,10,10,10">PhoneNumber</Label>
         <TextBox Grid.Row="6" Grid.Column="1" Margin="0,10,0,10" Text="{Binding PhoneNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValidationStyle}"/>
         <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Style="{StaticResource GrayButton}" Command="{Binding NavigateBackCommand}">Cancel</Button>
-            <Button Style="{StaticResource GreenButton}" Command="{Binding SaveCommand}">Save</Button>
+            <Button Command="{Binding NavigateBackCommand}">Cancel</Button>
+            <Button Command="{Binding SaveCommand}">Save</Button>
         </StackPanel>
     </Grid>
 </UserControl>

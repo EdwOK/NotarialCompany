@@ -13,6 +13,6 @@
         <xctk:WatermarkTextBox Style="{StaticResource TextBoxValidationStyle}" Name="Login" Watermark="Login" Margin="0,0,0,15" Text="{Binding Login, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
         <xctk:WatermarkTextBox Style="{StaticResource TextBoxValidationStyle}" Name="Password" Watermark="Password" Margin="0,0,0,5" Text="{Binding Password, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
         <Label Content="{Binding LoginErrorMessage, Mode=TwoWay}" Margin="0,0,0,5" Foreground="Red" Visibility="{Binding HasLoginError, Converter={con:BooleanToVisibilityConverter IsReversed=True}}" />
-        <Button Content="Login" Command="{Binding LoginCommand}" IsDefault="True" Style="{StaticResource GreenButton}" IsEnabled="{Binding Error, Converter={StaticResource NullToTrueConverter}}"/>
+        <Button Content="Login" Command="{Binding LoginCommand}" IsDefault="True" IsEnabled="{Binding Error, Converter={StaticResource NullToTrueConverter}}"/>
     </StackPanel>
 </UserControl>

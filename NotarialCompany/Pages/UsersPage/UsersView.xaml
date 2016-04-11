@@ -18,23 +18,21 @@
         </i:Interaction.Triggers>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Label Margin="10,10,0,10" VerticalAlignment="Center">Users</Label>
-            <Button Margin="10,10,0,10" Style="{StaticResource TitleButton}" Command="{Binding AddNewItemCommand}">Add New</Button>
+            <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}">Add New</Button>
         </StackPanel>
-        <xcdg:DataGridControl ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" AutoCreateColumns="False">
-            <xcdg:DataGridControl.Columns>
-                <xcdg:Column Width="30" FieldName="Id" Title="Id" IsMainColumn="True" AllowGroup="False">
-                    <xcdg:Column.CellContentTemplate>
-                        <DataTemplate>
-                            <Button Content="{Binding}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type xcdg:DataGridControl}}}"/>
-                        </DataTemplate>
-                    </xcdg:Column.CellContentTemplate>
-                </xcdg:Column>
-                <xcdg:Column FieldName="Username" Title="UserName" ReadOnly="True"/>
-                <xcdg:Column FieldName="Password" Title="Password" ReadOnly="True"/>
-                <xcdg:Column FieldName="Role" Title="Role" ReadOnly="True"/>
-                <xcdg:Column FieldName="Employee" Width="250" Title="Employee" ReadOnly="True"/>
-                <xcdg:Column FieldName="Employee.EmployeesPosition.Postition" Width="150" Title="Postition" ReadOnly="True"/>
-            </xcdg:DataGridControl.Columns>
-        </xcdg:DataGridControl>
+        <DataGrid ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Resources>
+                <DataTemplate x:Key="GridOpenDetailsButton">
+                    <Button Content="{Binding Path=Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"/>
+                </DataTemplate>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Id" CellTemplate="{StaticResource GridOpenDetailsButton}"/>
+                <DataGridTextColumn Header="Username" Binding="{Binding Username}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Role" Binding="{Binding Role}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Employee" Binding="{Binding Employee}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Postition" Binding="{Binding Employee.EmployeesPosition.Postition}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </UserControl>
