@@ -11,12 +11,15 @@
   <Application.Resources>
         <ResourceDictionary>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix Metro Design
             <local:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-            <converters:NullToTrueConverter x:Key="NullToTrueConverter"></converters:NullToTrueConverter>
+            <converters:NullToTrueConverter x:Key="NullToTrueConverter"/>
 
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml"></ResourceDictionary>
-                <!--                <ResourceDictionary Source="Resources/Styles/Buttons.xaml"></ResourceDictionary>-->
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml"/>
+                <!--<ResourceDictionary Source="Resources/Styles/Buttons.xaml"></ResourceDictionary>-->
 
                 <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
@@ -26,6 +29,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+<<<<<<< HEAD
 =======
             <local:ViewModelLocator x:Key="Locator" d:IsDataSource="True"/>
             <converters:NullToTrueConverter x:Key="NullToTrueConverter"/>
@@ -34,6 +38,8 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml"/>
                 <ResourceDictionary Source="Resources/Styles/Buttons.xaml"/>
 >>>>>>> App change
+=======
+>>>>>>> Fix Metro Design
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
