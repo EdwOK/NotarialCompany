@@ -11,11 +11,11 @@
   <Application.Resources>
         <ResourceDictionary>
             <local:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-            <converters:NullToTrueConverter x:Key="NullToTrueConverter"></converters:NullToTrueConverter>
+            <converters:NullToTrueConverter x:Key="NullToTrueConverter"/>
 
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml"></ResourceDictionary>
-                <!--                <ResourceDictionary Source="Resources/Styles/Buttons.xaml"></ResourceDictionary>-->
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml"/>
+                <!--<ResourceDictionary Source="Resources/Styles/Buttons.xaml"></ResourceDictionary>-->
 
                 <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />

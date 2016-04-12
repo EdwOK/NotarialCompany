@@ -1,16 +1,17 @@
 ﻿using System.Windows.Controls;
+using MahApps.Metro.Controls;
 
 namespace NotarialCompany.Common.MessagesArgs
 {
     public class OpenViewArgs
     {
-        public OpenViewArgs(ContentControl view, string viewModelName)
+        public OpenViewArgs(MetroContentControl view, string viewModelName)
         {
             View = view;
             ViewModelName = viewModelName;
         }
 
-        public ContentControl View { get; private set; }
+        public MetroContentControl View { get; private set; }
 
         public string ViewModelName { get; private set; }
     }

@@ -1,11 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using MahApps.Metro.Controls;
 
 namespace NotarialCompany.Pages.ClientsPage
 {
     /// <summary>
     /// Interaction logic for ClientDetailsView.xaml
     /// </summary>
-    public partial class ClientDetailsView : UserControl
+    public partial class ClientDetailsView : MetroContentControl
     {
         public ClientDetailsView()
         {
