@@ -1,15 +1,17 @@
-﻿<UserControl x:Class="NotarialCompany.Pages.UsersPage.UsersView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
-             xmlns:local="clr-namespace:NotarialCompany.Pages.UsersPage"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             DataContext="{Binding UsersViewModel, Source={StaticResource Locator}}"
-             mc:Ignorable="d" 
-             d:DesignHeight="1000" d:DesignWidth="1000">
+﻿<controls:MetroContentControl 
+    x:Class="NotarialCompany.Pages.UsersPage.UsersView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
+    xmlns:local="clr-namespace:NotarialCompany.Pages.UsersPage"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    DataContext="{Binding UsersViewModel, Source={StaticResource Locator}}"
+    mc:Ignorable="d" 
+    d:DesignHeight="1000" d:DesignWidth="1000">
     <DockPanel>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">
@@ -18,6 +20,7 @@
         </i:Interaction.Triggers>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Label Margin="10,10,0,10" VerticalAlignment="Center">Users</Label>
+            <TextBox controls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200" />
             <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}">Add New</Button>
         </StackPanel>
         <DataGrid ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False" CanUserAddRows="False">
@@ -35,4 +38,5 @@
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
-</UserControl>
+</controls:MetroContentControl>
+

@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro.Controls;
 using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
@@ -16,7 +17,7 @@ namespace NotarialCompany.Pages.UsersPage
         private readonly DbScope dbScope;
         private readonly IAuthenticationService authenticationService;
 
-        private ContentControl parentView;
+        private MetroContentControl parentView;
         private string parentViewModelName;
 
         public UserDetailsViewModel(DbScope dbScope, IAuthenticationService authenticationService)

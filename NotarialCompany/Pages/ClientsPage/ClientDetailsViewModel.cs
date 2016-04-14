@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro.Controls;
 using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
@@ -15,7 +16,7 @@ namespace NotarialCompany.Pages.ClientsPage
     {
         private readonly DbScope dbScope;
 
-        private ContentControl parentView;
+        private MetroContentControl parentView;
         private string parentViewModelName;
 
         public ClientDetailsViewModel(DbScope dbScope) 

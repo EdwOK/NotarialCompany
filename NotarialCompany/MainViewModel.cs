@@ -4,6 +4,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro.Controls;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.Pages.ClientsPage;
 using NotarialCompany.Pages.DealsPage;
@@ -17,7 +18,7 @@ namespace NotarialCompany
     public class MainViewModel : ViewModelBase
     {
         private readonly IAuthenticationService authenticationService;
-        private ContentControl currentView;
+        private MetroContentControl currentView;
 
         public MainViewModel(IAuthenticationService authenticationService)
         {
@@ -38,7 +39,7 @@ namespace NotarialCompany
 
         public bool IsAuthenticated => authenticationService.IsAuthenticated();
 
-        public ContentControl CurrentView
+        public MetroContentControl CurrentView
         {
             get { return currentView; }
             set { Set(ref currentView, value); }
