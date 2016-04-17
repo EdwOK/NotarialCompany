@@ -10,10 +10,6 @@
     xmlns:converters="clr-namespace:NotarialCompany.Common.Converters">
   <Application.Resources>
         <ResourceDictionary>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Fix Metro Design
             <local:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             <converters:NullToTrueConverter x:Key="NullToTrueConverter"/>
 
@@ -29,17 +25,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
-<<<<<<< HEAD
-=======
-            <local:ViewModelLocator x:Key="Locator" d:IsDataSource="True"/>
-            <converters:NullToTrueConverter x:Key="NullToTrueConverter"/>
-            
-            <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml"/>
                 <ResourceDictionary Source="Resources/Styles/Buttons.xaml"/>
->>>>>>> App change
-=======
->>>>>>> Fix Metro Design
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
