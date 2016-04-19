@@ -30,7 +30,7 @@ namespace NotarialCompany.Security
         public bool ValidatePassword(string username, string password)
         {
             User user = dbScope.GetUserByUsername(username);
-            if (user != null /*&& CompareHash(password, user.Password, user.Salt)*/)
+            if (user != null && CompareHash(password, user.Password, user.Salt))
             {
                 CurrentUser = user;
                 return true;
