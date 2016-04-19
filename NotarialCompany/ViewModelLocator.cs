@@ -39,6 +39,12 @@ namespace NotarialCompany
 
             SimpleIoc.Default.Register<IAuthenticationService, AuthenticationService>();
             SimpleIoc.Default.Register<DbScope>();
+
+            SimpleIoc.Default.Register<ServicesView>();
+            SimpleIoc.Default.Register<DealsView>();
+            SimpleIoc.Default.Register<ClientsView>();
+            SimpleIoc.Default.Register<UsersView>();
+            SimpleIoc.Default.Register<LoginView>();
         }
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
@@ -54,6 +60,13 @@ namespace NotarialCompany
         public ServiceDetailsViewModel ServiceDetailsViewModel => ServiceLocator.Current.GetInstance<ServiceDetailsViewModel>();
 
         public DealsViewModel DealsViewModel => ServiceLocator.Current.GetInstance<DealsViewModel>();
+
+        public ServicesView ServicesView => ServiceLocator.Current.GetInstance<ServicesView>();
+        public DealsView DealsView => ServiceLocator.Current.GetInstance<DealsView>();
+        public ClientsView ClientsView => ServiceLocator.Current.GetInstance<ClientsView>();
+        public UsersView UsersView => ServiceLocator.Current.GetInstance<UsersView>();
+        public LoginView LoginView => ServiceLocator.Current.GetInstance<LoginView>();
+
 
         public static void Cleanup()
         {

@@ -4,7 +4,7 @@
     xmlns:local="clr-namespace:NotarialCompany.Resources.Styles"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
 
-    <Style TargetType="{x:Type Control}" x:Key="IncreasedFontStyle">
+    <!--<Style TargetType="{x:Type Control}" x:Key="IncreasedFontStyle">
         <Setter Property="FontSize" Value="18" />
     </Style>
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource IncreasedFontStyle}"></Style>
@@ -38,5 +38,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 </ResourceDictionary>
