@@ -1,4 +1,5 @@
-﻿using NotarialCompany.Models;
+﻿using System.Threading.Tasks;
+using NotarialCompany.Models;
 
 namespace NotarialCompany.Security
 {
@@ -8,7 +9,7 @@ namespace NotarialCompany.Security
 
         User GenerateCredentials(User user);
 
-        bool ValidatePassword(string username, string password);
+        Task<bool> ValidatePassword(string username, string password);
 
         void Logout();
 

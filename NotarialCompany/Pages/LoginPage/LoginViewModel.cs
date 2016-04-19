@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Controls;
 using System.Windows.Input;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using NotarialCompany.Common;
@@ -41,7 +38,7 @@ namespace NotarialCompany.Pages.LoginPage
 
         public ICommand LoginCommand { get; set; }
 
-        private void LoginCommandExecute()
+        private async void LoginCommandExecute()
         {
             if (EnableValidationAndGetError() != null)
             {
@@ -50,11 +47,13 @@ namespace NotarialCompany.Pages.LoginPage
 
             AllowValidation = false;
 
-            if (!authenticationService.ValidatePassword(Login, Password))
+            var status = await authenticationService.ValidatePassword(Login, Password);
+            if (!status)
             {
                 LoginErrorMessage = "Username or Password is incorrect";
                 return;
             }
+
             Messenger.Default.Send(new OpenViewArgs(new ServicesView(), nameof(ServicesViewModel)));
         }
 

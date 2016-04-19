@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
 
@@ -26,9 +27,9 @@ namespace NotarialCompany.Security
             return user;
         }
 
-        public bool ValidatePassword(string username, string password)
+        public async Task<bool> ValidatePassword(string username, string password)
         {
-            User user = dbScope.GetUserByUsername(username);
+            User user = await dbScope.GetUserByUsernameAsync(username);
             if (user != null && CompareHash(password, user.Password, user.Salt))
             {
                 CurrentUser = user;
