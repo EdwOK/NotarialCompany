@@ -24,6 +24,11 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+<<<<<<< HEAD
+=======
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/Buttons.xaml"/>
+>>>>>>> 096942652e2709a659afccdaad6e8863d88444c8
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
