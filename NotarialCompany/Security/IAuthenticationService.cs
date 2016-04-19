@@ -9,7 +9,7 @@ namespace NotarialCompany.Security
 
         User GenerateCredentials(User user);
 
-        Task<bool> ValidatePassword(string username, string password);
+        bool ValidatePassword(string username, string password);
 
         void Logout();
 

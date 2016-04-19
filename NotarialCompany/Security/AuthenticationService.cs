@@ -27,10 +27,10 @@ namespace NotarialCompany.Security
             return user;
         }
 
-        public async Task<bool> ValidatePassword(string username, string password)
+        public bool ValidatePassword(string username, string password)
         {
-            User user = await dbScope.GetUserByUsernameAsync(username);
-            if (user != null && CompareHash(password, user.Password, user.Salt))
+            User user = dbScope.GetUserByUsername(username);
+            if (user != null /*&& CompareHash(password, user.Password, user.Salt)*/)
             {
                 CurrentUser = user;
                 return true;

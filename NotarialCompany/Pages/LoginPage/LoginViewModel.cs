@@ -38,7 +38,7 @@ namespace NotarialCompany.Pages.LoginPage
 
         public ICommand LoginCommand { get; set; }
 
-        private async void LoginCommandExecute()
+        private void LoginCommandExecute()
         {
             if (EnableValidationAndGetError() != null)
             {
@@ -47,7 +47,7 @@ namespace NotarialCompany.Pages.LoginPage
 
             AllowValidation = false;
 
-            var status = await authenticationService.ValidatePassword(Login, Password);
+            var status = authenticationService.ValidatePassword(Login, Password);
             if (!status)
             {
                 LoginErrorMessage = "Username or Password is incorrect";
