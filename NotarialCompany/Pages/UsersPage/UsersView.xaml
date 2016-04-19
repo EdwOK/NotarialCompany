@@ -20,19 +20,19 @@
         </i:Interaction.Triggers>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Label Margin="10,10,0,10" VerticalAlignment="Center">Users</Label>
-            <TextBox controls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200" />
+            <TextBox controls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}">Add New</Button>
         </StackPanel>
-        <DataGrid ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False" CanUserAddRows="False">
+        <DataGrid ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False" CanUserAddRows="False" >
             <DataGrid.Resources>
                 <DataTemplate x:Key="GridOpenDetailsButton">
-                    <Button Content="{Binding Path=Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"/>
+                    <Button Content="{Binding Path=Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand"/>
                 </DataTemplate>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Id" CellTemplate="{StaticResource GridOpenDetailsButton}"/>
                 <DataGridTextColumn Header="Username" Binding="{Binding Username}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Role" Binding="{Binding Role}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Role" Binding="{Binding Role.Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Employee" Binding="{Binding Employee}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Postition" Binding="{Binding Employee.EmployeesPosition.Postition}" IsReadOnly="True"/>
             </DataGrid.Columns>

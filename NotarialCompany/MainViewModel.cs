@@ -20,15 +20,28 @@ namespace NotarialCompany
         private readonly IAuthenticationService authenticationService;
         private MetroContentControl currentView;
 
-        public MainViewModel(IAuthenticationService authenticationService)
+        private readonly UsersView usersView;
+        private readonly ServicesView servicesView;
+        private readonly DealsView dealsView;
+        private readonly ClientsView clientsView;
+        private readonly LoginView loginView;
+
+        public MainViewModel(IAuthenticationService authenticationService, UsersView usersView,
+            ServicesView servicesView, DealsView dealsView, ClientsView clientsView, LoginView loginView)
         {
             this.authenticationService = authenticationService;
+            this.usersView = usersView;
+            this.servicesView = servicesView;
+            this.dealsView = dealsView;
+            this.clientsView = clientsView;
+            this.loginView = loginView;
             CurrentView = new LoginView();
 
             OpenDealsCommand = new RelayCommand(OpenDealsCommandExecute);
             OpenServicesCommand = new RelayCommand(OpenServicesCommandExecute);
             OpenClientsCommand = new RelayCommand(OpenClientsCommandExecute);
             OpenUsersCommand = new RelayCommand(OpenUsersCommandExecute);
+            LogoutCommand = new RelayCommand(LogoutCommandExecute);
 
             Messenger.Default.Register<OpenViewArgs>(this, args =>
             {
@@ -49,25 +62,33 @@ namespace NotarialCompany
         public ICommand OpenDealsCommand { get; set; }
         public ICommand OpenClientsCommand { get; set; }
         public ICommand OpenUsersCommand { get; set; }
+        public ICommand LogoutCommand { get; set; }
 
         public void OpenUsersCommandExecute()
         {
-            CurrentView = new UsersView();
+            CurrentView = usersView;
         }
 
         private void OpenServicesCommandExecute()
         {
-            CurrentView = new ServicesView();
+            CurrentView = servicesView;
         }
 
         private void OpenDealsCommandExecute()
         {
-            CurrentView = new DealsView();
+            CurrentView = dealsView;
         }
 
         private void OpenClientsCommandExecute()
         {
-            CurrentView = new ClientsView();
+            CurrentView = clientsView;
+        }
+
+        private void LogoutCommandExecute()
+        {
+            authenticationService.Logout();
+            CurrentView = loginView;
+            RaisePropertyChanged(() => IsAuthenticated);
         }
     }
 }

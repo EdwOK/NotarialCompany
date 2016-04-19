@@ -58,7 +58,7 @@
                     <Button.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Profile" Command="{Binding OpenDealsCommand}"/>
-                            <MenuItem Header="Logout" Command="{Binding OpenClientsCommand}"/>
+                            <MenuItem Header="Logout" Command="{Binding LogoutCommand}"/>
                         </ContextMenu>
                     </Button.ContextMenu>
                 </controls:DropdownButtonControl>

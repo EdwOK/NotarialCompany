@@ -147,6 +147,7 @@
     <Compile Include="Common\ValidationViewModel.cs" />
     <Compile Include="Configuration\AutoMapperConfig.cs" />
     <Compile Include="Controls\DropdownButtonControl.cs" />
+    <Compile Include="Controls\PasswordBoxBehavior.cs" />
     <Compile Include="DataAccess\DbScope.cs" />
     <Compile Include="Common\MessagesArgs\OpenViewArgs.cs" />
     <Compile Include="Common\MessagesArgs\SendViewModelParamArgs.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Security\IAuthenticationService.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Pages\LoginPage\LoginViewModel.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
