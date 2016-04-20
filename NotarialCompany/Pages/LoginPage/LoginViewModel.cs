@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro.Controls.Dialogs;
 using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.Pages.ServicesPage;
@@ -13,11 +14,12 @@ namespace NotarialCompany.Pages.LoginPage
     {
         private readonly IAuthenticationService authenticationService;
 
-        private string loginErrorMessage;
+        private IDialogCoordinator dialogCoordinator;
 
-        public LoginViewModel(IAuthenticationService authenticationService)
+        public LoginViewModel(IAuthenticationService authenticationService, IDialogCoordinator dialogCoordinator)
         {
             this.authenticationService = authenticationService;
+            this.dialogCoordinator = dialogCoordinator;
 
             ValidatingProperties = new List<string> {nameof(Login), nameof(Password)};
 
@@ -27,14 +29,6 @@ namespace NotarialCompany.Pages.LoginPage
         public string Login { get; set; }
 
         public string Password { get; set; }
-
-        public string LoginErrorMessage
-        {
-            get { return loginErrorMessage; }
-            set { Set(ref loginErrorMessage, value); }
-        }
-
-        public bool HasLoginError => LoginErrorMessage != null;
 
         public ICommand LoginCommand { get; set; }
 
@@ -46,11 +40,10 @@ namespace NotarialCompany.Pages.LoginPage
             }
 
             AllowValidation = false;
-
             var status = authenticationService.ValidatePassword(Login, Password);
             if (!status)
             {
-                LoginErrorMessage = "Username or Password is incorrect";
+                dialogCoordinator.ShowMessageAsync(this, "Authorization", "Username or Password is incorrect!");
                 return;
             }
 

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using NotarialCompany.Models;
+﻿using NotarialCompany.Models;
 
 namespace NotarialCompany.Security
 {

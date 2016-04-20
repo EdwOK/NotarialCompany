@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:con="http://schemas.kent.boogaart.com/converters"
     xmlns:metroControls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+    dialog:DialogParticipation.Register="{Binding}"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:controls="clr-namespace:NotarialCompany.Controls"
     DataContext="{Binding LoginViewModel, Source={StaticResource Locator}}"
@@ -18,7 +20,6 @@
                 <controls:PasswordBehavior Password="{Binding Password, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
             </i:Interaction.Behaviors>
         </PasswordBox>
-        <Label Content="{Binding LoginErrorMessage, Mode=TwoWay}" Margin="0,0,0,5" Foreground="Red" Visibility="{Binding HasLoginError, Converter={con:BooleanToVisibilityConverter IsReversed=True}}" />
         <Button Content="Login" Command="{Binding LoginCommand}" IsDefault="True" IsEnabled="{Binding Error, Converter={StaticResource NullToTrueConverter}}"/>
     </StackPanel>
 </metroControls:MetroContentControl>
