@@ -65,6 +65,7 @@ namespace NotarialCompany.Pages.UsersPage
             {
                 return false;
             }
+            
 
             if (!string.IsNullOrEmpty(SearchText))
             {
