@@ -14,7 +14,7 @@ namespace NotarialCompany.Pages.LoginPage
     {
         private readonly IAuthenticationService authenticationService;
 
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IDialogCoordinator dialogCoordinator;
 
         public LoginViewModel(IAuthenticationService authenticationService, IDialogCoordinator dialogCoordinator)
         {
@@ -40,6 +40,7 @@ namespace NotarialCompany.Pages.LoginPage
             }
 
             AllowValidation = false;
+
             var status = authenticationService.ValidatePassword(Login, Password);
             if (!status)
             {

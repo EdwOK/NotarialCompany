@@ -143,6 +143,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Converters\MultiConcatStringConverter.cs" />
     <Compile Include="Common\Converters\NullToTrueConverter.cs" />
     <Compile Include="Common\ValidationViewModel.cs" />
     <Compile Include="Configuration\AutoMapperConfig.cs" />

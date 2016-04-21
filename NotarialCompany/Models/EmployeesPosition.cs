@@ -6,7 +6,6 @@
         public string Postition { get; set; }
         public decimal Salary { get; set; }
         public int Commission { get; set; }
-
         public string Description { get; set; }
     }
 }
