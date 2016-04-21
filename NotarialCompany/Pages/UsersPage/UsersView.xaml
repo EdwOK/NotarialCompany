@@ -33,7 +33,15 @@
                 <DataGridTemplateColumn Header="Id" CellTemplate="{StaticResource GridOpenDetailsButton}"/>
                 <DataGridTextColumn Header="Username" Binding="{Binding Username}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Role" Binding="{Binding Role.Name}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Employee" Binding="{Binding Employee}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Employee" IsReadOnly="True">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource MultiConcatStringConverter}">
+                            <Binding Path="Employee.LastName"/>
+                            <Binding Path="Employee.FirstName"/>
+                            <Binding Path="Employee.MiddleName"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Postition" Binding="{Binding Employee.EmployeesPosition.Postition}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
