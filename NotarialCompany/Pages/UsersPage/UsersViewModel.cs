@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Threading;
 using System.Windows.Data;
 using GalaSoft.MvvmLight.Messaging;
 using NotarialCompany.Common;
@@ -13,11 +12,13 @@ namespace NotarialCompany.Pages.UsersPage
 {
     public class UsersViewModel : BasePageViewModel
     {
+        private string searchText;
+
+        private ICollectionView users;
+
         public UsersViewModel(DbScope dbScope) : base(dbScope)
         {
         }
-
-        private ICollectionView users;
 
         public ICollectionView Users
         {
@@ -26,8 +27,6 @@ namespace NotarialCompany.Pages.UsersPage
         }
 
         public User SelectedUser { get; set; }
-
-        private string searchText;
 
         public string SearchText
         {
@@ -66,14 +65,16 @@ namespace NotarialCompany.Pages.UsersPage
             {
                 return false;
             }
+            
+
             if (!string.IsNullOrEmpty(SearchText))
             {
-                return data.Username.Contains(SearchText, StringComparison.OrdinalIgnoreCase) 
-                    || data.Role.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
-                    || data.Employee.FirstName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
-                    || data.Employee.LastName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
-                    || data.Employee.MiddleName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
-                    || data.Employee.EmployeesPosition.Postition.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
+                return data.Username.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+                       || data.Role.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+                       || data.Employee.FirstName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+                       || data.Employee.LastName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+                       || data.Employee.MiddleName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+                       || data.Employee.EmployeesPosition.Postition.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
             }
             return true;
         }

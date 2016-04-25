@@ -1,4 +1,5 @@
 using GalaSoft.MvvmLight.Ioc;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.ServiceLocation;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Pages.ClientsPage;
@@ -39,6 +40,8 @@ namespace NotarialCompany
 
             SimpleIoc.Default.Register<IAuthenticationService, AuthenticationService>();
             SimpleIoc.Default.Register<DbScope>();
+
+            SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
 
             SimpleIoc.Default.Register<ServicesView>();
             SimpleIoc.Default.Register<DealsView>();

@@ -31,14 +31,11 @@ namespace NotarialCompany.Controls
         {
             base.OnPropertyChanged(e);
 
-            if (e.Property == PasswordProperty)
+            if (e.Property == PasswordProperty && !skipUpdate)
             {
-                if (!skipUpdate)
-                {
-                    skipUpdate = true;
-                    AssociatedObject.Password = e.NewValue as string;
-                    skipUpdate = false;
-                }
+                skipUpdate = true;
+                AssociatedObject.Password = e.NewValue as string;
+                skipUpdate = false;
             }
         }
 

@@ -1,8 +1,10 @@
+using System;
 using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using AutoMapper;
 using NotarialCompany.Models;
 
@@ -26,6 +28,30 @@ namespace NotarialCompany.DataAccess
 
                 DataTable dataTable = dataSet.Tables["Table"];
                 return dataTable.Rows.Count == 0 ? null : Mapper.Map<object[], User>(dataTable.Rows[0].ItemArray);
+            }
+        }
+
+        public async Task<User> GetUserByUsernameAsync(string username)
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.UsersGetUserByUsername, connection) { CommandType = CommandType.StoredProcedure })
+            using (var dataAdapter = new SqlDataAdapter(command))
+            {
+                command.Parameters.Add(new SqlParameter("@username", username));
+                try
+                {
+                    await connection.OpenAsync();
+
+                    var dataSet = new DataSet();
+                    dataAdapter.Fill(dataSet, "Table");
+
+                    DataTable dataTable = dataSet.Tables["Table"];
+                    return dataTable.Rows.Count == 0 ? null : Mapper.Map<object[], User>(dataTable.Rows[0].ItemArray);
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
         }
 

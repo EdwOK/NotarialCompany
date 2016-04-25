@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
@@ -31,7 +30,13 @@ namespace NotarialCompany.Pages.UsersPage
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
 
-            ValidatingProperties = new List<string> { nameof(Username), nameof(Password) };
+            ValidatingProperties = new List<string>
+            {
+                nameof(Username),
+                nameof(Password),
+                nameof(SelectedRole),
+                nameof(SelectedEmployee)
+            };
 
             Messenger.Default.Register<SendViewModelParamArgs<User>>(this, args =>
             {
@@ -91,6 +96,14 @@ namespace NotarialCompany.Pages.UsersPage
             if (propertyName == nameof(Password) && string.IsNullOrWhiteSpace(Password))
             {
                 return "Password is required";
+            }
+            if (propertyName == nameof(SelectedRole) && SelectedRole == null)
+            {
+                return "Role is required";
+            }
+            if (propertyName == nameof(SelectedEmployee) && SelectedEmployee == null)
+            {
+                return "Employee is required";
             }
             return null;
         }
