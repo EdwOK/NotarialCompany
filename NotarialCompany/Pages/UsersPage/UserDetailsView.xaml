@@ -33,7 +33,7 @@
         <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,10,0,10" ItemsSource="{Binding Employees, Mode=TwoWay}" SelectedItem="{Binding SelectedEmployee, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
             <ComboBox.DisplayMemberPath>
                 <MultiBinding Converter="{StaticResource MultiConcatStringConverter}">
-                    <Binding Path="LastName"/>
+                    <Binding Path="Employee"/>
                     <Binding Path="FirstName"/>
                     <Binding Path="MiddleName"/>
                 </MultiBinding>
