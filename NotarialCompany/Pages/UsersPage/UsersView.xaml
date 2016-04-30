@@ -9,7 +9,9 @@
     xmlns:local="clr-namespace:NotarialCompany.Pages.UsersPage"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
     DataContext="{Binding UsersViewModel, Source={StaticResource Locator}}"
+    dialogs:DialogParticipation.Register="{Binding}"
     mc:Ignorable="d" 
     d:DesignHeight="1000" d:DesignWidth="1000">
     <DockPanel>
@@ -23,10 +25,13 @@
             <TextBox controls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}">Add New</Button>
         </StackPanel>
-        <DataGrid ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False" CanUserAddRows="False">
+        <DataGrid ItemsSource="{Binding UsersViews}" SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Resources>
                 <DataTemplate x:Key="GridOpenDetailsButton">
                     <Button Content="{Binding Path=Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand"/>
+                </DataTemplate>
+                <DataTemplate x:Key="GridRemoveDetailsButton">
+                    <Button Command="{Binding Path=DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand" Style="{StaticResource RemoveButton}"></Button>
                 </DataTemplate>
             </DataGrid.Resources>
             <DataGrid.Columns>
@@ -43,6 +48,7 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Postition" Binding="{Binding Employee.EmployeesPosition.Postition}" IsReadOnly="True"/>
+                <DataGridTemplateColumn CellTemplate="{StaticResource GridRemoveDetailsButton}"/>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

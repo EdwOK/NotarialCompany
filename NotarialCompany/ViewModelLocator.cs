@@ -8,6 +8,8 @@ using NotarialCompany.Pages.LoginPage;
 using NotarialCompany.Pages.ServicesPage;
 using NotarialCompany.Pages.UsersPage;
 using NotarialCompany.Security;
+using NotarialCompany.Security.Authentication;
+using NotarialCompany.Security.Authorization;
 
 namespace NotarialCompany
 {
@@ -39,6 +41,7 @@ namespace NotarialCompany
             SimpleIoc.Default.Register<DealsViewModel>();
 
             SimpleIoc.Default.Register<IAuthenticationService, AuthenticationService>();
+            SimpleIoc.Default.Register<IAuthorizationService, AuthorizationService>();
             SimpleIoc.Default.Register<DbScope>();
 
             SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();

@@ -191,10 +191,19 @@
       <DependentUpon>UsersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\UsersPage\UsersViewModel.cs" />
-    <Compile Include="Security\AuthenticationService.cs" />
-    <Compile Include="Security\IAuthenticationService.cs" />
+    <Compile Include="Security\Authorization\AccessPolicyBase.cs" />
+    <Compile Include="Security\Authorization\AdminAccessPolicy.cs" />
+    <Compile Include="Security\Authentication\AuthenticationService.cs" />
+    <Compile Include="Security\Authorization\AuthorizationService.cs" />
+    <Compile Include="Security\Authentication\IAuthenticationService.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Pages\LoginPage\LoginViewModel.cs" />
+    <Compile Include="Security\Authorization\IAccessPolicy.cs" />
+    <Compile Include="Security\Authorization\IAuthorizationService.cs" />
+    <Compile Include="Security\Authorization\ResourceAction.cs" />
+    <Compile Include="Security\Authorization\ResourceInfo.cs" />
+    <Compile Include="Models\RoleDefinition.cs" />
+    <Compile Include="Security\Authorization\UserAccessPolicy.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="App.xaml.cs">

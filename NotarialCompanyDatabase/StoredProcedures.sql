@@ -84,10 +84,7 @@
 --	INSERT INTO [dbo].[Users] ([Username], [Password], [Salt], [RoleId], [EmployeeId])
 --	VALUES (@username,	@password, @salt, @roleId, @employeeId)
 --GO
-
-IF OBJECT_ID('[Users.GetUserByUsernameAndPassword]') IS NOT NULL
-	DROP PROCEDURE [Users.GetUserByUsernameAndPassword]
-GO
+------------------------------------------------Users------------------------------------------------
 
 IF OBJECT_ID('[Users.UsersGetUserByUsername]') IS NOT NULL
 	DROP PROCEDURE [Users.UsersGetUserByUsername]
@@ -145,6 +142,19 @@ AS
 	WHERE [Users].[Id] = @id
 GO
 
+IF OBJECT_ID('[Users.RemoveUser]') IS NOT NULL
+	DROP PROCEDURE [Users.RemoveUser]
+GO
+
+CREATE PROCEDURE [Users.RemoveUser]
+	@id INT
+AS
+	DELETE FROM [dbo].[Users]
+	WHERE [Id] = @id
+GO
+
+------------------------------------------------Services------------------------------------------------
+
 IF OBJECT_ID('[Services.GetServices]') IS NOT NULL
 	DROP PROCEDURE [Services.GetServices]
 GO
@@ -193,6 +203,7 @@ AS
 	WHERE [Services].[Id] = @id
 GO
 
+------------------------------------------------Clients------------------------------------------------
 
 IF OBJECT_ID('[Clients.CreateOrUpdateClient]') IS NOT NULL
 	DROP PROCEDURE [Clients.CreateOrUpdateClient]
@@ -221,6 +232,8 @@ AS
 	WHERE [Clients].[Id] = @id
 GO
 
+------------------------------------------------Roles------------------------------------------------
+
 IF OBJECT_ID('[Roles.GetRoles]') IS NOT NULL
 	DROP PROCEDURE [Roles.GetRoles]
 GO
@@ -232,6 +245,8 @@ BEGIN
 	SELECT * FROM [Roles]
 END
 GO
+
+------------------------------------------------Employees------------------------------------------------
 
 IF OBJECT_ID('[Employees.GetEmployees]') IS NOT NULL
 	DROP PROCEDURE [Employees.GetEmployees]

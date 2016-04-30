@@ -43,5 +43,10 @@ namespace NotarialCompany.Pages.ServicesPage
             Messenger.Default.Send(new SendViewModelParamArgs<Service>(new ServicesView(), nameof(ServicesViewModel),
                 nameof(ServiceDetailsViewModel), new Service()));
         }
+
+        protected override void RemoveItemCommandExecute()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

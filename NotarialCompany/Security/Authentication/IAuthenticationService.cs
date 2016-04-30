@@ -1,6 +1,6 @@
 ﻿using NotarialCompany.Models;
 
-namespace NotarialCompany.Security
+namespace NotarialCompany.Security.Authentication
 {
     public interface IAuthenticationService
     {

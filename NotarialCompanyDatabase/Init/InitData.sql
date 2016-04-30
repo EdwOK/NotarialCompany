@@ -45,3 +45,9 @@ INSERT INTO [dbo].[EmployeesPositions] (Position, Salary, Commission)
 VALUES (N'Нотариус 1 разряда', 80000, 30)
 
 GO
+
+INSERT INTO [dbo].[Employees] ([FirstName], [LastName], [MiddleName], [Address], [PhoneNumber], [EmploymentDate], [EmployeesPositionId])
+VALUES (N'Default', N'', N'', N'' , N'', '2010-05-08', 1)
+
+INSERT INTO [dbo].[Users] ([Username], [Password], [Salt], [RoleId], [EmployeeId])
+VALUES (N'not', N'bH/LJ4ToQu+2U/upEYz8d7E+ySLODkVCUBwrSK6rb4o=', N'+NXdbYwfuP9NEtcYIxu/tt+IhJ7Xje8QoGLXV8dwdKA=', 1, 1)

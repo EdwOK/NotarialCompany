@@ -8,6 +8,7 @@ using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
 using NotarialCompany.Security;
+using NotarialCompany.Security.Authentication;
 
 namespace NotarialCompany.Pages.UsersPage
 {

@@ -202,6 +202,18 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public void DeleteUser(int userId)
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.UsersRemoveUser, connection) { CommandType = CommandType.StoredProcedure })
+            {
+                connection.Open();
+                SqlCommandBuilder.DeriveParameters(command);
+                command.Parameters[1].Value = userId;
+                command.ExecuteNonQuery();
+            }
+        }
+
         #endregion
 
         private static class StoredProceduresNames
@@ -209,6 +221,7 @@ namespace NotarialCompany.DataAccess
             public const string UsersGetUsers = "[Users.GetUsers]";
             public const string UsersUpdateUser = "[Users.CreateOrUpdateUser]";
             public const string UsersGetUserByUsername = "[Users.UsersGetUserByUsername]";
+            public const string UsersRemoveUser = "[Users.RemoveUser]";
 
             public const string ServicesGetServices = "[Services.GetServices]";
             public const string ServicesUpdateService = "[Services.CreateOrUpdateService]";

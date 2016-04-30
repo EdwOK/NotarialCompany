@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Data;
+using System.Windows.Input;
 using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro.Controls.Dialogs;
 using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
@@ -12,18 +16,22 @@ namespace NotarialCompany.Pages.UsersPage
 {
     public class UsersViewModel : BasePageViewModel
     {
+        private readonly IDialogCoordinator dialogCoordinator;
         private string searchText;
 
-        private ICollectionView users;
+        private ICollectionView usersViews;
 
-        public UsersViewModel(DbScope dbScope) : base(dbScope)
+        private IList<User> users; 
+
+        public UsersViewModel(DbScope dbScope, IDialogCoordinator dialogCoordinator) : base(dbScope)
         {
+            this.dialogCoordinator = dialogCoordinator;
         }
 
-        public ICollectionView Users
+        public ICollectionView UsersViews
         {
-            get { return users; }
-            set { Set(ref users, value); }
+            get { return usersViews; }
+            set { Set(ref usersViews, value); }
         }
 
         public User SelectedUser { get; set; }
@@ -34,14 +42,14 @@ namespace NotarialCompany.Pages.UsersPage
             set
             {
                 Set(ref searchText, value);
-                Users?.Refresh();
+                UsersViews?.Refresh();
             }
         }
 
         protected override void LoadedCommandExecute()
         {
-            Users = CollectionViewSource.GetDefaultView(DbScope.GetUsers());
-            Users.Filter = Filter;
+            UsersViews = CollectionViewSource.GetDefaultView(users = DbScope.GetUsers());
+            UsersViews.Filter = Filter;
         }
 
         protected override void OpenDetailsViewCommandExecute()
@@ -57,6 +65,21 @@ namespace NotarialCompany.Pages.UsersPage
             Messenger.Default.Send(new SendViewModelParamArgs<User>(new UsersView(), nameof(UsersViewModel),
                 nameof(UserDetailsViewModel), new User()));
         }
+
+        protected override async void RemoveItemCommandExecute()
+        {
+            MessageDialogResult result = await dialogCoordinator.ShowMessageAsync(
+                this, "Delete user", "Are you sure?", MessageDialogStyle.AffirmativeAndNegative);
+            if (result != MessageDialogResult.Affirmative)
+            {
+                return;
+            }
+
+            DbScope.DeleteUser(SelectedUser.Id);
+            users.Remove(SelectedUser);
+            usersViews.Refresh();
+        }
+
 
         private bool Filter(object obj)
         {

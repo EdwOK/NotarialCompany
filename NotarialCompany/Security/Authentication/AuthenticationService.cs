@@ -4,8 +4,7 @@ using System.Text;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
 
-
-namespace NotarialCompany.Security
+namespace NotarialCompany.Security.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
@@ -29,12 +28,12 @@ namespace NotarialCompany.Security
         public bool ValidatePassword(string username, string password)
         {
             User user = dbScope.GetUserByUsername(username);
-            if (user != null && CompareHash(password, user.Password, user.Salt))
+            if (user == null || !CompareHash(password, user.Password, user.Salt))
             {
-                CurrentUser = user;
-                return true;
+                return false;
             }
-            return false;
+            CurrentUser = user;
+            return true;
         }
 
         public void Logout()

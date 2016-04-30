@@ -6,18 +6,21 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro.Controls;
 using NotarialCompany.Common.MessagesArgs;
+using NotarialCompany.Models;
 using NotarialCompany.Pages.ClientsPage;
 using NotarialCompany.Pages.DealsPage;
 using NotarialCompany.Pages.LoginPage;
 using NotarialCompany.Pages.ServicesPage;
 using NotarialCompany.Pages.UsersPage;
-using NotarialCompany.Security;
+using NotarialCompany.Security.Authentication;
+using NotarialCompany.Security.Authorization;
 
 namespace NotarialCompany
 {
     public class MainViewModel : ViewModelBase
     {
         private readonly IAuthenticationService authenticationService;
+        private readonly IAuthorizationService authorizationService;
         private MetroContentControl currentView;
 
         private readonly UsersView usersView;
@@ -26,16 +29,19 @@ namespace NotarialCompany
         private readonly ClientsView clientsView;
         private readonly LoginView loginView;
 
-        public MainViewModel(IAuthenticationService authenticationService, UsersView usersView,
-            ServicesView servicesView, DealsView dealsView, ClientsView clientsView, LoginView loginView)
+        public MainViewModel(IAuthenticationService authenticationService, IAuthorizationService authorizationService,
+            UsersView usersView, ServicesView servicesView, DealsView dealsView, ClientsView clientsView, LoginView loginView)
         {
+            CurrentView = loginView;
+
             this.authenticationService = authenticationService;
+            this.authorizationService = authorizationService;
+
             this.usersView = usersView;
             this.servicesView = servicesView;
             this.dealsView = dealsView;
             this.clientsView = clientsView;
             this.loginView = loginView;
-            CurrentView = new LoginView();
 
             OpenDealsCommand = new RelayCommand(OpenDealsCommandExecute);
             OpenServicesCommand = new RelayCommand(OpenServicesCommandExecute);
@@ -47,10 +53,13 @@ namespace NotarialCompany
             {
                 CurrentView = args.View;
                 RaisePropertyChanged(() => IsAuthenticated);
+                RaisePropertyChanged(() => HasUserAccess);
             });
         }
 
         public bool IsAuthenticated => authenticationService.IsAuthenticated();
+
+        public bool HasUserAccess => authorizationService.CheckAccess(typeof (User), AccessPolicyBase.StandartResourceActions);
 
         public MetroContentControl CurrentView
         {

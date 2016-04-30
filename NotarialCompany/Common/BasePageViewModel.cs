@@ -15,6 +15,7 @@ namespace NotarialCompany.Common
             OpenDetailsViewCommand = new RelayCommand(OpenDetailsViewCommandExecute);
             LoadedCommand = new RelayCommand(LoadedCommandExecute);
             AddNewItemCommand = new RelayCommand(AddNewItemCommandExecute);
+            RemoveItemCommand = new RelayCommand(RemoveItemCommandExecute);
         }
 
         public ICommand OpenDetailsViewCommand { get; set; }
@@ -23,10 +24,14 @@ namespace NotarialCompany.Common
 
         public ICommand AddNewItemCommand { get; set; }
 
+        public ICommand RemoveItemCommand { get; set; }
+
         protected abstract void LoadedCommandExecute();
 
         protected abstract void OpenDetailsViewCommandExecute();
 
         protected abstract void AddNewItemCommandExecute();
+
+        protected abstract void RemoveItemCommandExecute();
     }
 }

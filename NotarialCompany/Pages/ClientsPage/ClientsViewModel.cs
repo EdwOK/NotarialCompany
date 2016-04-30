@@ -59,6 +59,11 @@ namespace NotarialCompany.Pages.ClientsPage
                 nameof(ClientDetailsViewModel), new Client()));
         }
 
+        protected override void RemoveItemCommandExecute()
+        {
+            throw new NotImplementedException();
+        }
+
         private bool Filter(object obj)
         {
             var data = obj as Client;
