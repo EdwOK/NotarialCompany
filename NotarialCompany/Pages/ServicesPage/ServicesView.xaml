@@ -29,9 +29,9 @@
                         <DataTemplate>
                             <Button Content="{Binding}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type xcdg:DataGridControl}}}"/>
                         </DataTemplate>
-                        <DataTemplate x:Key="GridRemoveDetailsButton">
+                        <!--<DataTemplate x:Key="GridRemoveDetailsButton">
                             <Button Command="{Binding Path=DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand" Style="{StaticResource RemoveButton}"></Button>
-                        </DataTemplate>
+                        </DataTemplate>-->
                     </xcdg:Column.CellContentTemplate>
                 </xcdg:Column>
                 <xcdg:Column FieldName="Name" Title="Name" Width="600" ReadOnly="True"/>

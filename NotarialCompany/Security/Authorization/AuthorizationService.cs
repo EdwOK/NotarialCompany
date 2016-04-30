@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using NotarialCompany.Security.Authentication;
 
 namespace NotarialCompany.Security.Authorization
@@ -30,12 +29,10 @@ namespace NotarialCompany.Security.Authorization
 
         private IList<IAccessPolicy> GetAccessPolicies()
         {
-            Type accessPolicyType = typeof(IAccessPolicy);
-            var accessPoliciesTypes =
-                GetType().Assembly.GetTypes().Where(t => t.GetInterfaces().Contains(accessPolicyType) && !t.IsAbstract);
+            var accessPolicyType = typeof(IAccessPolicy);
+            var accessPoliciesTypes = GetType().Assembly.GetTypes().Where(t => t.GetInterfaces().Contains(accessPolicyType) && !t.IsAbstract);
 
-            return accessPoliciesTypes.Select(
-                accessPoliciesType => (IAccessPolicy) Activator.CreateInstance(accessPoliciesType)).ToList();
+            return accessPoliciesTypes.Select(accessPoliciesType => (IAccessPolicy) Activator.CreateInstance(accessPoliciesType)).ToList();
         }
     }
 }

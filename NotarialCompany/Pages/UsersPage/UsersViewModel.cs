@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Data;
-using System.Windows.Input;
 using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro.Controls.Dialogs;
 using NotarialCompany.Common;
@@ -68,8 +66,11 @@ namespace NotarialCompany.Pages.UsersPage
 
         protected override async void RemoveItemCommandExecute()
         {
-            MessageDialogResult result = await dialogCoordinator.ShowMessageAsync(
-                this, "Delete user", "Are you sure?", MessageDialogStyle.AffirmativeAndNegative);
+            MessageDialogResult result =
+                await
+                    dialogCoordinator.ShowMessageAsync(this, "Delete user", "Are you sure?",
+                        MessageDialogStyle.AffirmativeAndNegative);
+
             if (result != MessageDialogResult.Affirmative)
             {
                 return;
@@ -88,7 +89,6 @@ namespace NotarialCompany.Pages.UsersPage
             {
                 return false;
             }
-            
 
             if (!string.IsNullOrEmpty(SearchText))
             {

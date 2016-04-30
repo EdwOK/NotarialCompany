@@ -6,9 +6,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.Pages.ServicesPage;
-using NotarialCompany.Security;
 using NotarialCompany.Security.Authentication;
-using NotarialCompany.Security.Authorization;
 
 namespace NotarialCompany.Pages.LoginPage
 {

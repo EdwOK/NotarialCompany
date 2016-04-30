@@ -18,13 +18,18 @@ namespace NotarialCompany.Security.Authorization
 
         public bool IsInRole(ResourceInfo resourceInfo, RoleDefinition roleDefinition)
         {
-            return resourceInfo.User.Role.GetRoleDefinition() == roleDefinition;
+            return GetRoleDefinition(resourceInfo.User.Role.Name) == roleDefinition;
         }
 
         public bool CheckStandartAction(ResourceInfo resourceInfo, Type resourceType, ResourceAction resourceAction)
         {
             return resourceInfo.ResourceType == resourceType &&
                    resourceInfo.ResourceActions.Any(ra => ra == resourceAction);
+        }
+
+        private RoleDefinition GetRoleDefinition(string name)
+        {
+            return (RoleDefinition)Enum.Parse(typeof(RoleDefinition), name);
         }
     }
 }

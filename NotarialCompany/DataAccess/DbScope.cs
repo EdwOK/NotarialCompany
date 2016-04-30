@@ -15,6 +15,8 @@ namespace NotarialCompany.DataAccess
         private static readonly ConnectionStringSettings Settings  =
             ConfigurationManager.ConnectionStrings["NotarialCompanyDatabaseConnectionString"];
 
+        #region Gets methods
+
         public User GetUserByUsername(string username)
         {
             using (var connection = new SqlConnection(Settings.ConnectionString))
@@ -54,8 +56,6 @@ namespace NotarialCompany.DataAccess
                 }
             }
         }
-
-        #region Gets methods
 
         public List<User> GetUsers()
         {
