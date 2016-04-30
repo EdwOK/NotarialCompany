@@ -66,10 +66,8 @@ namespace NotarialCompany.Pages.UsersPage
 
         protected override async void RemoveItemCommandExecute()
         {
-            MessageDialogResult result =
-                await
-                    dialogCoordinator.ShowMessageAsync(this, "Delete user", "Are you sure?",
-                        MessageDialogStyle.AffirmativeAndNegative);
+            MessageDialogResult result = await dialogCoordinator.ShowMessageAsync(
+                this, "Delete user", "Are you sure?", MessageDialogStyle.AffirmativeAndNegative);
 
             if (result != MessageDialogResult.Affirmative)
             {
