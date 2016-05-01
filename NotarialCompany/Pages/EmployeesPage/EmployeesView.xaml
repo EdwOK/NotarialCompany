@@ -41,7 +41,7 @@
                 <DataGridTextColumn Header="MiddleName" Binding="{Binding MiddleName}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="200" IsReadOnly="True"/>
                 <DataGridTextColumn Header="PhoneNumber" Binding="{Binding PhoneNumber}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Employment Date" Binding="{Binding EmploymentDate, StringFormat=d}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding EmploymentDate, StringFormat=d}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Position" Binding="{Binding EmployeesPosition.Position}" IsReadOnly="True"/>
                 <DataGridTemplateColumn CellTemplate="{StaticResource GridRemoveDetailsButton}"/>
             </DataGrid.Columns>

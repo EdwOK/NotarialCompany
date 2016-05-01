@@ -9,18 +9,24 @@ using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
+using NotarialCompany.Security.Authorization;
 
 namespace NotarialCompany.Pages.ClientsPage
 {
     public class ClientDetailsViewModel : ValidationViewModel
     {
+        private readonly IAuthorizationService authorizationService;
+
         private MetroContentControl parentView;
         private string parentViewModelName;
 
-        public ClientDetailsViewModel(DbScope dbScope) : base(dbScope) 
+        public ClientDetailsViewModel(DbScope dbScope, IAuthorizationService authorizationService) : base(dbScope)
         {
+            this.authorizationService = authorizationService;
+
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
+            LoadedCommand = new RelayCommand(LoadedCommandExecute);
 
             ValidatingProperties = new List<string>
             {
@@ -56,8 +62,12 @@ namespace NotarialCompany.Pages.ClientsPage
 
         public Client Client { get; set; }
 
+        public bool CanUpdateClient { get; set; }
+
         public ICommand SaveCommand { get; set; }
         public ICommand NavigateBackCommand { get; set; }
+
+        public ICommand LoadedCommand { get; set; }
 
         public string FirstName
         {
@@ -138,6 +148,12 @@ namespace NotarialCompany.Pages.ClientsPage
         private void NavigateBackCommandExecute()
         {
             Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
+        }
+
+        private void LoadedCommandExecute()
+        {
+            CanUpdateClient = authorizationService.CheckAccess(typeof(Client), ResourceAction.Update);
+            RaisePropertyChanged(() => CanUpdateClient);
         }
     }
 }
