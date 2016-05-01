@@ -21,13 +21,9 @@ namespace NotarialCompany.Pages.UsersPage
         private MetroContentControl parentView;
         private string parentViewModelName;
 
-<<<<<<< HEAD
-        public UserDetailsViewModel(DbScope dbScope, IAuthenticationService authenticationService) : base(dbScope)
-=======
         private string savedPassword;
 
-        public UserDetailsViewModel(DbScope dbScope, IAuthenticationService authenticationService, IAuthorizationService authorizationService)
->>>>>>> 0db34f9eb683003f46f4926354956b2a0304eb4d
+        public UserDetailsViewModel(DbScope dbScope, IAuthenticationService authenticationService, IAuthorizationService authorizationService) : base(dbScope)
         {
             this.authenticationService = authenticationService;
             this.authorizationService = authorizationService;
@@ -137,10 +133,6 @@ namespace NotarialCompany.Pages.UsersPage
             User.Role = SelectedRole;
             User.RoleId = SelectedRole.Id;
 
-<<<<<<< HEAD
-            var saveUser = authenticationService.GenerateCredentials(User);
-            DbScope.UpdateUser(saveUser);
-=======
             if (IsCreationMode || User.Password != null)
             {
                 authenticationService.GenerateCredentials(User);
@@ -149,8 +141,7 @@ namespace NotarialCompany.Pages.UsersPage
             {
                 User.Password = savedPassword;
             }
-            dbScope.CreateOrUpdateUser(User);
->>>>>>> 0db34f9eb683003f46f4926354956b2a0304eb4d
+            DbScope.CreateOrUpdateUser(User);
             NavigateBackCommandExecute();
         }
 

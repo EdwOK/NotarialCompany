@@ -13,25 +13,15 @@ namespace NotarialCompany.Pages.ServicesPage
 {
     public class ServiceDetailsViewModel : ValidationViewModel
     {
-<<<<<<< HEAD
-        private MetroContentControl parentView;
-        private string parentViewModelName;
-
-        public ServiceDetailsViewModel(DbScope dbScope) : base(dbScope)
-        {
-=======
-        private readonly DbScope dbScope;
         private readonly IAuthorizationService authorizationService;
 
         private MetroContentControl parentView;
         private string parentViewModelName;
 
-        public ServiceDetailsViewModel(DbScope dbScope, IAuthorizationService authorizationService)
+        public ServiceDetailsViewModel(DbScope dbScope, IAuthorizationService authorizationService) : base(dbScope)
         {
-            this.dbScope = dbScope;
             this.authorizationService = authorizationService;
 
->>>>>>> 0db34f9eb683003f46f4926354956b2a0304eb4d
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
             LoadedCommand = new RelayCommand(LoadedCommandExecute);

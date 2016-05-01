@@ -101,18 +101,17 @@ namespace NotarialCompany
             CurrentView = clientsView;
         }
 
-<<<<<<< HEAD
         private void OpenEmployeesCommandExecute()
         {
             CurrentView = employeeView;
-=======
+        }
+
         private void OpenUserProfileCommandExecute()
         {
             MetroContentControl view = CurrentView;
             Messenger.Default.Send(new OpenViewArgs(new UserDetailsView(), nameof(UserDetailsViewModel)));
             Messenger.Default.Send(new SendViewModelParamArgs<User>(view, nameof(MainViewModel),
                 nameof(UserDetailsViewModel), authenticationService.CurrentUser));
->>>>>>> 0db34f9eb683003f46f4926354956b2a0304eb4d
         }
 
         private void LogoutCommandExecute()

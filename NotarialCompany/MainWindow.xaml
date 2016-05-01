@@ -24,18 +24,14 @@
                         <TextBlock VerticalAlignment="Center">Clients</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding OpenServicesCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="1,1,1,1"> 
+                <Button Command="{Binding OpenServicesCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="1,1,1,1">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/services.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Services</TextBlock>
                     </StackPanel>
                 </Button>
-<<<<<<< HEAD
-                <Button Command="{Binding OpenEmployeeCommand}">
-=======
                 <Button Style="{DynamicResource AccentedSquareButtonStyle}" Margin="1,1,1,1">
->>>>>>> 0db34f9eb683003f46f4926354956b2a0304eb4d
-                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/employees.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Employees</TextBlock>
                     </StackPanel>
