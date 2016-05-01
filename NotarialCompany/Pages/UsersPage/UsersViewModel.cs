@@ -21,7 +21,8 @@ namespace NotarialCompany.Pages.UsersPage
 
         private IList<User> users; 
 
-        public UsersViewModel(DbScope dbScope, IDialogCoordinator dialogCoordinator) : base(dbScope)
+        public UsersViewModel(DbScope dbScope, IDialogCoordinator dialogCoordinator)
+            : base(dbScope)
         {
             this.dialogCoordinator = dialogCoordinator;
         }

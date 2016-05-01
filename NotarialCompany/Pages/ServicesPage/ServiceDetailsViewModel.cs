@@ -7,18 +7,34 @@ using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
+using NotarialCompany.Security.Authorization;
 
 namespace NotarialCompany.Pages.ServicesPage
 {
     public class ServiceDetailsViewModel : ValidationViewModel
     {
+<<<<<<< HEAD
         private MetroContentControl parentView;
         private string parentViewModelName;
 
         public ServiceDetailsViewModel(DbScope dbScope) : base(dbScope)
         {
+=======
+        private readonly DbScope dbScope;
+        private readonly IAuthorizationService authorizationService;
+
+        private MetroContentControl parentView;
+        private string parentViewModelName;
+
+        public ServiceDetailsViewModel(DbScope dbScope, IAuthorizationService authorizationService)
+        {
+            this.dbScope = dbScope;
+            this.authorizationService = authorizationService;
+
+>>>>>>> 0db34f9eb683003f46f4926354956b2a0304eb4d
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
+            LoadedCommand = new RelayCommand(LoadedCommandExecute);
 
             ValidatingProperties = new List<string> {nameof(Name), nameof(Description)};
 
@@ -45,6 +61,7 @@ namespace NotarialCompany.Pages.ServicesPage
 
         public ICommand SaveCommand { get; set; }
         public ICommand NavigateBackCommand { get; set; }
+        public ICommand LoadedCommand { get; set; }
 
         public string Name
         {
@@ -63,6 +80,8 @@ namespace NotarialCompany.Pages.ServicesPage
             get { return Service?.Cost ?? 0; }
             set { Service.Cost = value; }
         }
+
+        public bool CanUpdateService { get; set; }
 
         protected override string GetValidationError(string propertyName)
         {
@@ -91,6 +110,12 @@ namespace NotarialCompany.Pages.ServicesPage
         private void NavigateBackCommandExecute()
         {
             Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
+        }
+
+        private void LoadedCommandExecute()
+        {
+            CanUpdateService = authorizationService.CheckAccess(typeof (Service), ResourceAction.Update);
+            RaisePropertyChanged(nameof(CanUpdateService));
         }
     }
 }

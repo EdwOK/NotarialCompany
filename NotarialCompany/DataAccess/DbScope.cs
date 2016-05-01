@@ -203,10 +203,10 @@ namespace NotarialCompany.DataAccess
             }
         }
 
-        public void UpdateUser(User user)
+        public void CreateOrUpdateUser(User user)
         {
             using (var connection = new SqlConnection(Settings.ConnectionString))
-            using (var command = new SqlCommand(StoredProceduresNames.UsersUpdateUser, connection) { CommandType = CommandType.StoredProcedure })
+            using (var command = new SqlCommand(StoredProceduresNames.UsersCreateOrUpdateUser, connection) { CommandType = CommandType.StoredProcedure })
             {
                 connection.Open();
                 SqlCommandBuilder.DeriveParameters(command);
@@ -294,7 +294,7 @@ namespace NotarialCompany.DataAccess
         private static class StoredProceduresNames
         {
             public const string UsersGetUsers = "[Users.GetUsers]";
-            public const string UsersUpdateUser = "[Users.CreateOrUpdateUser]";
+            public const string UsersCreateOrUpdateUser = "[Users.CreateOrUpdateUser]";
             public const string UsersGetUserByUsername = "[Users.UsersGetUserByUsername]";
             public const string UsersRemoveUser = "[Users.RemoveUser]";
 

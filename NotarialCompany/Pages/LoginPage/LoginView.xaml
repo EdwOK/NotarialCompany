@@ -10,16 +10,36 @@
     dialog:DialogParticipation.Register="{Binding}"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:controls="clr-namespace:NotarialCompany.Controls"
+    xmlns:command="http://www.galasoft.ch/mvvmlight"
+    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
     DataContext="{Binding LoginViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d" 
     d:DesignHeight="300" d:DesignWidth="300">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <command:EventToCommand Command="{Binding Mode=OneWay, Path=LoadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <metroControls:MetroContentControl.Resources>
+        <xcdg:EmptyStringToBooleanConverter x:Key="EmptyStringToBooleanConverter"/>
+    </metroControls:MetroContentControl.Resources>
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300">
-        <TextBox Name="Login" metroControls:TextBoxHelper.Watermark="Login" Margin="0,0,0,15" Text="{Binding Login, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
-        <PasswordBox Name="Password" metroControls:TextBoxHelper.Watermark="Password" Margin="0,0,0,5">
+        <TextBox 
+            Name="Login" 
+            metroControls:TextBoxHelper.Watermark="Login" 
+            Margin="0,0,0,15" Text="{Binding Login, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+            KeyboardNavigation.TabIndex="0"/>
+        <PasswordBox Name="Password" metroControls:TextBoxHelper.Watermark="Password" Margin="0,0,0,15" KeyboardNavigation.TabIndex="1">
             <i:Interaction.Behaviors>
                 <controls:PasswordBehavior Password="{Binding Password, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
             </i:Interaction.Behaviors>
         </PasswordBox>
-        <Button Content="Login" Command="{Binding LoginCommand}" IsDefault="True" IsEnabled="{Binding Error, Converter={StaticResource NullToTrueConverter}}"/>
+        <Button 
+            Content="Login" 
+            Command="{Binding LoginCommand}" 
+            IsDefault="True" 
+            IsEnabled="{Binding Error, Converter={StaticResource EmptyStringToBooleanConverter}}" 
+            KeyboardNavigation.TabIndex="2"
+            Style="{DynamicResource SquareButtonStyle}"/>
     </StackPanel>
 </metroControls:MetroContentControl>

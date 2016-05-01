@@ -53,6 +53,7 @@ namespace NotarialCompany
             OpenUsersCommand = new RelayCommand(OpenUsersCommandExecute);
             OpenEmployeeCommand = new RelayCommand(OpenEmployeesCommandExecute);
             LogoutCommand = new RelayCommand(LogoutCommandExecute);
+            OpenUserProfileCommand = new RelayCommand(OpenUserProfileCommandExecute);
 
             Messenger.Default.Register<OpenViewArgs>(this, args =>
             {
@@ -78,6 +79,7 @@ namespace NotarialCompany
         public ICommand OpenUsersCommand { get; set; }
         public ICommand OpenEmployeeCommand { get; set; }
         public ICommand LogoutCommand { get; set; }
+        public ICommand OpenUserProfileCommand { get; set; }
 
         public void OpenUsersCommandExecute()
         {
@@ -99,9 +101,18 @@ namespace NotarialCompany
             CurrentView = clientsView;
         }
 
+<<<<<<< HEAD
         private void OpenEmployeesCommandExecute()
         {
             CurrentView = employeeView;
+=======
+        private void OpenUserProfileCommandExecute()
+        {
+            MetroContentControl view = CurrentView;
+            Messenger.Default.Send(new OpenViewArgs(new UserDetailsView(), nameof(UserDetailsViewModel)));
+            Messenger.Default.Send(new SendViewModelParamArgs<User>(view, nameof(MainViewModel),
+                nameof(UserDetailsViewModel), authenticationService.CurrentUser));
+>>>>>>> 0db34f9eb683003f46f4926354956b2a0304eb4d
         }
 
         private void LogoutCommandExecute()

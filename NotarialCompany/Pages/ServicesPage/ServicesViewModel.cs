@@ -8,12 +8,15 @@ using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
+using NotarialCompany.Security.Authentication;
+using NotarialCompany.Security.Authorization;
 using NotarialCompany.Utilities;
 
 namespace NotarialCompany.Pages.ServicesPage
 {
     public class ServicesViewModel : BasePageViewModel
     {
+        private readonly IAuthorizationService authorizationService;
         private readonly IDialogCoordinator dialogCoordinator;
         private string searchText;
 
@@ -21,8 +24,10 @@ namespace NotarialCompany.Pages.ServicesPage
 
         private IList<Service> services;
 
-        public ServicesViewModel(DbScope dbScope, IDialogCoordinator dialogCoordinator) : base(dbScope)
+        public ServicesViewModel(DbScope dbScope, IAuthorizationService authorizationService, IDialogCoordinator dialogCoordinator) 
+            : base(dbScope)
         {
+            this.authorizationService = authorizationService;
             this.dialogCoordinator = dialogCoordinator;
         }
 
@@ -44,8 +49,17 @@ namespace NotarialCompany.Pages.ServicesPage
             }
         }
 
+        public bool CanDeleteService { get; set; }
+        public bool CanCreateService { get; set; }
+
         protected override void LoadedCommandExecute()
         {
+            CanDeleteService = authorizationService.CheckAccess(typeof(Service), ResourceAction.Delete);
+            RaisePropertyChanged(() => CanDeleteService);
+
+            CanCreateService = authorizationService.CheckAccess(typeof(Service), ResourceAction.Create);
+            RaisePropertyChanged(() => CanCreateService);
+
             ServicesView = CollectionViewSource.GetDefaultView(services = DbScope.GetServices());
             ServicesView.Filter = Filter;
         }
@@ -66,10 +80,8 @@ namespace NotarialCompany.Pages.ServicesPage
 
         protected override async void RemoveItemCommandExecute()
         {
-            MessageDialogResult result =
-                await
-                    dialogCoordinator.ShowMessageAsync(this, "Delete service", "Are you sure?",
-                        MessageDialogStyle.AffirmativeAndNegative);
+            MessageDialogResult result = await dialogCoordinator.ShowMessageAsync(
+                this, "Delete service", "Are you sure?",MessageDialogStyle.AffirmativeAndNegative);
 
             if (result != MessageDialogResult.Affirmative)
             {

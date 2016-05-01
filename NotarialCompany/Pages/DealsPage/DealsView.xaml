@@ -10,7 +10,7 @@
     mc:Ignorable="d" 
     d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Label>Deals</Label>
+        <Label FontWeight="Bold">Deals</Label>
     </Grid>
 </controls:MetroContentControl>
 
