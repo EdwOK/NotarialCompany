@@ -1,4 +1,4 @@
-﻿<controls:MetroContentControl 
+﻿<metroControls:MetroContentControl 
     x:Class="NotarialCompany.Pages.ServicesPage.ServicesView"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,7 +8,9 @@
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
     xmlns:local="clr-namespace:NotarialCompany.Pages.ServicesPage"
-    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:metroControls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+    dialog:DialogParticipation.Register="{Binding}"
     DataContext="{Binding ServicesViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d" 
     d:DesignHeight="1000" d:DesignWidth="1000">
@@ -20,24 +22,25 @@
         </i:Interaction.Triggers>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Label Margin="10,10,0,10" VerticalAlignment="Center">Services</Label>
+            <TextBox metroControls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200"/>
             <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}">Add New</Button>
         </StackPanel>
-        <xcdg:DataGridControl ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedServise}" AutoCreateColumns="False"> 
-            <xcdg:DataGridControl.Columns>
-                <xcdg:Column Width="30" FieldName="Id" Title="Id" IsMainColumn="True" AllowGroup="False">
-                    <xcdg:Column.CellContentTemplate>
-                        <DataTemplate>
-                            <Button Content="{Binding}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type xcdg:DataGridControl}}}"/>
-                        </DataTemplate>
-                        <!--<DataTemplate x:Key="GridRemoveDetailsButton">
-                            <Button Command="{Binding Path=DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand" Style="{StaticResource RemoveButton}"></Button>
-                        </DataTemplate>-->
-                    </xcdg:Column.CellContentTemplate>
-                </xcdg:Column>
-                <xcdg:Column FieldName="Name" Title="Name" Width="600" ReadOnly="True"/>
-                <xcdg:Column FieldName="Cost" Title="Cost" ReadOnly="True"/>
-            </xcdg:DataGridControl.Columns>
-        </xcdg:DataGridControl>
+        <DataGrid ItemsSource="{Binding ServicesView}" SelectedItem="{Binding SelectedServise}" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Resources>
+                <DataTemplate x:Key="GridOpenDetailsButton">
+                    <Button Content="{Binding Path=Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand"/>
+                </DataTemplate>
+                <DataTemplate x:Key="GridRemoveDetailsButton">
+                    <Button Command="{Binding Path=DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand" Style="{StaticResource RemoveButton}"/>
+                </DataTemplate>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Id" CellTemplate="{StaticResource GridOpenDetailsButton}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Cost" Binding="{Binding Cost}" IsReadOnly="True"/>
+                <DataGridTemplateColumn CellTemplate="{StaticResource GridRemoveDetailsButton}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
-</controls:MetroContentControl>
+</metroControls:MetroContentControl>
 

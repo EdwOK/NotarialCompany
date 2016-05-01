@@ -1,31 +1,53 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Data;
 using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro.Controls.Dialogs;
 using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
+using NotarialCompany.Utilities;
 
 namespace NotarialCompany.Pages.ServicesPage
 {
     public class ServicesViewModel : BasePageViewModel
     {
-        private List<Service> services;
+        private readonly IDialogCoordinator dialogCoordinator;
+        private string searchText;
 
-        public ServicesViewModel(DbScope dbScope) : base(dbScope)
+        private ICollectionView servicesViews;
+
+        private IList<Service> services;
+
+        public ServicesViewModel(DbScope dbScope, IDialogCoordinator dialogCoordinator) : base(dbScope)
         {
+            this.dialogCoordinator = dialogCoordinator;
         }
 
-        public List<Service> Services
+        public ICollectionView ServicesView
         {
-            get { return services; }
-            set { Set(ref services, value); }
+            get { return servicesViews; }
+            set { Set(ref servicesViews, value); }
         }
 
         public Service SelectedServise { get; set; }
 
+        public string SearchText
+        {
+            get { return searchText; }
+            set
+            {
+                Set(ref searchText, value);
+                ServicesView?.Refresh();
+            }
+        }
+
         protected override void LoadedCommandExecute()
         {
-            Services = DbScope.GetServices();
+            ServicesView = CollectionViewSource.GetDefaultView(services = DbScope.GetServices());
+            ServicesView.Filter = Filter;
         }
 
         protected override void OpenDetailsViewCommandExecute()
@@ -42,9 +64,37 @@ namespace NotarialCompany.Pages.ServicesPage
                 nameof(ServiceDetailsViewModel), new Service()));
         }
 
-        protected override void RemoveItemCommandExecute()
+        protected override async void RemoveItemCommandExecute()
         {
-            throw new System.NotImplementedException();
+            MessageDialogResult result =
+                await
+                    dialogCoordinator.ShowMessageAsync(this, "Delete services", "Are you sure?",
+                        MessageDialogStyle.AffirmativeAndNegative);
+
+            if (result != MessageDialogResult.Affirmative)
+            {
+                return;
+            }
+
+            DbScope.DeleteService(SelectedServise.Id);
+            services.Remove(SelectedServise);
+            servicesViews.Refresh();
+        }
+
+        private bool Filter(object obj)
+        {
+            var data = obj as Service;
+            if (data == null)
+            {
+                return false;
+            }
+
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+                return data.Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                       data.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
+            }
+            return true;
         }
     }
 }

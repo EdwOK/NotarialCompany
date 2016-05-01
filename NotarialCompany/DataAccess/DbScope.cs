@@ -202,6 +202,10 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        #endregion
+
+        #region Delete Methods 
+
         public void DeleteUser(int userId)
         {
             using (var connection = new SqlConnection(Settings.ConnectionString))
@@ -214,8 +218,20 @@ namespace NotarialCompany.DataAccess
             }
         }
 
-        #endregion
+        public void DeleteService(int serviceId)
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.ServicesRemoveService, connection) { CommandType = CommandType.StoredProcedure })
+            {
+                connection.Open();
+                SqlCommandBuilder.DeriveParameters(command);
+                command.Parameters[1].Value = serviceId;
+                command.ExecuteNonQuery();
+            }
+        }
 
+
+        #endregion
         private static class StoredProceduresNames
         {
             public const string UsersGetUsers = "[Users.GetUsers]";
@@ -225,6 +241,7 @@ namespace NotarialCompany.DataAccess
 
             public const string ServicesGetServices = "[Services.GetServices]";
             public const string ServicesUpdateService = "[Services.CreateOrUpdateService]";
+            public const string ServicesRemoveService = "[Services.RemoveService]";
 
             public const string ÑlientsGetClients = "[Clients.GetClients]";
             public const string ClientsUpdateClient = "[Clients.CreateOrUpdateClient]";

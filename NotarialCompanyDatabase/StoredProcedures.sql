@@ -203,6 +203,18 @@ AS
 	WHERE [Services].[Id] = @id
 GO
 
+
+IF OBJECT_ID('[Services.RemoveService]') IS NOT NULL
+	DROP PROCEDURE [Services.RemoveService]
+GO
+
+CREATE PROCEDURE [Services.RemoveService]
+	@id INT
+AS
+	DELETE FROM [dbo].[Services]
+	WHERE [Id] = @id
+GO
+
 ------------------------------------------------Clients------------------------------------------------
 
 IF OBJECT_ID('[Clients.CreateOrUpdateClient]') IS NOT NULL
