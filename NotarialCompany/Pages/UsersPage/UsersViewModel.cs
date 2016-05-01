@@ -95,7 +95,7 @@ namespace NotarialCompany.Pages.UsersPage
                        || data.Employee.FirstName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
                        || data.Employee.LastName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
                        || data.Employee.MiddleName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
-                       || data.Employee.EmployeesPosition.Postition.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
+                       || data.Employee.EmployeesPosition.Position.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
             }
             return true;
         }

@@ -9,6 +9,7 @@ using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.Models;
 using NotarialCompany.Pages.ClientsPage;
 using NotarialCompany.Pages.DealsPage;
+using NotarialCompany.Pages.EmployeesPage;
 using NotarialCompany.Pages.LoginPage;
 using NotarialCompany.Pages.ServicesPage;
 using NotarialCompany.Pages.UsersPage;
@@ -27,10 +28,12 @@ namespace NotarialCompany
         private readonly ServicesView servicesView;
         private readonly DealsView dealsView;
         private readonly ClientsView clientsView;
+        private readonly EmployeesView employeeView;
         private readonly LoginView loginView;
 
         public MainViewModel(IAuthenticationService authenticationService, IAuthorizationService authorizationService,
-            UsersView usersView, ServicesView servicesView, DealsView dealsView, ClientsView clientsView, LoginView loginView)
+            UsersView usersView, ServicesView servicesView, DealsView dealsView, ClientsView clientsView, 
+            EmployeesView employeeView, LoginView loginView)
         {
             CurrentView = loginView;
 
@@ -41,12 +44,14 @@ namespace NotarialCompany
             this.servicesView = servicesView;
             this.dealsView = dealsView;
             this.clientsView = clientsView;
+            this.employeeView = employeeView;
             this.loginView = loginView;
 
             OpenDealsCommand = new RelayCommand(OpenDealsCommandExecute);
             OpenServicesCommand = new RelayCommand(OpenServicesCommandExecute);
             OpenClientsCommand = new RelayCommand(OpenClientsCommandExecute);
             OpenUsersCommand = new RelayCommand(OpenUsersCommandExecute);
+            OpenEmployeeCommand = new RelayCommand(OpenEmployeesCommandExecute);
             LogoutCommand = new RelayCommand(LogoutCommandExecute);
 
             Messenger.Default.Register<OpenViewArgs>(this, args =>
@@ -71,6 +76,7 @@ namespace NotarialCompany
         public ICommand OpenDealsCommand { get; set; }
         public ICommand OpenClientsCommand { get; set; }
         public ICommand OpenUsersCommand { get; set; }
+        public ICommand OpenEmployeeCommand { get; set; }
         public ICommand LogoutCommand { get; set; }
 
         public void OpenUsersCommandExecute()
@@ -91,6 +97,11 @@ namespace NotarialCompany
         private void OpenClientsCommandExecute()
         {
             CurrentView = clientsView;
+        }
+
+        private void OpenEmployeesCommandExecute()
+        {
+            CurrentView = employeeView;
         }
 
         private void LogoutCommandExecute()

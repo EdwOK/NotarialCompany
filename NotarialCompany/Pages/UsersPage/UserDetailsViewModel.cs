@@ -14,15 +14,13 @@ namespace NotarialCompany.Pages.UsersPage
 {
     public class UserDetailsViewModel : ValidationViewModel
     {
-        private readonly DbScope dbScope;
         private readonly IAuthenticationService authenticationService;
 
         private MetroContentControl parentView;
         private string parentViewModelName;
 
-        public UserDetailsViewModel(DbScope dbScope, IAuthenticationService authenticationService)
+        public UserDetailsViewModel(DbScope dbScope, IAuthenticationService authenticationService) : base(dbScope)
         {
-            this.dbScope = dbScope;
             this.authenticationService = authenticationService;
 
             this.Roles = dbScope.GetRoles();
@@ -123,7 +121,7 @@ namespace NotarialCompany.Pages.UsersPage
             User.RoleId = SelectedRole.Id;
 
             var saveUser = authenticationService.GenerateCredentials(User);
-            dbScope.UpdateUser(saveUser);
+            DbScope.UpdateUser(saveUser);
             NavigateBackCommandExecute();
         }
 

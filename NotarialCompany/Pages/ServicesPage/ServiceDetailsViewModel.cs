@@ -12,15 +12,11 @@ namespace NotarialCompany.Pages.ServicesPage
 {
     public class ServiceDetailsViewModel : ValidationViewModel
     {
-        private readonly DbScope dbScope;
-
         private MetroContentControl parentView;
         private string parentViewModelName;
 
-        public ServiceDetailsViewModel(DbScope dbScope)
+        public ServiceDetailsViewModel(DbScope dbScope) : base(dbScope)
         {
-            this.dbScope = dbScope;
-
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
 
@@ -87,7 +83,8 @@ namespace NotarialCompany.Pages.ServicesPage
             {
                 return;
             }
-            dbScope.UpdateService(Service);
+
+            DbScope.UpdateService(Service);
             NavigateBackCommandExecute();
         }
 

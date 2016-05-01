@@ -270,6 +270,34 @@ GO
 
 ------------------------------------------------Employees------------------------------------------------
 
+IF OBJECT_ID('[Employees.CreateOrUpdateEmployee]') IS NOT NULL
+	DROP PROCEDURE [Employees.CreateOrUpdateEmployee]
+GO
+
+
+CREATE PROCEDURE [Employees.CreateOrUpdateEmployee]
+	@id INT,
+	@firstName NVARCHAR(30),
+	@lastName NVARCHAR(30),
+	@middleName NVARCHAR(30),
+	@address NVARCHAR(250),
+	@phoneNumber NVARCHAR(15),
+	@employmentDate DATE,
+	@employeesPositionId INT
+AS
+	IF @id = 0
+	BEGIN
+		INSERT INTO [Employees]
+		VALUES (@firstName,	@lastName, @middleName, @address, @phoneNumber, @employmentDate, @employeesPositionId)
+		RETURN
+	END
+
+	UPDATE [Employees] 
+	SET [FirstName] = @firstName, [LastName] = @lastName, [MiddleName] = @middleName, [Address] = @address, 
+		[PhoneNumber] = @phoneNumber, [EmploymentDate] = @employmentDate, [EmployeesPositionId] = @employeesPositionId
+	WHERE [Employees].[Id] = @id
+GO
+
 IF OBJECT_ID('[Employees.GetEmployees]') IS NOT NULL
 	DROP PROCEDURE [Employees.GetEmployees]
 GO
@@ -280,5 +308,30 @@ BEGIN
 	SET NOCOUNT ON;
 	SELECT * FROM [Employees]
 	INNER JOIN [EmployeesPositions] ON [EmployeesPositions].[Id] = [Employees].[EmployeesPositionId]
+END
+GO
+
+IF OBJECT_ID('[Employees.RemoveEmployee]') IS NOT NULL
+	DROP PROCEDURE [Employees.RemoveEmployee]
+GO
+
+CREATE PROCEDURE [Employees.RemoveEmployee]
+	@id INT
+AS
+	DELETE FROM [dbo].[Employees]
+	WHERE [Id] = @id
+GO
+
+------------------------------------------------EmployeesPositions------------------------------------------------
+
+IF OBJECT_ID('[EmployeesPositions.GetEmployeesPosition]') IS NOT NULL
+	DROP PROCEDURE [EmployeesPositions.GetEmployeesPosition]
+GO
+
+CREATE PROCEDURE [EmployeesPositions.GetEmployeesPosition]
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SELECT * FROM [EmployeesPositions]
 END
 GO

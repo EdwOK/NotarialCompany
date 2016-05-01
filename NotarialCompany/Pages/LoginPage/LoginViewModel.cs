@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro.Controls.Dialogs;
 using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
+using NotarialCompany.DataAccess;
 using NotarialCompany.Pages.ServicesPage;
 using NotarialCompany.Security.Authentication;
 
@@ -16,7 +17,7 @@ namespace NotarialCompany.Pages.LoginPage
 
         private readonly IDialogCoordinator dialogCoordinator;
 
-        public LoginViewModel(IAuthenticationService authenticationService, IDialogCoordinator dialogCoordinator)
+        public LoginViewModel(DbScope dbScope, IAuthenticationService authenticationService, IDialogCoordinator dialogCoordinator) : base(dbScope)
         {
             this.authenticationService = authenticationService;
             this.dialogCoordinator = dialogCoordinator;

@@ -147,6 +147,24 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public List<EmployeesPosition> GetEmployeesPosition()
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.EmployeesPositionsGetEmployeesPosition, connection) { CommandType = CommandType.StoredProcedure })
+            using (var dataAdapter = new SqlDataAdapter(command))
+            {
+                var dataSet = new DataSet();
+                dataAdapter.Fill(dataSet, "Table");
+
+                DataTable dataTable = dataSet.Tables["Table"];
+
+                var list = new List<EmployeesPosition>(
+                    from DataRow row in dataTable.Rows
+                    select Mapper.Map<object[], EmployeesPosition>(row.ItemArray));
+                return list;
+            }
+        }
+
         #endregion
 
         #region Updates methods
@@ -202,6 +220,23 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public void UpdateEmployee(Employee employee)
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.EmployeesUpdateEmployee, connection) { CommandType = CommandType.StoredProcedure })
+            {
+                connection.Open();
+                SqlCommandBuilder.DeriveParameters(command);
+
+                var serviseRecord = Mapper.Map<Employee, object[]>(employee);
+                for (var i = 0; i < serviseRecord.Length; i++)
+                {
+                    command.Parameters[i + 1].Value = serviseRecord[i];
+                }
+                command.ExecuteNonQuery();
+            }
+        }
+
         #endregion
 
         #region Delete Methods 
@@ -242,6 +277,18 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public void DeleteEmployee(int employeeId)
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.EmployeesRemoveEmployee, connection) { CommandType = CommandType.StoredProcedure })
+            {
+                connection.Open();
+                SqlCommandBuilder.DeriveParameters(command);
+                command.Parameters[1].Value = employeeId;
+                command.ExecuteNonQuery();
+            }
+        }
+
         #endregion
 
         private static class StoredProceduresNames
@@ -259,8 +306,13 @@ namespace NotarialCompany.DataAccess
             public const string ClientsUpdateClient = "[Clients.CreateOrUpdateClient]";
             public const string ClientsRemoveClient = "[Clients.RemoveClient]";
 
-            public const string RolesGetRoles = "[Roles.GetRoles]";
             public const string EmployeesGetEmployees = "[Employees.GetEmployees]";
+            public const string EmployeesUpdateEmployee = "[Employees.CreateOrUpdateEmployee]";
+            public const string EmployeesRemoveEmployee = "[Employees.RemoveEmployee]";
+
+            public const string EmployeesPositionsGetEmployeesPosition = "[EmployeesPositions.GetEmployeesPosition]";
+
+            public const string RolesGetRoles = "[Roles.GetRoles]";
         }
     }
 }

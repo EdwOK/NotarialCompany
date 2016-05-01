@@ -13,6 +13,7 @@ namespace NotarialCompany.Configuration
                 cfg.AddProfile(new UserProfile());
                 cfg.AddProfile(new ServicesProfile());
                 cfg.AddProfile(new RolesProfile());
+                cfg.AddProfile(new EmployeesPositionProfile());
                 cfg.AddProfile(new EmployeesProfile());
                 cfg.AddProfile(new ClientsProfile());
             });
@@ -46,7 +47,7 @@ namespace NotarialCompany.Configuration
                         EmployeesPosition = new EmployeesPosition
                         {
                             Id = (int) src[16],
-                            Postition = (string) src[17],
+                            Position = (string) src[17],
                             Salary = (decimal) src[18],
                             Commission = (int) src[19]
                         }
@@ -110,6 +111,20 @@ namespace NotarialCompany.Configuration
         }
     }
 
+    public class EmployeesPositionProfile : Profile
+    {
+        protected override void Configure()
+        {
+            CreateMap<object[], EmployeesPosition>()
+                .ForMember(u => u.Id, opts => opts.MapFrom(src => (int)src[0]))
+                .ForMember(u => u.Position, opts => opts.MapFrom(src => (string)src[1]))
+                .ForMember(u => u.Salary, opts => opts.MapFrom(src => (decimal)src[2]))
+                .ForMember(u => u.Commission, opts => opts.MapFrom(src => (int)src[3]))
+                .ReverseMap()
+                .ConstructUsing(x => new object[] { x.Id, x.Position, x.Salary, x.Commission });
+        }
+    }
+
     public class EmployeesProfile : Profile
     {
         protected override void Configure()
@@ -127,7 +142,7 @@ namespace NotarialCompany.Configuration
                     new EmployeesPosition
                     {
                         Id = (int) src[8],
-                        Postition = (string) src[9],
+                        Position = (string) src[9],
                         Salary = (decimal) src[10],
                         Commission = (int) src[11]
                     }))

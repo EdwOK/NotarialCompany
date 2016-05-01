@@ -2,12 +2,20 @@
 using System.ComponentModel;
 using System.Linq;
 using GalaSoft.MvvmLight;
+using NotarialCompany.DataAccess;
 
 namespace NotarialCompany.Common
 {
     public class ValidationViewModel : ViewModelBase, IDataErrorInfo
     {
         protected bool AllowValidation;
+
+        protected readonly DbScope DbScope;
+
+        protected ValidationViewModel(DbScope dbScope) 
+        {
+            this.DbScope = dbScope;
+        }
 
         public ICollection<string> ValidatingProperties { get; set; }
 

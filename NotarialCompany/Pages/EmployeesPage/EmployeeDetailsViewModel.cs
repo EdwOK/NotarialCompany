@@ -1,98 +1,114 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Controls;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro.Controls;
 using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
+using NotarialCompany.Pages.UsersPage;
 
-namespace NotarialCompany.Pages.ClientsPage
+namespace NotarialCompany.Pages.EmployeesPage
 {
-    public class ClientDetailsViewModel : ValidationViewModel
+    public class EmployeeDetailsViewModel : ValidationViewModel
     {
         private MetroContentControl parentView;
         private string parentViewModelName;
 
-        public ClientDetailsViewModel(DbScope dbScope) : base(dbScope) 
+        public EmployeeDetailsViewModel(DbScope dbScope) : base(dbScope)
         {
+            this.EmployeesPositions = dbScope.GetEmployeesPosition();
+
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
 
             ValidatingProperties = new List<string>
             {
                 nameof(FirstName),
-                nameof(SecondName),
                 nameof(MiddleName),
-                nameof(Occupation),
+                nameof(LastName),
+                nameof(PhoneNumber),
                 nameof(Address),
-                nameof(PhoneNumber)
+                nameof(EmploymentDate),
+                nameof(SelectedEmployeesPosition)
             };
 
-            Messenger.Default.Register<SendViewModelParamArgs<Client>>(this, args =>
+            Messenger.Default.Register<SendViewModelParamArgs<Employee>>(this, args =>
             {
-                if (args.ChildViewModelName != nameof(ClientDetailsViewModel))
+                if (args.ChildViewModelName != nameof(EmployeeDetailsViewModel))
                 {
                     return;
                 }
+
                 AllowValidation = false;
 
                 parentView = args.ParentView;
                 parentViewModelName = args.ParentViewModelName;
 
-                Client = args.Parameter ?? new Client();
+                Employee = args.Parameter ?? new Employee();
+                SelectedEmployeesPosition = EmployeesPositions.Find(r => r.Id == Employee.EmployeesPositionId);
 
                 RaisePropertyChanged(() => FirstName);
-                RaisePropertyChanged(() => SecondName);
                 RaisePropertyChanged(() => MiddleName);
-                RaisePropertyChanged(() => Occupation);
+                RaisePropertyChanged(() => LastName);
                 RaisePropertyChanged(() => Address);
                 RaisePropertyChanged(() => PhoneNumber);
+                RaisePropertyChanged(() => EmploymentDate);
+                RaisePropertyChanged(() => SelectedEmployeesPosition);
             });
         }
 
-        public Client Client { get; set; }
+        public Employee Employee { get; set; }
+
+        public EmployeesPosition SelectedEmployeesPosition { get; set; }
+
+        public List<EmployeesPosition> EmployeesPositions { get; set; }
 
         public ICommand SaveCommand { get; set; }
         public ICommand NavigateBackCommand { get; set; }
 
         public string FirstName
         {
-            get { return Client?.FirstName; }
-            set { Client.FirstName = value; }
+            get { return Employee?.FirstName; }
+            set { Employee.FirstName = value; }
         }
 
-        public string SecondName
+        public string LastName
         {
-            get { return Client?.SecondName; }
-            set { Client.SecondName = value; }
+            get { return Employee?.LastName; }
+            set { Employee.LastName = value; }
         }
 
         public string MiddleName
         {
-            get { return Client?.MiddleName; }
-            set { Client.MiddleName = value; }
-        }
-
-        public string Occupation
-        {
-            get { return Client?.Occupation; }
-            set { Client.Occupation = value; }
+            get { return Employee?.MiddleName; }
+            set { Employee.MiddleName = value; }
         }
 
         public string Address
         {
-            get { return Client?.Address; }
-            set { Client.Address = value; }
+            get { return Employee?.Address; }
+            set { Employee.Address = value; }
         }
 
         public string PhoneNumber
         {
-            get { return Client?.PhoneNumber; }
-            set { Client.PhoneNumber = value; }
+            get { return Employee?.PhoneNumber; }
+            set { Employee.PhoneNumber = value; }
+        }
+
+        public DateTime EmploymentDate
+        {
+            get { return Employee?.EmploymentDate ?? DateTime.Now; }
+            set
+            {
+                if (Employee != null)
+                {
+                    Employee.EmploymentDate = value;
+                }
+            }
         }
 
         protected override string GetValidationError(string propertyName)
@@ -101,17 +117,13 @@ namespace NotarialCompany.Pages.ClientsPage
             {
                 return "FirstName is required";
             }
-            if (propertyName == nameof(SecondName) && string.IsNullOrWhiteSpace(SecondName))
-            {
-                return "SecondName is required";
-            }
             if (propertyName == nameof(MiddleName) && string.IsNullOrWhiteSpace(MiddleName))
             {
                 return "MiddleName is required";
             }
-            if (propertyName == nameof(Occupation) && string.IsNullOrWhiteSpace(Occupation))
+            if (propertyName == nameof(LastName) && string.IsNullOrWhiteSpace(LastName))
             {
-                return "Occupation is required";
+                return "LastName is required";
             }
             if (propertyName == nameof(Address) && string.IsNullOrWhiteSpace(Address))
             {
@@ -120,6 +132,10 @@ namespace NotarialCompany.Pages.ClientsPage
             if (propertyName == nameof(PhoneNumber) && string.IsNullOrWhiteSpace(PhoneNumber))
             {
                 return "PhoneNumber is required";
+            }
+            if (propertyName == nameof(SelectedEmployeesPosition) && SelectedEmployeesPosition == null)
+            {
+                return "Position is required";
             }
             return null;
         }
@@ -131,7 +147,10 @@ namespace NotarialCompany.Pages.ClientsPage
                 return;
             }
 
-            DbScope.UpdateClient(Client);
+            Employee.EmployeesPosition = SelectedEmployeesPosition;
+            Employee.EmployeesPositionId = SelectedEmployeesPosition.Id;
+
+            DbScope.UpdateEmployee(Employee);
             NavigateBackCommandExecute();
         }
 

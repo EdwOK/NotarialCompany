@@ -4,6 +4,7 @@ using Microsoft.Practices.ServiceLocation;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Pages.ClientsPage;
 using NotarialCompany.Pages.DealsPage;
+using NotarialCompany.Pages.EmployeesPage;
 using NotarialCompany.Pages.LoginPage;
 using NotarialCompany.Pages.ServicesPage;
 using NotarialCompany.Pages.UsersPage;
@@ -40,6 +41,9 @@ namespace NotarialCompany
 
             SimpleIoc.Default.Register<DealsViewModel>();
 
+            SimpleIoc.Default.Register<EmployeesViewModel>();
+            SimpleIoc.Default.Register<EmployeeDetailsViewModel>();
+
             SimpleIoc.Default.Register<IAuthenticationService, AuthenticationService>();
             SimpleIoc.Default.Register<IAuthorizationService, AuthorizationService>();
             SimpleIoc.Default.Register<DbScope>();
@@ -51,6 +55,7 @@ namespace NotarialCompany
             SimpleIoc.Default.Register<ClientsView>();
             SimpleIoc.Default.Register<UsersView>();
             SimpleIoc.Default.Register<LoginView>();
+            SimpleIoc.Default.Register<EmployeesView>();
         }
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
@@ -67,11 +72,15 @@ namespace NotarialCompany
 
         public DealsViewModel DealsViewModel => ServiceLocator.Current.GetInstance<DealsViewModel>();
 
+        public EmployeesViewModel EmployeesViewModel => ServiceLocator.Current.GetInstance<EmployeesViewModel>();
+        public EmployeeDetailsViewModel EmployeeDetailsViewModel => ServiceLocator.Current.GetInstance<EmployeeDetailsViewModel>();
+
         public ServicesView ServicesView => ServiceLocator.Current.GetInstance<ServicesView>();
         public DealsView DealsView => ServiceLocator.Current.GetInstance<DealsView>();
         public ClientsView ClientsView => ServiceLocator.Current.GetInstance<ClientsView>();
         public UsersView UsersView => ServiceLocator.Current.GetInstance<UsersView>();
         public LoginView LoginView => ServiceLocator.Current.GetInstance<LoginView>();
+        public EmployeesView EmployeesView => ServiceLocator.Current.GetInstance<EmployeesView>();
 
 
         public static void Cleanup()

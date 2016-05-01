@@ -172,6 +172,14 @@
       <DependentUpon>DealsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\DealsPage\DealsViewModel.cs" />
+    <Compile Include="Pages\EmployeesPage\EmployeeDetailsView.xaml.cs">
+      <DependentUpon>EmployeeDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EmployeesPage\EmployeeDetailsViewModel.cs" />
+    <Compile Include="Pages\EmployeesPage\EmployeesView.xaml.cs">
+      <DependentUpon>EmployeesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EmployeesPage\EmployeesViewModel.cs" />
     <Compile Include="Pages\LoginPage\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -263,6 +271,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\DealsPage\DealsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EmployeesPage\EmployeeDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EmployeesPage\EmployeesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
