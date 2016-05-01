@@ -230,8 +230,20 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public void DeleteClient(int clientId)
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.ClientsRemoveClient, connection) { CommandType = CommandType.StoredProcedure })
+            {
+                connection.Open();
+                SqlCommandBuilder.DeriveParameters(command);
+                command.Parameters[1].Value = clientId;
+                command.ExecuteNonQuery();
+            }
+        }
 
         #endregion
+
         private static class StoredProceduresNames
         {
             public const string UsersGetUsers = "[Users.GetUsers]";
@@ -245,6 +257,7 @@ namespace NotarialCompany.DataAccess
 
             public const string ÑlientsGetClients = "[Clients.GetClients]";
             public const string ClientsUpdateClient = "[Clients.CreateOrUpdateClient]";
+            public const string ClientsRemoveClient = "[Clients.RemoveClient]";
 
             public const string RolesGetRoles = "[Roles.GetRoles]";
             public const string EmployeesGetEmployees = "[Employees.GetEmployees]";

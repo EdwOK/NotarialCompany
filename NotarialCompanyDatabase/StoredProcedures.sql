@@ -167,19 +167,6 @@ BEGIN
 END
 GO
 
-IF OBJECT_ID('[Clients.GetClients]') IS NOT NULL
-	DROP PROCEDURE [Clients.GetClients]
-GO
-
-CREATE PROCEDURE [Clients.GetClients]
-AS
-BEGIN
-	SET NOCOUNT ON;
-	SELECT * FROM [Clients]
-END
-GO
-
-
 IF OBJECT_ID('[Services.CreateOrUpdateService]') IS NOT NULL
 	DROP PROCEDURE [Services.CreateOrUpdateService]
 GO
@@ -242,6 +229,29 @@ AS
 	SET [FirstName] = @firstName, [SecondName] = @secondName, [MiddleName] = @middleName, [Occupation] = @occupation, 
 		[Address] = @address, [PhoneNumber] = @phoneNumber
 	WHERE [Clients].[Id] = @id
+GO
+
+IF OBJECT_ID('[Clients.GetClients]') IS NOT NULL
+	DROP PROCEDURE [Clients.GetClients]
+GO
+
+CREATE PROCEDURE [Clients.GetClients]
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SELECT * FROM [Clients]
+END
+GO
+
+IF OBJECT_ID('[Clients.RemoveClient]') IS NOT NULL
+	DROP PROCEDURE [Clients.RemoveClient]
+GO
+
+CREATE PROCEDURE [Clients.RemoveClient]
+	@id INT
+AS
+	DELETE FROM [dbo].[Clients]
+	WHERE [Id] = @id
 GO
 
 ------------------------------------------------Roles------------------------------------------------

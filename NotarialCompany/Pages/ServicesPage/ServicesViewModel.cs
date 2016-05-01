@@ -68,7 +68,7 @@ namespace NotarialCompany.Pages.ServicesPage
         {
             MessageDialogResult result =
                 await
-                    dialogCoordinator.ShowMessageAsync(this, "Delete services", "Are you sure?",
+                    dialogCoordinator.ShowMessageAsync(this, "Delete service", "Are you sure?",
                         MessageDialogStyle.AffirmativeAndNegative);
 
             if (result != MessageDialogResult.Affirmative)
@@ -89,12 +89,8 @@ namespace NotarialCompany.Pages.ServicesPage
                 return false;
             }
 
-            if (!string.IsNullOrEmpty(SearchText))
-            {
-                return data.Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                       data.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
-            }
-            return true;
+            return string.IsNullOrEmpty(SearchText) ||
+                   data.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

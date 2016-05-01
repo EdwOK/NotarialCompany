@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Data;
 using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro.Controls.Dialogs;
 using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
@@ -13,18 +14,22 @@ namespace NotarialCompany.Pages.ClientsPage
 {
     public class ClientsViewModel : BasePageViewModel
     {
+        private readonly IDialogCoordinator dialogCoordinator;
         private string searchText;
 
-        private ICollectionView clients;
+        private ICollectionView clientsViews;
 
-        public ClientsViewModel(DbScope dbScope) : base(dbScope)
+        private IList<Client> clients;
+
+        public ClientsViewModel(DbScope dbScope, IDialogCoordinator dialogCoordinator) : base(dbScope)
         {
+            this.dialogCoordinator = dialogCoordinator;
         }
 
-        public ICollectionView Clients
+        public ICollectionView ClientsView
         {
-            get { return clients; }
-            set { Set(ref clients, value); }
+            get { return clientsViews; }
+            set { Set(ref clientsViews, value); }
         }
 
         public Client SelectedClient { get; set; }
@@ -35,14 +40,14 @@ namespace NotarialCompany.Pages.ClientsPage
             set
             {
                 Set(ref searchText, value);
-                Clients?.Refresh();
+                ClientsView?.Refresh();
             }
         }
 
         protected override void LoadedCommandExecute()
         {
-            Clients = CollectionViewSource.GetDefaultView(DbScope.GetClients());
-            Clients.Filter = Filter;
+            ClientsView = CollectionViewSource.GetDefaultView(clients = DbScope.GetClients());
+            ClientsView.Filter = Filter;
         }
 
         protected override void OpenDetailsViewCommandExecute()
@@ -59,9 +64,21 @@ namespace NotarialCompany.Pages.ClientsPage
                 nameof(ClientDetailsViewModel), new Client()));
         }
 
-        protected override void RemoveItemCommandExecute()
+        protected override async void RemoveItemCommandExecute()
         {
-            throw new NotImplementedException();
+            MessageDialogResult result =
+                await
+                    dialogCoordinator.ShowMessageAsync(this, "Delete client", "Are you sure?",
+                        MessageDialogStyle.AffirmativeAndNegative);
+
+            if (result != MessageDialogResult.Affirmative)
+            {
+                return;
+            }
+
+            DbScope.DeleteClient(SelectedClient.Id);
+            clients.Remove(SelectedClient);
+            clientsViews.Refresh();
         }
 
         private bool Filter(object obj)
