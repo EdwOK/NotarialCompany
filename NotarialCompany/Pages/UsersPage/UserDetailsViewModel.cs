@@ -9,6 +9,7 @@ using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
 using NotarialCompany.Security;
 using NotarialCompany.Security.Authentication;
+using NotarialCompany.Security.Authorization;
 
 namespace NotarialCompany.Pages.UsersPage
 {
@@ -16,20 +17,25 @@ namespace NotarialCompany.Pages.UsersPage
     {
         private readonly DbScope dbScope;
         private readonly IAuthenticationService authenticationService;
+        private readonly IAuthorizationService authorizationService;
 
         private MetroContentControl parentView;
         private string parentViewModelName;
 
-        public UserDetailsViewModel(DbScope dbScope, IAuthenticationService authenticationService)
+        private string savedPassword;
+
+        public UserDetailsViewModel(DbScope dbScope, IAuthenticationService authenticationService, IAuthorizationService authorizationService)
         {
             this.dbScope = dbScope;
             this.authenticationService = authenticationService;
+            this.authorizationService = authorizationService;
 
             this.Roles = dbScope.GetRoles();
             this.Employees = dbScope.GetEmployees();
 
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
+            LoadedCommand = new RelayCommand(LoadedCommandExecute);
 
             ValidatingProperties = new List<string>
             {
@@ -52,6 +58,9 @@ namespace NotarialCompany.Pages.UsersPage
                 parentViewModelName = args.ParentViewModelName;
 
                 User = args.Parameter ?? new User();
+                savedPassword = User.Password;
+                User.Password = null;
+
                 SelectedRole = Roles.Find(r => r.Id == User.RoleId);
                 SelectedEmployee = Employees.Find(e => e.Id == User.EmployeeId);
 
@@ -63,10 +72,10 @@ namespace NotarialCompany.Pages.UsersPage
         }
 
         public User User { get; set; }
-
         public ICommand SaveCommand { get; set; }
-
         public ICommand NavigateBackCommand { get; set; }
+
+        public ICommand LoadedCommand { get; set; }
 
         public string Username
         {
@@ -80,6 +89,8 @@ namespace NotarialCompany.Pages.UsersPage
             set { User.Password = value; }
         }
 
+        public bool CanUpdateUser { get; set; }
+
         public Employee SelectedEmployee { get; set; }
 
         public Role SelectedRole { get; set; }
@@ -87,14 +98,16 @@ namespace NotarialCompany.Pages.UsersPage
         public List<Role> Roles { get; set; }
 
         public List<Employee> Employees { get; set; }
-         
+
+        public bool IsCreationMode => User?.Id == 0;
+
         protected override string GetValidationError(string propertyName)
         {
             if (propertyName == nameof(Username) && string.IsNullOrWhiteSpace(Username))
             {
                 return "Name is required";
             }
-            if (propertyName == nameof(Password) && string.IsNullOrWhiteSpace(Password))
+            if (propertyName == nameof(Password) && string.IsNullOrWhiteSpace(Password) && IsCreationMode)
             {
                 return "Password is required";
             }
@@ -122,14 +135,27 @@ namespace NotarialCompany.Pages.UsersPage
             User.Role = SelectedRole;
             User.RoleId = SelectedRole.Id;
 
-            var saveUser = authenticationService.GenerateCredentials(User);
-            dbScope.UpdateUser(saveUser);
+            if (IsCreationMode || User.Password != null)
+            {
+                authenticationService.GenerateCredentials(User);
+            }
+            else
+            {
+                User.Password = savedPassword;
+            }
+            dbScope.CreateOrUpdateUser(User);
             NavigateBackCommandExecute();
         }
 
         private void NavigateBackCommandExecute()
         {
             Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
+        }
+
+        private void LoadedCommandExecute()
+        {
+            CanUpdateUser = authorizationService.CheckAccess(typeof (User), ResourceAction.Update);
+            RaisePropertyChanged(() => CanUpdateUser);
         }
     }
 }

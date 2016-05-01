@@ -7,22 +7,26 @@ using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
+using NotarialCompany.Security.Authorization;
 
 namespace NotarialCompany.Pages.ServicesPage
 {
     public class ServiceDetailsViewModel : ValidationViewModel
     {
         private readonly DbScope dbScope;
+        private readonly IAuthorizationService authorizationService;
 
         private MetroContentControl parentView;
         private string parentViewModelName;
 
-        public ServiceDetailsViewModel(DbScope dbScope)
+        public ServiceDetailsViewModel(DbScope dbScope, IAuthorizationService authorizationService)
         {
             this.dbScope = dbScope;
+            this.authorizationService = authorizationService;
 
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
+            LoadedCommand = new RelayCommand(LoadedCommandExecute);
 
             ValidatingProperties = new List<string> {nameof(Name), nameof(Description)};
 
@@ -49,6 +53,7 @@ namespace NotarialCompany.Pages.ServicesPage
 
         public ICommand SaveCommand { get; set; }
         public ICommand NavigateBackCommand { get; set; }
+        public ICommand LoadedCommand { get; set; }
 
         public string Name
         {
@@ -67,6 +72,8 @@ namespace NotarialCompany.Pages.ServicesPage
             get { return Service?.Cost ?? 0; }
             set { Service.Cost = value; }
         }
+
+        public bool CanUpdateService { get; set; }
 
         protected override string GetValidationError(string propertyName)
         {
@@ -94,6 +101,12 @@ namespace NotarialCompany.Pages.ServicesPage
         private void NavigateBackCommandExecute()
         {
             Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
+        }
+
+        private void LoadedCommandExecute()
+        {
+            CanUpdateService = authorizationService.CheckAccess(typeof (Service), ResourceAction.Update);
+            RaisePropertyChanged(nameof(CanUpdateService));
         }
     }
 }

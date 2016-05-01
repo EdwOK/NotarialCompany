@@ -10,6 +10,7 @@
     xmlns:local="clr-namespace:NotarialCompany.Pages.ServicesPage"
     xmlns:metroControls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+    xmlns:converters="http://schemas.kent.boogaart.com/converters"
     dialog:DialogParticipation.Register="{Binding}"
     DataContext="{Binding ServicesViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d" 
@@ -21,17 +22,21 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <Label Margin="10,10,0,10" VerticalAlignment="Center">Services</Label>
+            <Label Margin="10,10,0,10" VerticalAlignment="Center" FontWeight="Bold">Services</Label>
             <TextBox metroControls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}">Add New</Button>
+            <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}" Visibility="{Binding CanCreateService, Converter={converters:BooleanToVisibilityConverter}}">Add New</Button>
         </StackPanel>
         <DataGrid ItemsSource="{Binding ServicesView}" SelectedItem="{Binding SelectedServise}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Resources>
                 <DataTemplate x:Key="GridOpenDetailsButton">
-                    <Button Content="{Binding Path=Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand"/>
+                    <Button Content="{Binding Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand"/>
                 </DataTemplate>
                 <DataTemplate x:Key="GridRemoveDetailsButton">
-                    <Button Command="{Binding Path=DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand" Style="{StaticResource RemoveButton}"/>
+                    <Button 
+                        Command="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                        Visibility="{Binding DataContext.CanDeleteService, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Converter={converters:BooleanToVisibilityConverter}}"
+                        Style="{StaticResource RemoveButton}"
+                        Cursor="Hand"/>
                 </DataTemplate>
             </DataGrid.Resources>
             <DataGrid.Columns>

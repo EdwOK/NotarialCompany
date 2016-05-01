@@ -10,39 +10,39 @@
     Title="Notarial Company" Height="600" MinHeight="600" Width="900" MinWidth="900" 
     WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip">
     <DockPanel>
-        <DockPanel DockPanel.Dock="Top" Visibility="{Binding IsAuthenticated, Converter={converters:BooleanToVisibilityConverter}}">
+        <DockPanel DockPanel.Dock="Top" Visibility="{Binding IsAuthenticated, Converter={converters:BooleanToVisibilityConverter}}" Margin="5,5,5,5">
             <WrapPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                <Button Command="{Binding OpenDealsCommand}">
+                <Button Command="{Binding OpenDealsCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="1,1,1,1">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/deals.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Deals</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding OpenClientsCommand}">
+                <Button Command="{Binding OpenClientsCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="1,1,1,1">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/clients.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Clients</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding OpenServicesCommand}">
+                <Button Command="{Binding OpenServicesCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="1,1,1,1"> 
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/services.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Services</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button>
+                <Button Style="{DynamicResource AccentedSquareButtonStyle}" Margin="1,1,1,1">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/employees.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Employees</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button>
+                <Button Style="{DynamicResource AccentedSquareButtonStyle}" Margin="1,1,1,1">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/employees_postions.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Positions</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding OpenUsersCommand}" Visibility="{Binding HasUserAccess, Converter={converters:BooleanToVisibilityConverter}}">
+                <Button Command="{Binding OpenUsersCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="1,1,1,1" Visibility="{Binding HasUserAccess, Converter={converters:BooleanToVisibilityConverter}}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/clients.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Users</TextBlock>
@@ -50,7 +50,7 @@
                 </Button>
             </WrapPanel>
             <WrapPanel HorizontalAlignment="Right">
-                <controls:DropdownButtonControl ContextMenuService.IsEnabled="False">
+                <controls:DropdownButtonControl ContextMenuService.IsEnabled="False" Style="{DynamicResource AccentedSquareButtonStyle}">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Resources/Images/settings.png" Width="32" Height="32" />
@@ -58,13 +58,13 @@
                     </Button.Content>
                     <Button.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Profile" Command="{Binding OpenDealsCommand}"/>
+                            <MenuItem Header="Profile" Command="{Binding OpenUserProfileCommand}"/>
                             <MenuItem Header="Logout" Command="{Binding LogoutCommand}"/>
                         </ContextMenu>
                     </Button.ContextMenu>
                 </controls:DropdownButtonControl>
             </WrapPanel>
         </DockPanel>
-        <Controls:MetroContentControl Content="{Binding CurrentView}"/>
+        <Controls:MetroContentControl Content="{Binding CurrentView}" Margin="10,5,10,10"/>
     </DockPanel>
 </Controls:MetroWindow>

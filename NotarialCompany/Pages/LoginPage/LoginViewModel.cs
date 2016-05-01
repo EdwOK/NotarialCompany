@@ -24,13 +24,28 @@ namespace NotarialCompany.Pages.LoginPage
             ValidatingProperties = new List<string> {nameof(Login), nameof(Password)};
 
             LoginCommand = new RelayCommand(LoginCommandExecute);
+            LoadedCommand = new RelayCommand(LoadedCommandExecute);
         }
 
         public string Login { get; set; }
 
         public string Password { get; set; }
 
+        public ICommand LoadedCommand { get; set; }
         public ICommand LoginCommand { get; set; }
+
+        protected override string GetValidationError(string propertyName)
+        {
+            if (propertyName == nameof(Login) && string.IsNullOrWhiteSpace(Login))
+            {
+                return "Login is required";
+            }
+            if (propertyName == nameof(Password) && string.IsNullOrWhiteSpace(Password))
+            {
+                return "Password is required";
+            }
+            return null;
+        }
 
         private void LoginCommandExecute()
         {
@@ -51,17 +66,10 @@ namespace NotarialCompany.Pages.LoginPage
             Messenger.Default.Send(new OpenViewArgs(new ServicesView(), nameof(ServicesViewModel)));
         }
 
-        protected override string GetValidationError(string propertyName)
+        private void LoadedCommandExecute()
         {
-            if (propertyName == nameof(Login) && string.IsNullOrWhiteSpace(Login))
-            {
-                return "Login is required";
-            }
-            if (propertyName == nameof(Password) && string.IsNullOrWhiteSpace(Password))
-            {
-                return "Password is required";
-            }
-            return null;
+            Password = null;
+            RaisePropertyChanged(nameof(Password));
         }
     }
 }

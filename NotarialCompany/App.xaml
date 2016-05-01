@@ -7,11 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     d1p1:Ignorable="d" 
     xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:converters="clr-namespace:NotarialCompany.Common.Converters">
+    xmlns:converters="clr-namespace:NotarialCompany.Common.Converters"
+    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid">
     <Application.Resources>
         <ResourceDictionary>
             <local:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-            <converters:NullToTrueConverter x:Key="NullToTrueConverter"/>
+            <xcdg:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
             <converters:MultiConcatStringConverter x:Key="MultiConcatStringConverter"/>
             <ResourceDictionary.MergedDictionaries>
                 <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
