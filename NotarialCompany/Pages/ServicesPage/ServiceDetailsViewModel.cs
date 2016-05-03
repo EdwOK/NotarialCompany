@@ -15,9 +15,6 @@ namespace NotarialCompany.Pages.ServicesPage
     {
         private readonly IAuthorizationService authorizationService;
 
-        private MetroContentControl parentView;
-        private string parentViewModelName;
-
         public ServiceDetailsViewModel(DbScope dbScope, IAuthorizationService authorizationService) : base(dbScope)
         {
             this.authorizationService = authorizationService;
@@ -36,8 +33,8 @@ namespace NotarialCompany.Pages.ServicesPage
                 }
                 AllowValidation = false;
 
-                parentView = args.ParentView;
-                parentViewModelName = args.ParentViewModelName;
+                ParentView = args.ParentView;
+                ParentViewModelName = args.ParentViewModelName;
 
                 Service = args.Parameter ?? new Service();
 
@@ -99,7 +96,7 @@ namespace NotarialCompany.Pages.ServicesPage
 
         private void NavigateBackCommandExecute()
         {
-            Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
+            Messenger.Default.Send(new OpenViewArgs(ParentView, ParentViewModelName));
         }
 
         private void LoadedCommandExecute()

@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using MahApps.Metro.Controls;
 using NotarialCompany.DataAccess;
 
 namespace NotarialCompany.Common
@@ -11,6 +14,9 @@ namespace NotarialCompany.Common
         protected bool AllowValidation;
 
         protected readonly DbScope DbScope;
+
+        protected MetroContentControl ParentView;
+        protected string ParentViewModelName;
 
         protected ValidationViewModel(DbScope dbScope) 
         {

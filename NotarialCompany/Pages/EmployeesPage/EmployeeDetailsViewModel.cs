@@ -16,9 +16,6 @@ namespace NotarialCompany.Pages.EmployeesPage
     {
         private readonly IAuthorizationService authorizationService;
 
-        private MetroContentControl parentView;
-        private string parentViewModelName;
-
         public EmployeeDetailsViewModel(DbScope dbScope, IAuthorizationService authorizationService) : base(dbScope)
         {
             this.authorizationService = authorizationService;
@@ -48,8 +45,8 @@ namespace NotarialCompany.Pages.EmployeesPage
 
                 AllowValidation = false;
 
-                parentView = args.ParentView;
-                parentViewModelName = args.ParentViewModelName;
+                ParentView = args.ParentView;
+                ParentViewModelName = args.ParentViewModelName;
 
                 Employee = args.Parameter ?? new Employee();
                 SelectedEmployeesPosition = EmployeesPositions.Find(r => r.Id == Employee.EmployeesPositionId);
@@ -163,7 +160,7 @@ namespace NotarialCompany.Pages.EmployeesPage
 
         private void NavigateBackCommandExecute()
         {
-            Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
+            Messenger.Default.Send(new OpenViewArgs(ParentView, ParentViewModelName));
         }
 
         private void LoadedCommandExecute()
