@@ -64,12 +64,14 @@ namespace NotarialCompany
                 CurrentView = args.View;
                 RaisePropertyChanged(() => IsAuthenticated);
                 RaisePropertyChanged(() => HasUserAccess);
+                RaisePropertyChanged(() => HasEmployeesPositionAccess);
             });
         }
 
         public bool IsAuthenticated => authenticationService.IsAuthenticated();
 
         public bool HasUserAccess => authorizationService.CheckAccess(typeof (User), AccessPolicyBase.StandartResourceActions);
+        public bool HasEmployeesPositionAccess => authorizationService.CheckAccess(typeof(EmployeesPosition), AccessPolicyBase.StandartResourceActions);
 
         public MetroContentControl CurrentView
         {

@@ -37,7 +37,7 @@
                         <TextBlock VerticalAlignment="Center">Employees</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding OpenEmployeesPotitionsCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="1,1,1,1">
+                <Button Command="{Binding OpenEmployeesPotitionsCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Margin="1,1,1,1" Visibility="{Binding HasEmployeesPositionAccess, Converter={converters:BooleanToVisibilityConverter}}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/Images/employees_postions.png" Width="32" Height="32" Margin="0,0,5,0"/>
                         <TextBlock VerticalAlignment="Center">Positions</TextBlock>
