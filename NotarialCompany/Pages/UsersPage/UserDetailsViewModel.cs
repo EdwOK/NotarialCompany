@@ -18,9 +18,6 @@ namespace NotarialCompany.Pages.UsersPage
         private readonly IAuthenticationService authenticationService;
         private readonly IAuthorizationService authorizationService;
 
-        private MetroContentControl parentView;
-        private string parentViewModelName;
-
         private string savedPassword;
 
         public UserDetailsViewModel(DbScope dbScope, IAuthenticationService authenticationService, IAuthorizationService authorizationService) : base(dbScope)
@@ -52,8 +49,8 @@ namespace NotarialCompany.Pages.UsersPage
 
                 AllowValidation = false;
 
-                parentView = args.ParentView;
-                parentViewModelName = args.ParentViewModelName;
+                ParentView = args.ParentView;
+                ParentViewModelName = args.ParentViewModelName;
 
                 User = args.Parameter ?? new User();
                 savedPassword = User.Password;
@@ -147,7 +144,7 @@ namespace NotarialCompany.Pages.UsersPage
 
         private void NavigateBackCommandExecute()
         {
-            Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
+            Messenger.Default.Send(new OpenViewArgs(ParentView, ParentViewModelName));
         }
 
         private void LoadedCommandExecute()

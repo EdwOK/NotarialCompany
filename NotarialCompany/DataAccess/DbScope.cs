@@ -276,6 +276,23 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public void UpdateEmployeesPosition(EmployeesPosition employeesPosition)
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.EmployeesPositionsUpdateEmployeesPosition, connection) { CommandType = CommandType.StoredProcedure })
+            {
+                connection.Open();
+                SqlCommandBuilder.DeriveParameters(command);
+
+                var serviseRecord = Mapper.Map<EmployeesPosition, object[]>(employeesPosition);
+                for (var i = 0; i < serviseRecord.Length; i++)
+                {
+                    command.Parameters[i + 1].Value = serviseRecord[i];
+                }
+                command.ExecuteNonQuery();
+            }
+        }
+
         public void CreateOrUpdateDeal(Deal deal)
         {
             using (var connection = new SqlConnection(Settings.ConnectionString))
@@ -345,6 +362,18 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public void DeleteEmployeePosition(int employeePositionId)
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.EmployeesPositionsRemoveEmployeesPosition, connection) { CommandType = CommandType.StoredProcedure })
+            {
+                connection.Open();
+                SqlCommandBuilder.DeriveParameters(command);
+                command.Parameters[1].Value = employeePositionId;
+                command.ExecuteNonQuery();
+            }
+        }
+
         #endregion
 
         private static class StoredProceduresNames
@@ -368,6 +397,8 @@ namespace NotarialCompany.DataAccess
             public const string EmployeesRemoveEmployee = "[Employees.RemoveEmployee]";
 
             public const string EmployeesPositionsGetEmployeesPosition = "[EmployeesPositions.GetEmployeesPosition]";
+            public const string EmployeesPositionsUpdateEmployeesPosition = "[EmployeesPositions.CreateOrUpdateEmployeesPosition]";
+            public const string EmployeesPositionsRemoveEmployeesPosition = "[EmployeesPositions.RemoveEmployeesPosition]";
 
             public const string RolesGetRoles = "[Roles.GetRoles]";
 

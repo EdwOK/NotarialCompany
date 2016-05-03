@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -16,9 +14,6 @@ namespace NotarialCompany.Pages.ClientsPage
     public class ClientDetailsViewModel : ValidationViewModel
     {
         private readonly IAuthorizationService authorizationService;
-
-        private MetroContentControl parentView;
-        private string parentViewModelName;
 
         public ClientDetailsViewModel(DbScope dbScope, IAuthorizationService authorizationService) : base(dbScope)
         {
@@ -46,8 +41,8 @@ namespace NotarialCompany.Pages.ClientsPage
                 }
                 AllowValidation = false;
 
-                parentView = args.ParentView;
-                parentViewModelName = args.ParentViewModelName;
+                ParentView = args.ParentView;
+                ParentViewModelName = args.ParentViewModelName;
 
                 Client = args.Parameter ?? new Client();
 
@@ -66,7 +61,6 @@ namespace NotarialCompany.Pages.ClientsPage
 
         public ICommand SaveCommand { get; set; }
         public ICommand NavigateBackCommand { get; set; }
-
         public ICommand LoadedCommand { get; set; }
 
         public string FirstName
@@ -147,7 +141,7 @@ namespace NotarialCompany.Pages.ClientsPage
 
         private void NavigateBackCommandExecute()
         {
-            Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
+            Messenger.Default.Send(new OpenViewArgs(ParentView, ParentViewModelName));
         }
 
         private void LoadedCommandExecute()

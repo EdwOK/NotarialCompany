@@ -8,21 +8,22 @@ using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
-using NotarialCompany.Pages.UsersPage;
+using NotarialCompany.Security.Authorization;
 
 namespace NotarialCompany.Pages.EmployeesPage
 {
     public class EmployeeDetailsViewModel : ValidationViewModel
     {
-        private MetroContentControl parentView;
-        private string parentViewModelName;
+        private readonly IAuthorizationService authorizationService;
 
-        public EmployeeDetailsViewModel(DbScope dbScope) : base(dbScope)
+        public EmployeeDetailsViewModel(DbScope dbScope, IAuthorizationService authorizationService) : base(dbScope)
         {
+            this.authorizationService = authorizationService;
             this.EmployeesPositions = dbScope.GetEmployeesPosition();
 
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
+            LoadedCommand = new RelayCommand(LoadedCommandExecute);
 
             ValidatingProperties = new List<string>
             {
@@ -44,8 +45,8 @@ namespace NotarialCompany.Pages.EmployeesPage
 
                 AllowValidation = false;
 
-                parentView = args.ParentView;
-                parentViewModelName = args.ParentViewModelName;
+                ParentView = args.ParentView;
+                ParentViewModelName = args.ParentViewModelName;
 
                 Employee = args.Parameter ?? new Employee();
                 SelectedEmployeesPosition = EmployeesPositions.Find(r => r.Id == Employee.EmployeesPositionId);
@@ -66,8 +67,11 @@ namespace NotarialCompany.Pages.EmployeesPage
 
         public List<EmployeesPosition> EmployeesPositions { get; set; }
 
+        public bool CanUpdateEmployee { get; set; }
+
         public ICommand SaveCommand { get; set; }
         public ICommand NavigateBackCommand { get; set; }
+        public ICommand LoadedCommand { get; set; }
 
         public string FirstName
         {
@@ -156,7 +160,13 @@ namespace NotarialCompany.Pages.EmployeesPage
 
         private void NavigateBackCommandExecute()
         {
-            Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
+            Messenger.Default.Send(new OpenViewArgs(ParentView, ParentViewModelName));
+        }
+
+        private void LoadedCommandExecute()
+        {
+            CanUpdateEmployee = authorizationService.CheckAccess(typeof(Employee), ResourceAction.Update);
+            RaisePropertyChanged(() => CanUpdateEmployee);
         }
     }
 }

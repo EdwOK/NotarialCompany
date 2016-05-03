@@ -324,6 +324,29 @@ GO
 
 ------------------------------------------------EmployeesPositions------------------------------------------------
 
+IF OBJECT_ID('[EmployeesPositions.CreateOrUpdateEmployeesPosition]') IS NOT NULL
+	DROP PROCEDURE [EmployeesPositions.CreateOrUpdateEmployeesPosition]
+GO
+
+
+CREATE PROCEDURE [EmployeesPositions.CreateOrUpdateEmployeesPosition]
+	@id INT,
+	@position NVARCHAR(30),
+	@salary MONEY,
+	@commission INT
+AS
+	IF @id = 0
+	BEGIN
+		INSERT INTO [EmployeesPositions]
+		VALUES (@position,	@salary, @commission)
+		RETURN
+	END
+
+	UPDATE [EmployeesPositions] 
+	SET [Position] = @position, [Salary] = @salary, [Commission] = @commission
+	WHERE [EmployeesPositions].[Id] = @id
+GO
+
 IF OBJECT_ID('[EmployeesPositions.GetEmployeesPosition]') IS NOT NULL
 	DROP PROCEDURE [EmployeesPositions.GetEmployeesPosition]
 GO
@@ -410,4 +433,15 @@ BEGIN
 	SELECT [ServiceId] FROM [DealService]
 	WHERE [DealService].[DealId] = @id
 END
+GO
+
+IF OBJECT_ID('[EmployeesPositions.RemoveEmployeesPosition]') IS NOT NULL
+	DROP PROCEDURE [EmployeesPositions.RemoveEmployeesPosition]
+GO
+
+CREATE PROCEDURE [EmployeesPositions.RemoveEmployeesPosition]
+	@id INT
+AS
+	DELETE FROM [dbo].[EmployeesPositions]
+	WHERE [Id] = @id
 GO

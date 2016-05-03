@@ -1,15 +1,15 @@
-﻿<controls:MetroContentControl 
-    x:Class="NotarialCompany.Pages.EmployeesPage.EmployeesView"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+﻿<controls:MetroContentControl  
+    x:Class="NotarialCompany.Pages.EmployeesPositionsPage.EmployeesPositionsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:converters="http://schemas.kent.boogaart.com/converters"
     xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:converters="http://schemas.kent.boogaart.com/converters"
     dialog:DialogParticipation.Register="{Binding}"
-    DataContext="{Binding EmployeesViewModel, Source={StaticResource Locator}}"
+    DataContext="{Binding EmployeesPositionsViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d" 
     d:DesignHeight="1000" d:DesignWidth="1000">
     <DockPanel>
@@ -19,11 +19,11 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <Label Margin="0,10,0,10" VerticalAlignment="Center" FontWeight="Bold">Employess</Label>
+            <Label Margin="0,10,0,10" VerticalAlignment="Center" FontWeight="Bold">Employess Positions</Label>
             <TextBox controls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}" Visibility="{Binding CanCreateEmployee, Converter={converters:BooleanToVisibilityConverter}}">Add New</Button>
+            <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}" Visibility="{Binding CanCreateEmployeePosition, Converter={converters:BooleanToVisibilityConverter}}">Add New</Button>
         </StackPanel>
-        <DataGrid ItemsSource="{Binding EmployeesView}" SelectedItem="{Binding SelectedEmployee}" AutoGenerateColumns="False" CanUserAddRows="False">
+        <DataGrid ItemsSource="{Binding EmployeesPositionsView}" SelectedItem="{Binding SelectedEmployeesPosition}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Resources>
                 <DataTemplate x:Key="GridOpenDetailsButton">
                     <Button Content="{Binding Path=Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand"/>
@@ -32,18 +32,14 @@
                     <Button 
                         Command="{Binding Path=DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
                         Cursor="Hand" Style="{StaticResource RemoveButton}"
-                        Visibility="{Binding DataContext.CanDeleteEmployee, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Converter={converters:BooleanToVisibilityConverter}}"></Button>
+                        Visibility="{Binding DataContext.CanDeleteEmployeePosition, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Converter={converters:BooleanToVisibilityConverter}}"></Button>
                 </DataTemplate>-->
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Id" CellTemplate="{StaticResource GridOpenDetailsButton}"/>
-                <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="LastName" Binding="{Binding LastName}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="MiddleName" Binding="{Binding MiddleName}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="200" IsReadOnly="True"/>
-                <DataGridTextColumn Header="PhoneNumber" Binding="{Binding PhoneNumber}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Date" Binding="{Binding EmploymentDate, StringFormat=d}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Position" Binding="{Binding EmployeesPosition.Position}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Position" Binding="{Binding Position}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Salary" Binding="{Binding Salary}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Commission" Binding="{Binding Commission}" IsReadOnly="True"/>
                 <!--<DataGridTemplateColumn CellTemplate="{StaticResource GridRemoveDetailsButton}"/>-->
             </DataGrid.Columns>
         </DataGrid>

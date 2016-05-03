@@ -38,13 +38,11 @@ CREATE TABLE [dbo].[Employees] (
 )
 CREATE INDEX [IX_EmployeesPositionId] ON [dbo].[Employees]([EmployeesPositionId])
 
-
 CREATE TABLE [dbo].[EmployeesPositions] (
     [Id] [int] NOT NULL IDENTITY,
     [Position] [nvarchar](30) NOT NULL,
     [Salary] [money] NOT NULL,
-    [Commission] [int] NOT NULL,
-    [Description] [nvarchar](100),
+    [Commission] [int] NOT NULL
     CONSTRAINT [PK_dbo.EmployeesPositions] PRIMARY KEY ([Id])
 )
 
@@ -68,8 +66,8 @@ CREATE TABLE [dbo].[Roles] (
 CREATE TABLE [dbo].[Users] (
     [Id] [int] NOT NULL IDENTITY,
     [Username] [nvarchar](30) NOT NULL,
-    [Password] [nvarchar](MAX) NOT NULL,
-    [Salt] [nvarchar](MAX) NOT NULL,
+    [Password] [nvarchar](50) NOT NULL,
+    [Salt] [nvarchar](50) NOT NULL,
     [RoleId] [int] NOT NULL,
     [EmployeeId] [int] NOT NULL,
     CONSTRAINT [PK_dbo.Users] PRIMARY KEY ([Id])

@@ -1,15 +1,13 @@
-﻿<metroControls:MetroContentControl 
+﻿<controls:MetroContentControl 
     x:Class="NotarialCompany.Pages.ClientsPage.ClientsView"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
-    xmlns:local="clr-namespace:NotarialCompany.Pages.ClientsPage"
-    xmlns:metroControls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+    xmlns:converters="http://schemas.kent.boogaart.com/converters"
     dialog:DialogParticipation.Register="{Binding}"
     DataContext="{Binding ClientsViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d" 
@@ -21,18 +19,21 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <Label Margin="10,10,0,10" VerticalAlignment="Center" FontWeight="Bold">Clients</Label>
-            <TextBox metroControls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}">Add New</Button>
+            <Label Margin="0,10,0,10" VerticalAlignment="Center" FontWeight="Bold">Clients</Label>
+            <TextBox controls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}" Visibility="{Binding CanCreateClient, Converter={converters:BooleanToVisibilityConverter}}">Add New</Button>
         </StackPanel>
         <DataGrid ItemsSource="{Binding ClientsView}" SelectedItem="{Binding SelectedClient}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Resources>
                 <DataTemplate x:Key="GridOpenDetailsButton">
                     <Button Content="{Binding Path=Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand"/>
                 </DataTemplate>
-                <DataTemplate x:Key="GridRemoveDetailsButton">
-                    <Button Command="{Binding Path=DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand" Style="{StaticResource RemoveButton}"></Button>
-                </DataTemplate>
+                <!--<DataTemplate x:Key="GridRemoveDetailsButton">
+                    <Button 
+                        Command="{Binding Path=DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
+                        Cursor="Hand" Style="{StaticResource RemoveButton}"
+                        Visibility="{Binding DataContext.CanDeleteClient, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Converter={converters:BooleanToVisibilityConverter}}"></Button>
+                </DataTemplate>-->
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Id" CellTemplate="{StaticResource GridOpenDetailsButton}"/>
@@ -42,9 +43,9 @@
                 <DataGridTextColumn Header="Occupation" Binding="{Binding Occupation}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Address" Binding="{Binding Address}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="PhoneNumber" Binding="{Binding PhoneNumber}" IsReadOnly="True"/>
-                <DataGridTemplateColumn CellTemplate="{StaticResource GridRemoveDetailsButton}"/>
+                <!--<DataGridTemplateColumn CellTemplate="{StaticResource GridRemoveDetailsButton}"/>-->
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
-</metroControls:MetroContentControl>
+</controls:MetroContentControl>
 
