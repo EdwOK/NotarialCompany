@@ -7,6 +7,7 @@
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:converters="http://schemas.kent.boogaart.com/converters"
     dialog:DialogParticipation.Register="{Binding}"
     DataContext="{Binding EmployeesPositionsViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d" 
@@ -20,7 +21,7 @@
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Label Margin="0,10,0,10" VerticalAlignment="Center" FontWeight="Bold">Employess Positions</Label>
             <TextBox controls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}">Add New</Button>
+            <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}" Visibility="{Binding CanCreateEmployeePosition, Converter={converters:BooleanToVisibilityConverter}}">Add New</Button>
         </StackPanel>
         <DataGrid ItemsSource="{Binding EmployeesPositionsView}" SelectedItem="{Binding SelectedEmployeesPosition}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Resources>
@@ -28,7 +29,10 @@
                     <Button Content="{Binding Path=Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand"/>
                 </DataTemplate>
                 <!--<DataTemplate x:Key="GridRemoveDetailsButton">
-                    <Button Command="{Binding Path=DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand" Style="{StaticResource RemoveButton}"/>
+                    <Button 
+                        Command="{Binding Path=DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
+                        Cursor="Hand" Style="{StaticResource RemoveButton}"
+                        Visibility="{Binding DataContext.CanDeleteEmployeePosition, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Converter={converters:BooleanToVisibilityConverter}}"></Button>
                 </DataTemplate>-->
             </DataGrid.Resources>
             <DataGrid.Columns>
