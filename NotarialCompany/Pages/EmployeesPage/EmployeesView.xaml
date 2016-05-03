@@ -21,7 +21,7 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <Label Margin="10,10,0,10" VerticalAlignment="Center">Employess</Label>
+            <Label Margin="0,10,0,10" VerticalAlignment="Center" FontWeight="Bold">Employess</Label>
             <TextBox metroControls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}">Add New</Button>
         </StackPanel>
@@ -30,9 +30,9 @@
                 <DataTemplate x:Key="GridOpenDetailsButton">
                     <Button Content="{Binding Path=Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand"/>
                 </DataTemplate>
-                <DataTemplate x:Key="GridRemoveDetailsButton">
+                <!--<DataTemplate x:Key="GridRemoveDetailsButton">
                     <Button Command="{Binding Path=DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand" Style="{StaticResource RemoveButton}"/>
-                </DataTemplate>
+                </DataTemplate>-->
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Id" CellTemplate="{StaticResource GridOpenDetailsButton}"/>
@@ -43,7 +43,7 @@
                 <DataGridTextColumn Header="PhoneNumber" Binding="{Binding PhoneNumber}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Date" Binding="{Binding EmploymentDate, StringFormat=d}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Position" Binding="{Binding EmployeesPosition.Position}" IsReadOnly="True"/>
-                <DataGridTemplateColumn CellTemplate="{StaticResource GridRemoveDetailsButton}"/>
+                <!--<DataGridTemplateColumn CellTemplate="{StaticResource GridRemoveDetailsButton}"/>-->
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

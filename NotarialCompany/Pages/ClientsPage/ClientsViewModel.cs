@@ -8,12 +8,14 @@ using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
+using NotarialCompany.Security.Authorization;
 using NotarialCompany.Utilities;
 
 namespace NotarialCompany.Pages.ClientsPage
 {
     public class ClientsViewModel : BasePageViewModel
     {
+        private readonly IAuthorizationService authorizationService;
         private readonly IDialogCoordinator dialogCoordinator;
         private string searchText;
 
@@ -21,8 +23,9 @@ namespace NotarialCompany.Pages.ClientsPage
 
         private IList<Client> clients;
 
-        public ClientsViewModel(DbScope dbScope, IDialogCoordinator dialogCoordinator) : base(dbScope)
+        public ClientsViewModel(DbScope dbScope, IAuthorizationService authorizationService, IDialogCoordinator dialogCoordinator) : base(dbScope)
         {
+            this.authorizationService = authorizationService;
             this.dialogCoordinator = dialogCoordinator;
         }
 
@@ -44,8 +47,17 @@ namespace NotarialCompany.Pages.ClientsPage
             }
         }
 
+        public bool CanDeleteClient { get; set; }
+        public bool CanCreateClient { get; set; }
+
         protected override void LoadedCommandExecute()
         {
+            CanDeleteClient = authorizationService.CheckAccess(typeof(Client), ResourceAction.Delete);
+            RaisePropertyChanged(() => CanDeleteClient);
+
+            CanCreateClient = authorizationService.CheckAccess(typeof(Client), ResourceAction.Create);
+            RaisePropertyChanged(() => CanCreateClient);
+
             ClientsView = CollectionViewSource.GetDefaultView(clients = DbScope.GetClients());
             ClientsView.Filter = Filter;
         }

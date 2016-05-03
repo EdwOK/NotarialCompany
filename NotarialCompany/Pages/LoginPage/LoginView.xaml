@@ -35,11 +35,12 @@
             </i:Interaction.Behaviors>
         </PasswordBox>
         <Button 
-            Content="Login" 
+            Content="Login"
             Command="{Binding LoginCommand}" 
             IsDefault="True" 
             IsEnabled="{Binding Error, Converter={StaticResource EmptyStringToBooleanConverter}}" 
             KeyboardNavigation.TabIndex="2"
+            metroControls:ControlsHelper.ContentCharacterCasing="Upper"
             Style="{DynamicResource SquareButtonStyle}"/>
     </StackPanel>
 </metroControls:MetroContentControl>

@@ -22,7 +22,7 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <Label Margin="10,10,0,10" VerticalAlignment="Center" FontWeight="Bold">Services</Label>
+            <Label Margin="0,10,0,10" VerticalAlignment="Center" FontWeight="Bold">Services</Label>
             <TextBox metroControls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}" Visibility="{Binding CanCreateService, Converter={converters:BooleanToVisibilityConverter}}">Add New</Button>
         </StackPanel>
@@ -31,19 +31,19 @@
                 <DataTemplate x:Key="GridOpenDetailsButton">
                     <Button Content="{Binding Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand"/>
                 </DataTemplate>
-                <DataTemplate x:Key="GridRemoveDetailsButton">
+                <!--<DataTemplate x:Key="GridRemoveDetailsButton">
                     <Button 
                         Command="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                         Visibility="{Binding DataContext.CanDeleteService, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Converter={converters:BooleanToVisibilityConverter}}"
                         Style="{StaticResource RemoveButton}"
                         Cursor="Hand"/>
-                </DataTemplate>
+                </DataTemplate>-->
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Id" CellTemplate="{StaticResource GridOpenDetailsButton}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Cost" Binding="{Binding Cost}" IsReadOnly="True"/>
-                <DataGridTemplateColumn CellTemplate="{StaticResource GridRemoveDetailsButton}"/>
+                <!--<DataGridTemplateColumn CellTemplate="{StaticResource GridRemoveDetailsButton}"/>-->
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

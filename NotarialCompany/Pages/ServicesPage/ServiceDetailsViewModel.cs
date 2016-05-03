@@ -49,6 +49,8 @@ namespace NotarialCompany.Pages.ServicesPage
 
         public Service Service { get; set; }
 
+        public bool CanUpdateService { get; set; }
+
         public ICommand SaveCommand { get; set; }
         public ICommand NavigateBackCommand { get; set; }
         public ICommand LoadedCommand { get; set; }
@@ -70,8 +72,6 @@ namespace NotarialCompany.Pages.ServicesPage
             get { return Service?.Cost ?? 0; }
             set { Service.Cost = value; }
         }
-
-        public bool CanUpdateService { get; set; }
 
         protected override string GetValidationError(string propertyName)
         {
@@ -104,8 +104,8 @@ namespace NotarialCompany.Pages.ServicesPage
 
         private void LoadedCommandExecute()
         {
-            CanUpdateService = authorizationService.CheckAccess(typeof (Service), ResourceAction.Update);
-            RaisePropertyChanged(nameof(CanUpdateService));
+            CanUpdateService = authorizationService.CheckAccess(typeof(Service), ResourceAction.Update);
+            RaisePropertyChanged(() => CanUpdateService);
         }
     }
 }
