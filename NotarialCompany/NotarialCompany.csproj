@@ -179,6 +179,14 @@
       <DependentUpon>EmployeesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\EmployeesPage\EmployeesViewModel.cs" />
+    <Compile Include="Pages\EmployeesPositionsPage\EmployeePositionDetailsViewModel.cs" />
+    <Compile Include="Pages\EmployeesPositionsPage\EmployeePositonDetailsView.xaml.cs">
+      <DependentUpon>EmployeePositonDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EmployeesPositionsPage\EmployeesPositionsView.xaml.cs">
+      <DependentUpon>EmployeesPositionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EmployeesPositionsPage\EmployeesPositionsViewModel.cs" />
     <Compile Include="Pages\LoginPage\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -278,6 +286,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\EmployeesPage\EmployeesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EmployeesPositionsPage\EmployeePositonDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EmployeesPositionsPage\EmployeesPositionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
