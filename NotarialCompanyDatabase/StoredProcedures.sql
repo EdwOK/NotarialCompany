@@ -333,18 +333,17 @@ CREATE PROCEDURE [EmployeesPositions.CreateOrUpdateEmployeesPosition]
 	@id INT,
 	@position NVARCHAR(30),
 	@salary MONEY,
-	@commission INT,
-	@description NVARCHAR(100)
+	@commission INT
 AS
 	IF @id = 0
 	BEGIN
 		INSERT INTO [EmployeesPositions]
-		VALUES (@position,	@salary, @commission, @description)
+		VALUES (@position,	@salary, @commission)
 		RETURN
 	END
 
 	UPDATE [EmployeesPositions] 
-	SET [Position] = @position, [Salary] = @salary, [Commission] = @commission, [Description] = @description
+	SET [Position] = @position, [Salary] = @salary, [Commission] = @commission
 	WHERE [EmployeesPositions].[Id] = @id
 GO
 

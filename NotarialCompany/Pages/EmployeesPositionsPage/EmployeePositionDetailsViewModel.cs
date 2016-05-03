@@ -7,23 +7,28 @@ using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
+using NotarialCompany.Security.Authorization;
 
 namespace NotarialCompany.Pages.EmployeesPositionsPage
 {
     public class EmployeePositionDetailsViewModel : ValidationViewModel
     {
+        private readonly IAuthorizationService authorizationService;
+
         private MetroContentControl parentView;
         private string parentViewModelName;
 
-        public EmployeePositionDetailsViewModel(DbScope dbScope) : base(dbScope)
+        public EmployeePositionDetailsViewModel(DbScope dbScope, IAuthorizationService authorizationService) : base(dbScope)
         {
+            this.authorizationService = authorizationService;
+
             SaveCommand = new RelayCommand(SaveCommandExecute);
             NavigateBackCommand = new RelayCommand(NavigateBackCommandExecute);
+            LoadedCommand = new RelayCommand(LoadedCommandExecute);
 
             ValidatingProperties = new List<string>
             {
                 nameof(Position),
-                nameof(Description),
                 nameof(Salary),
                 nameof(Commission)
             };
@@ -43,7 +48,6 @@ namespace NotarialCompany.Pages.EmployeesPositionsPage
                 EmployeesPosition = args.Parameter ?? new EmployeesPosition();
 
                 RaisePropertyChanged(() => Position);
-                RaisePropertyChanged(() => Description);
                 RaisePropertyChanged(() => Salary);
                 RaisePropertyChanged(() => Commission);
             });
@@ -51,19 +55,16 @@ namespace NotarialCompany.Pages.EmployeesPositionsPage
 
         public EmployeesPosition EmployeesPosition { get; set; }
 
+        public bool CanUpdateEmployeesPosition { get; set; }
+
         public ICommand SaveCommand { get; set; }
         public ICommand NavigateBackCommand { get; set; }
+        public ICommand LoadedCommand { get; set; }
 
         public string Position
         {
             get { return EmployeesPosition?.Position; }
             set { EmployeesPosition.Position = value; }
-        }
-
-        public string Description
-        {
-            get { return EmployeesPosition?.Description; }
-            set { EmployeesPosition.Description = value; }
         }
 
         public decimal Salary
@@ -84,10 +85,6 @@ namespace NotarialCompany.Pages.EmployeesPositionsPage
             {
                 return "Position is required";
             }
-            if (propertyName == nameof(Description) && string.IsNullOrWhiteSpace(Description))
-            {
-                return "Description is required";
-            }
             return null;
         }
 
@@ -105,6 +102,12 @@ namespace NotarialCompany.Pages.EmployeesPositionsPage
         private void NavigateBackCommandExecute()
         {
             Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
+        }
+
+        private void LoadedCommandExecute()
+        {
+            CanUpdateEmployeesPosition = authorizationService.CheckAccess(typeof(EmployeesPosition), ResourceAction.Update);
+            RaisePropertyChanged(() => CanUpdateEmployeesPosition);
         }
     }
 }

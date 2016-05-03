@@ -101,8 +101,7 @@ namespace NotarialCompany.Pages.EmployeesPositionsPage
             }
 
             return string.IsNullOrEmpty(SearchText) ||
-                   data.Position.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                   (data.Description?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false);
+                   data.Position.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

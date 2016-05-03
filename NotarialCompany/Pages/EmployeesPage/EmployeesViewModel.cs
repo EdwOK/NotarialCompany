@@ -9,12 +9,14 @@ using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
 using NotarialCompany.Pages.ClientsPage;
+using NotarialCompany.Security.Authorization;
 using NotarialCompany.Utilities;
 
 namespace NotarialCompany.Pages.EmployeesPage
 {
     public class EmployeesViewModel : BasePageViewModel
     {
+        private readonly IAuthorizationService authorizationService;
         private readonly IDialogCoordinator dialogCoordinator;
         private string searchText;
 
@@ -22,8 +24,9 @@ namespace NotarialCompany.Pages.EmployeesPage
 
         private IList<Employee> employees;
 
-        public EmployeesViewModel(DbScope dbScope, IDialogCoordinator dialogCoordinator) : base(dbScope)
+        public EmployeesViewModel(DbScope dbScope, IAuthorizationService authorizationService, IDialogCoordinator dialogCoordinator) : base(dbScope)
         {
+            this.authorizationService = authorizationService;
             this.dialogCoordinator = dialogCoordinator;
         }
 
@@ -34,6 +37,9 @@ namespace NotarialCompany.Pages.EmployeesPage
         }
 
         public Employee SelectedEmployee { get; set; }
+
+        public bool CanDeleteEmployee { get; set; }
+        public bool CanCreateEmployee { get; set; }
 
         public string SearchText
         {
@@ -47,6 +53,12 @@ namespace NotarialCompany.Pages.EmployeesPage
 
         protected override void LoadedCommandExecute()
         {
+            CanDeleteEmployee = authorizationService.CheckAccess(typeof(Employee), ResourceAction.Delete);
+            RaisePropertyChanged(() => CanDeleteEmployee);
+
+            CanCreateEmployee = authorizationService.CheckAccess(typeof(Employee), ResourceAction.Create);
+            RaisePropertyChanged(() => CanCreateEmployee);
+
             EmployeesView = CollectionViewSource.GetDefaultView(employees = DbScope.GetEmployees());
             EmployeesView.Filter = Filter;
         }

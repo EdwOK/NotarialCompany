@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -66,7 +64,6 @@ namespace NotarialCompany.Pages.ClientsPage
 
         public ICommand SaveCommand { get; set; }
         public ICommand NavigateBackCommand { get; set; }
-
         public ICommand LoadedCommand { get; set; }
 
         public string FirstName
