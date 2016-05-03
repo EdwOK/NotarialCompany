@@ -122,8 +122,7 @@ namespace NotarialCompany
         {
             MetroContentControl view = CurrentView;
             Messenger.Default.Send(new OpenViewArgs(new UserDetailsView(), nameof(UserDetailsViewModel)));
-            Messenger.Default.Send(new SendViewModelParamArgs<User>(view, nameof(MainViewModel),
-                nameof(UserDetailsViewModel), authenticationService.CurrentUser));
+            Messenger.Default.Send(new SendViewModelParamArgs<User>(view, nameof(MainViewModel), nameof(UserDetailsViewModel), authenticationService.CurrentUser));
         }
 
         private void LogoutCommandExecute()

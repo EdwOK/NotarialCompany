@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
-using MahApps.Metro.Controls;
 using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
@@ -14,8 +13,17 @@ namespace NotarialCompany.Pages.DealsPage
 {
     public class DealDetailsViewModel : ValidationViewModel
     {
-        private MetroContentControl parentView;
-        private string parentViewModelName;
+        private decimal basePrice;
+
+        private Client selectedClient;
+
+        private Employee selectedEmployee;
+
+        private Dictionary<string, object> selectedServices;
+
+        private Dictionary<string, object> services;
+
+        private decimal totalPrice;
 
         public DealDetailsViewModel(DbScope dbScope) : base(dbScope)
         {
@@ -40,10 +48,10 @@ namespace NotarialCompany.Pages.DealsPage
 
                 AllowValidation = false;
 
-                parentView = args.ParentView;
-                parentViewModelName = args.ParentViewModelName;
+                ParentView = args.ParentView;
+                ParentViewModelName = args.ParentViewModelName;
 
-                Deal = args.Parameter ?? new Deal { Bill = new Bill(), ServiceIds = new List<int>()};
+                Deal = args.Parameter ?? new Deal { Bill = new Bill(), ServiceIds = new List<int>() };
             });
         }
 
@@ -51,14 +59,12 @@ namespace NotarialCompany.Pages.DealsPage
         public ICommand NavigateBackCommand { get; set; }
         public ICommand LoadedCommand { set; get; }
 
-        private Dictionary<string, object> services;
         public Dictionary<string, object> Services
         {
             get { return services; }
             set { Set(ref services, value); }
         }
 
-        private Dictionary<string, object> selectedServices;
         public Dictionary<string, object> SelectedServices
         {
             get { return selectedServices; }
@@ -77,7 +83,6 @@ namespace NotarialCompany.Pages.DealsPage
             set { Deal.Description = value; }
         }
 
-        private Employee selectedEmployee;
         public Employee SelectedEmployee
         {
             get { return selectedEmployee; }
@@ -90,8 +95,6 @@ namespace NotarialCompany.Pages.DealsPage
 
         public List<Employee> Employees { get; set; }
 
-
-        private Client selectedClient;
         public Client SelectedClient
         {
             get { return selectedClient; }
@@ -100,14 +103,12 @@ namespace NotarialCompany.Pages.DealsPage
 
         public List<Client> Clients { get; set; }
 
-        private decimal totalPrice;
         public decimal TotalPrice
         {
             get { return totalPrice; }
             set { Set(ref totalPrice, value); }
         }
 
-        private decimal basePrice;
         public decimal BasePrice
         {
             get { return basePrice; }
@@ -157,8 +158,8 @@ namespace NotarialCompany.Pages.DealsPage
             RaisePropertyChanged(() => BillDate);
 
             AllowValidation = false;
-            
-            var servicesList = DbScope.GetServices().ToDictionary(s => s.Name, s => (object)s);
+
+            var servicesList = DbScope.GetServices().ToDictionary(s => s.Name, s => (object) s);
             Services = new Dictionary<string, object>(servicesList);
 
             SelectedServices = new Dictionary<string, object>(
@@ -179,7 +180,7 @@ namespace NotarialCompany.Pages.DealsPage
 
         private void NavigateBackCommandExecute()
         {
-            Messenger.Default.Send(new OpenViewArgs(parentView, parentViewModelName));
+            Messenger.Default.Send(new OpenViewArgs(ParentView, ParentViewModelName));
         }
 
         private void CalculatePrices()
@@ -189,10 +190,10 @@ namespace NotarialCompany.Pages.DealsPage
                 return;
             }
 
-            BasePrice = selectedServices.Sum(p => ((Service)p.Value).Cost);
+            BasePrice = selectedServices.Sum(p => ((Service) p.Value).Cost);
             if (SelectedEmployee != null)
             {
-                TotalPrice = BasePrice / 100 * SelectedEmployee.EmployeesPosition.Commission + BasePrice;
+                TotalPrice = BasePrice/100*SelectedEmployee.EmployeesPosition.Commission + BasePrice;
             }
         }
 
@@ -206,6 +207,5 @@ namespace NotarialCompany.Pages.DealsPage
             Deal.Bill.BasePrice = BasePrice;
             Deal.Bill.TotalPrice = TotalPrice;
         }
-
     }
 }

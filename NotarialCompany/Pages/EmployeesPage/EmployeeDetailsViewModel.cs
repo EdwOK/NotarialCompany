@@ -103,17 +103,7 @@ namespace NotarialCompany.Pages.EmployeesPage
             set { Employee.PhoneNumber = value; }
         }
 
-        public DateTime EmploymentDate
-        {
-            get { return Employee?.EmploymentDate ?? DateTime.Now; }
-            set
-            {
-                if (Employee != null)
-                {
-                    Employee.EmploymentDate = value;
-                }
-            }
-        }
+        public DateTime EmploymentDate { get; set; }
 
         protected override string GetValidationError(string propertyName)
         {
@@ -165,6 +155,11 @@ namespace NotarialCompany.Pages.EmployeesPage
 
         private void LoadedCommandExecute()
         {
+            EmploymentDate = Employee.Id == 0 ? DateTime.Now.Date : Employee.EmploymentDate;
+            RaisePropertyChanged(() => EmploymentDate);
+
+            AllowValidation = false;
+
             CanUpdateEmployee = authorizationService.CheckAccess(typeof(Employee), ResourceAction.Update);
             RaisePropertyChanged(() => CanUpdateEmployee);
         }

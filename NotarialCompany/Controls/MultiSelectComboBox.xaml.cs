@@ -9,130 +9,126 @@ using System.Windows.Controls;
 namespace NotarialCompany.Controls
 {
     /// <summary>
-    /// Interaction logic for MultiSelectComboBox.xaml
+    ///     Interaction logic for MultiSelectComboBox.xaml
     /// </summary>
     public partial class MultiSelectComboBox : UserControl
     {
-        private ObservableCollection<Node> _nodeList;
+        private readonly ObservableCollection<Node> nodeList;
+
         public MultiSelectComboBox()
         {
             InitializeComponent();
-            _nodeList = new ObservableCollection<Node>();
+            nodeList = new ObservableCollection<Node>();
         }
 
         #region Dependency Properties
 
         public static readonly DependencyProperty ItemsSourceProperty =
-             DependencyProperty.Register("ItemsSource", typeof(Dictionary<string, object>), typeof(MultiSelectComboBox), new FrameworkPropertyMetadata(null,
-        new PropertyChangedCallback(MultiSelectComboBox.OnItemsSourceChanged)));
+            DependencyProperty.Register("ItemsSource", typeof (Dictionary<string, object>), typeof (MultiSelectComboBox),
+                new FrameworkPropertyMetadata(null, OnItemsSourceChanged));
 
         public static readonly DependencyProperty SelectedItemsProperty =
-         DependencyProperty.Register("SelectedItems", typeof(Dictionary<string, object>), typeof(MultiSelectComboBox), new FrameworkPropertyMetadata(null,
-     new PropertyChangedCallback(MultiSelectComboBox.OnSelectedItemsChanged)));
+            DependencyProperty.Register("SelectedItems", typeof (Dictionary<string, object>),
+                typeof (MultiSelectComboBox),
+                new FrameworkPropertyMetadata(null, OnSelectedItemsChanged));
 
         public static readonly DependencyProperty TextProperty =
-           DependencyProperty.Register("Text", typeof(string), typeof(MultiSelectComboBox), new UIPropertyMetadata(string.Empty));
+            DependencyProperty.Register("Text", typeof (string), typeof (MultiSelectComboBox),
+                new UIPropertyMetadata(string.Empty));
 
         public static readonly DependencyProperty DefaultTextProperty =
-            DependencyProperty.Register("DefaultText", typeof(string), typeof(MultiSelectComboBox), new UIPropertyMetadata(string.Empty));
-
+            DependencyProperty.Register("DefaultText", typeof (string), typeof (MultiSelectComboBox),
+                new UIPropertyMetadata(string.Empty));
 
 
         public Dictionary<string, object> ItemsSource
         {
-            get { return (Dictionary<string, object>)GetValue(ItemsSourceProperty); }
-            set
-            {
-                SetValue(ItemsSourceProperty, value);
-            }
+            get { return (Dictionary<string, object>) GetValue(ItemsSourceProperty); }
+            set { SetValue(ItemsSourceProperty, value); }
         }
 
         public Dictionary<string, object> SelectedItems
         {
-            get { return (Dictionary<string, object>)GetValue(SelectedItemsProperty); }
-            set
-            {
-                SetValue(SelectedItemsProperty, value);
-            }
+            get { return (Dictionary<string, object>) GetValue(SelectedItemsProperty); }
+            set { SetValue(SelectedItemsProperty, value); }
         }
 
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
+            get { return (string) GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
 
         public string DefaultText
         {
-            get { return (string)GetValue(DefaultTextProperty); }
+            get { return (string) GetValue(DefaultTextProperty); }
             set { SetValue(DefaultTextProperty, value); }
         }
+
         #endregion
 
         #region Events
+
         private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            MultiSelectComboBox control = (MultiSelectComboBox)d;
+            var control = (MultiSelectComboBox) d;
             control.DisplayInControl();
         }
 
         private static void OnSelectedItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            MultiSelectComboBox control = (MultiSelectComboBox)d;
+            var control = (MultiSelectComboBox) d;
             control.SelectNodes();
             control.SetText();
         }
 
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckBox clickedBox = (CheckBox)sender;
+            var clickedBox = (CheckBox) sender;
 
-            if (clickedBox.Content == "All" )
+            if (ReferenceEquals(clickedBox.Content, "All"))
             {
-                if (clickedBox.IsChecked.Value)
+                if (clickedBox.IsChecked.HasValue)
                 {
-                    foreach (Node node in _nodeList)
+                    foreach (var node in nodeList)
                     {
                         node.IsSelected = true;
                     }
                 }
                 else
                 {
-                    foreach (Node node in _nodeList)
+                    foreach (var node in nodeList)
                     {
                         node.IsSelected = false;
                     }
                 }
-
             }
             else
             {
-                int _selectedCount = 0;
-                foreach (Node s in _nodeList)
+                var selectedCount = nodeList.Count(s => s.IsSelected && s.Title != "All");
+                var node = nodeList.FirstOrDefault(i => i.Title == "All");
+                if (node != null)
                 {
-                    if (s.IsSelected && s.Title != "All")
-                        _selectedCount++;
+                    node.IsSelected = selectedCount == nodeList.Count - 1;
                 }
-                if (_selectedCount == _nodeList.Count - 1)
-                    _nodeList.FirstOrDefault(i => i.Title == "All").IsSelected = true;
-                else
-                    _nodeList.FirstOrDefault(i => i.Title == "All").IsSelected = false;
             }
             SetSelectedItems();
             SetText();
-
         }
+
         #endregion
 
-
         #region Methods
+
         private void SelectNodes()
         {
-            foreach (KeyValuePair<string, object> keyValue in SelectedItems)
+            foreach (var keyValue in SelectedItems)
             {
-                Node node = _nodeList.FirstOrDefault(i => i.Title == keyValue.Key);
+                var node = nodeList.FirstOrDefault(i => i.Title == keyValue.Key);
                 if (node != null)
+                {
                     node.IsSelected = true;
+                }
             }
         }
 
@@ -145,15 +141,15 @@ namespace NotarialCompany.Controls
 
             SelectedItems.Clear();
 
-            Dictionary<string, object> newSelectedItems = new Dictionary<string, object>();
+            var newSelectedItems = new Dictionary<string, object>();
 
-            foreach (Node node in _nodeList)
+            foreach (var node in nodeList)
             {
                 if (node.IsSelected && node.Title != "All")
                 {
-                    if (this.ItemsSource.Count > 0)
+                    if (ItemsSource.Count > 0)
                     {
-                        newSelectedItems.Add(node.Title, this.ItemsSource[node.Title]);
+                        newSelectedItems.Add(node.Title, ItemsSource[node.Title]);
                     }
                 }
             }
@@ -163,96 +159,95 @@ namespace NotarialCompany.Controls
 
         private void DisplayInControl()
         {
-            _nodeList.Clear();
-            if (this.ItemsSource.Count > 0)
-                _nodeList.Add(new Node("All"));
-            foreach (KeyValuePair<string, object> keyValue in this.ItemsSource)
+            nodeList.Clear();
+            if (ItemsSource.Count > 0)
             {
-                Node node = new Node(keyValue.Key);
-                _nodeList.Add(node);
+                nodeList.Add(new Node("All"));
             }
-            MultiSelectCombo.ItemsSource = _nodeList;
+
+            foreach (var keyValue in ItemsSource)
+            {
+                var node = new Node(keyValue.Key);
+                nodeList.Add(node);
+            }
+            MultiSelectCombo.ItemsSource = nodeList;
         }
 
         private void SetText()
         {
-            if (this.SelectedItems != null)
+            if (SelectedItems != null)
             {
-                StringBuilder displayText = new StringBuilder();
-                foreach (Node s in _nodeList)
+                var displayText = new StringBuilder();
+                foreach (var node in nodeList)
                 {
-                    if (s.IsSelected == true && s.Title == "All")
+                    if (node.IsSelected && node.Title == "All")
                     {
                         displayText = new StringBuilder();
                         displayText.Append("All");
                         break;
                     }
-                    else if (s.IsSelected == true && s.Title != "All")
+                    if (node.IsSelected && node.Title != "All")
                     {
-                        displayText.Append(s.Title);
+                        displayText.Append(node.Title);
                         displayText.Append(',');
                     }
                 }
-                this.Text = displayText.ToString().TrimEnd(new char[] { ',' }); 
-            }           
+                Text = displayText.ToString().TrimEnd(',');
+            }
+
             // set DefaultText if nothing else selected
-            if (string.IsNullOrEmpty(this.Text))
+            if (string.IsNullOrEmpty(Text))
             {
-                this.Text = this.DefaultText;
+                Text = DefaultText;
             }
         }
 
-       
         #endregion
     }
 
     public class Node : INotifyPropertyChanged
     {
+        private bool isSelected;
+        private string title;
 
-        private string _title;
-        private bool _isSelected;
-        #region ctor
+        #region Ctor
+
         public Node(string title)
         {
             Title = title;
         }
-        #endregion
 
-        #region Properties
-        public string Title
-        {
-            get
-            {
-                return _title;
-            }
-            set
-            {
-                _title = value;
-                NotifyPropertyChanged("Title");
-            }
-        }
-        public bool IsSelected
-        {
-            get
-            {
-                return _isSelected;
-            }
-            set
-            {
-                _isSelected = value;
-                NotifyPropertyChanged("IsSelected");
-            }
-        }
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void NotifyPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #region Properties
+
+        public string Title
+        {
+            get { return title; }
+            set
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                title = value;
+                NotifyPropertyChanged("Title");
             }
         }
 
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                isSelected = value;
+                NotifyPropertyChanged("IsSelected");
+            }
+        }
+
+        #endregion
     }
 }
