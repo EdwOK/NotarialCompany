@@ -165,6 +165,45 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public List<Deal> GetDeals()
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            {
+                List<Deal> list;
+                using (var command = new SqlCommand(StoredProceduresNames.DealsGetDeals, connection){ CommandType = CommandType.StoredProcedure})
+                using (var dataAdapter = new SqlDataAdapter(command))
+                {
+                    var dataSet = new DataSet();
+                    dataAdapter.Fill(dataSet, "Table");
+
+                    DataTable dataTable = dataSet.Tables["Table"];
+
+                    list = new List<Deal>(
+                        from DataRow row in dataTable.Rows
+                        select Mapper.Map<object[], Deal>(row.ItemArray));
+                }
+                using (var command = new SqlCommand(StoredProceduresNames.ServicesGetServicesByDealId, connection){CommandType = CommandType.StoredProcedure})
+                {
+                    using (var dataAdapter = new SqlDataAdapter(command))
+                    {
+                        connection.Open();
+                        SqlCommandBuilder.DeriveParameters(command);
+                        foreach (Deal deal in list)
+                        {
+                            command.Parameters[1].Value = deal.Id;
+
+                            var dataSet = new DataSet();
+                            dataAdapter.Fill(dataSet, "Table");
+                            DataTable dataTable = dataSet.Tables["Table"];
+                            deal.ServiceIds = new List<int>(from DataRow row in dataTable.Rows
+                                select (int)row.ItemArray[0]);
+                        }
+                    }
+                }
+                return list;
+            }
+        }
+
         #endregion
 
         #region Updates methods
@@ -237,6 +276,23 @@ namespace NotarialCompany.DataAccess
             }
         }
 
+        public void CreateOrUpdateDeal(Deal deal)
+        {
+            using (var connection = new SqlConnection(Settings.ConnectionString))
+            using (var command = new SqlCommand(StoredProceduresNames.DealsCreateOrUpdateDeal, connection) { CommandType = CommandType.StoredProcedure })
+            {
+                connection.Open();
+                SqlCommandBuilder.DeriveParameters(command);
+
+                var dealRecord = Mapper.Map<Deal, object[]>(deal);
+                for (var i = 0; i < dealRecord.Length; i++)
+                {
+                    command.Parameters[i + 1].Value = dealRecord[i];
+                }
+                command.ExecuteNonQuery();
+            }
+        }
+
         #endregion
 
         #region Delete Methods 
@@ -299,6 +355,7 @@ namespace NotarialCompany.DataAccess
             public const string UsersRemoveUser = "[Users.RemoveUser]";
 
             public const string ServicesGetServices = "[Services.GetServices]";
+            public const string ServicesGetServicesByDealId = "[Services.GetServicesByDealId]";
             public const string ServicesUpdateService = "[Services.CreateOrUpdateService]";
             public const string ServicesRemoveService = "[Services.RemoveService]";
 
@@ -313,6 +370,9 @@ namespace NotarialCompany.DataAccess
             public const string EmployeesPositionsGetEmployeesPosition = "[EmployeesPositions.GetEmployeesPosition]";
 
             public const string RolesGetRoles = "[Roles.GetRoles]";
+
+            public const string DealsCreateOrUpdateDeal = "[Deals.CreateOrUpdateDeal]";
+            public const string DealsGetDeals = "[Deals.GetDeals]";
         }
     }
 }

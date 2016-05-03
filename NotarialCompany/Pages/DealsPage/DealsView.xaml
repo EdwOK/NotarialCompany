@@ -6,11 +6,60 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:local="clr-namespace:NotarialCompany.Pages.DealsPage"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     DataContext="{Binding DealsViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d" 
-    d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Label FontWeight="Bold">Deals</Label>
-    </Grid>
+    d:DesignHeight="1000" d:DesignWidth="1000">
+    <DockPanel>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommand}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Label Margin="10,10,0,10" VerticalAlignment="Center" FontWeight="Bold">Deals</Label>
+            <TextBox controls:TextBoxHelper.Watermark="Search text ..."  Margin="10,10,0,10" VerticalAlignment="Center" MinWidth="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Margin="10,10,0,10" Command="{Binding AddNewItemCommand}">Add New</Button>
+        </StackPanel>
+        <DataGrid ItemsSource="{Binding DealsViews, Mode=TwoWay}" SelectedItem="{Binding SelectedDeal}" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Resources>
+                <DataTemplate x:Key="GridOpenDetailsButton">
+                    <Button Content="{Binding Path=Id}" Command="{Binding Path=DataContext.OpenDetailsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Cursor="Hand"/>
+                </DataTemplate>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Id" CellTemplate="{StaticResource GridOpenDetailsButton}"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Employee" IsReadOnly="True">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                            <Binding Path="Employee.LastName"/>
+                            <Binding Path="Employee.FirstName"/>
+                            <Binding Path="Employee.MiddleName"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Client" IsReadOnly="True">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                            <Binding Path="Client.SecondName"></Binding>
+                            <Binding Path="Client.FirstName"></Binding>
+                            <Binding Path="Client.MiddleName"></Binding>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Base Price" Binding="{Binding Bill.BasePrice}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Total Price" Binding="{Binding Bill.TotalPrice}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Bill.DateTime, StringFormat=d}" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Is Paid">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding Bill.IsPaid}" IsEnabled="False" HorizontalAlignment="Center"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
 </controls:MetroContentControl>
 

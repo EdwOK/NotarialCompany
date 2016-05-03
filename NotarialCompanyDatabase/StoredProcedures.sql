@@ -335,3 +335,79 @@ BEGIN
 	SELECT * FROM [EmployeesPositions]
 END
 GO
+
+------------------------------------------------Deals------------------------------------------------
+
+IF OBJECT_ID('[Deals.CreateOrUpdateDeal]') IS NOT NULL
+	DROP PROCEDURE [Deals.CreateOrUpdateDeal]
+GO
+
+CREATE PROCEDURE [Deals.CreateOrUpdateDeal]
+	@id int,
+	@description nvarchar(100),
+	@employeeId int,
+	@clientId int,
+	@isPaid bit,
+	@basePrice money,
+	@totalPrice money,
+	@dateTime datetime,
+	@servicesIds varchar(max)
+AS
+	IF @id = 0
+	BEGIN
+		INSERT INTO [dbo].[Deals] ([Description], [EmployeeId], [ClientId])
+		VALUES (@description, @employeeId, @clientId)
+
+		SET @id = CAST(SCOPE_IDENTITY() AS int)
+
+		INSERT INTO [dbo].[DealService] ([DealId], [ServiceId])
+		SELECT @id, s.Id
+		FROM [dbo].[Split](@servicesIds) AS s
+
+		INSERT INTO [dbo].[Bill] ([Id], [BasePrice], [TotalPrice], [IsPaid], [DateTime])
+		VALUES (@id, @basePrice, @totalPrice, @isPaid, @dateTime)
+		RETURN
+	END
+
+	UPDATE [Deals] 
+	SET [Description] = @description, [EmployeeId] = @employeeId, [ClientId] = @clientId
+	WHERE [Deals].[Id] = @id
+
+	DELETE FROM [DealService]
+	WHERE [DealService].[DealId] = @id
+	
+	INSERT INTO [dbo].[DealService] ([DealId], [ServiceId])
+	SELECT @id, s.Id
+	FROM [dbo].[Split](@servicesIds) AS s
+
+	UPDATE [Bill] 
+	SET [BasePrice] = @basePrice, [TotalPrice] = @totalPrice, [IsPaid] = @isPaid, [DateTime] = @dateTime
+	WHERE [Bill].[Id] = @id
+GO
+
+IF OBJECT_ID('[Deals.GetDeals]') IS NOT NULL
+	DROP PROCEDURE [Deals.GetDeals]
+GO
+
+CREATE PROCEDURE [Deals.GetDeals]
+AS
+	SET NOCOUNT ON;
+	SELECT * FROM [Deals] 
+	INNER JOIN [Bill] ON [Bill].[Id] = [Deals].[Id]
+	INNER JOIN [Employees] ON [Employees].[Id] = [Deals].[EmployeeId]
+	INNER JOIN [Clients] ON [Clients].[Id] = [Deals].[ClientId]
+GO
+
+IF OBJECT_ID('[Services.GetServicesByDealId]') IS NOT NULL
+	DROP PROCEDURE [Services.GetServicesByDealId]
+GO
+
+CREATE PROCEDURE [Services.GetServicesByDealId]
+	@id INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SELECT [ServiceId] FROM [DealService]
+	WHERE [DealService].[DealId] = @id
+END
+GO

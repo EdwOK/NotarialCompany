@@ -147,10 +147,14 @@
     <Compile Include="Common\ValidationViewModel.cs" />
     <Compile Include="Configuration\AutoMapperConfig.cs" />
     <Compile Include="Controls\DropdownButtonControl.cs" />
+    <Compile Include="Controls\MultiSelectComboBox.xaml.cs">
+      <DependentUpon>MultiSelectComboBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PasswordBoxBehavior.cs" />
     <Compile Include="DataAccess\DbScope.cs" />
     <Compile Include="Common\MessagesArgs\OpenViewArgs.cs" />
     <Compile Include="Common\MessagesArgs\SendViewModelParamArgs.cs" />
+    <Compile Include="Models\Bill.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Deal.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -167,6 +171,10 @@
     <Compile Include="Pages\ClientsPage\ClientDetailsVew.xaml.cs">
       <DependentUpon>ClientDetailsVew.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\DealsPage\DealDetailsView.xaml.cs">
+      <DependentUpon>DealDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DealsPage\DealDetailsViewModel.cs" />
     <Compile Include="Pages\DealsPage\DealsView.xaml.cs">
       <DependentUpon>DealsView.xaml</DependentUpon>
     </Compile>
@@ -257,6 +265,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\MultiSelectComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -268,6 +280,10 @@
     <Page Include="Pages\ClientsPage\ClientDetailsVew.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\DealsPage\DealDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\DealsPage\DealsView.xaml">
       <SubType>Designer</SubType>

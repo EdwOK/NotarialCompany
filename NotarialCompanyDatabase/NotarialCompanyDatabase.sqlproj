@@ -64,6 +64,7 @@
     <None Include="SelectScripts.sql" />
     <None Include="TriggersScripts.sql" />
     <None Include="StoredProcedures.sql" />
+    <None Include="FunctionsScripts.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Init\DbSchema.sql" />

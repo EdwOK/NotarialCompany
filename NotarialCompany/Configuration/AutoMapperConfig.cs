@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using NotarialCompany.Models;
 
@@ -16,6 +17,7 @@ namespace NotarialCompany.Configuration
                 cfg.AddProfile(new EmployeesPositionProfile());
                 cfg.AddProfile(new EmployeesProfile());
                 cfg.AddProfile(new ClientsProfile());
+                cfg.AddProfile(new DealProfile());
             });
         }
     }
@@ -160,6 +162,63 @@ namespace NotarialCompany.Configuration
                             x.EmploymentDate,
                             x.EmployeesPositionId
                         });
+        }
+    }
+
+    public class DealProfile : Profile
+    {
+        protected override void Configure()
+        {
+            CreateMap<object[], Deal>()
+                .ForMember(u => u.Id, opts => opts.MapFrom(src => (int) src[0]))
+                .ForMember(u => u.Description, opts => opts.MapFrom(src => (string) src[1]))
+                .ForMember(u => u.EmployeeId, opts => opts.MapFrom(src => (int) src[2]))
+                .ForMember(u => u.ClientId, opts => opts.MapFrom(src => (int) src[3]))
+                .ForMember(u => u.Bill, opts => opts.MapFrom(src =>
+                    new Bill
+                    {
+                        Id = (int) src[4],
+                        BasePrice = (decimal) src[5],
+                        TotalPrice = (decimal) src[6],
+                        IsPaid = (bool) src[7],
+                        DateTime = (DateTime) src[8]
+                    }))
+                .ForMember(u => u.Employee, opts => opts.MapFrom(src =>
+                    new Employee
+                    {
+                        Id = (int)src[9],
+                        FirstName = (string)src[10],
+                        LastName = (string)src[11],
+                        MiddleName = (string)src[12],
+                        Address = (string)src[13],
+                        PhoneNumber = (string)src[14],
+                        EmploymentDate = (DateTime)src[15],
+                        EmployeesPositionId = (int)src[16]
+                    }))
+                .ForMember(u => u.Client, opts => opts.MapFrom(src =>
+                    new Client
+                    {
+                        Id = (int)src[17],
+                        FirstName = (string)src[18],
+                        SecondName = (string)src[19],
+                        MiddleName = (string)src[20],
+                        Occupation = (string)src[21],
+                        Address = (string)src[22],
+                        PhoneNumber = (string)src[23]
+                    }))
+                .ReverseMap()
+                .ConstructUsing(x => new object[]
+                {
+                    x.Id,
+                    x.Description,
+                    x.EmployeeId,
+                    x.ClientId,
+                    x.Bill.IsPaid,
+                    x.Bill.BasePrice,
+                    x.Bill.TotalPrice,
+                    x.Bill.DateTime,
+                    string.Join(",", x.ServiceIds)
+                });
         }
     }
 }

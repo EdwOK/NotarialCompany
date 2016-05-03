@@ -40,6 +40,7 @@ namespace NotarialCompany
             SimpleIoc.Default.Register<ServiceDetailsViewModel>();
 
             SimpleIoc.Default.Register<DealsViewModel>();
+            SimpleIoc.Default.Register<DealDetailsViewModel>();
 
             SimpleIoc.Default.Register<EmployeesViewModel>();
             SimpleIoc.Default.Register<EmployeeDetailsViewModel>();
@@ -71,6 +72,7 @@ namespace NotarialCompany
         public ServiceDetailsViewModel ServiceDetailsViewModel => ServiceLocator.Current.GetInstance<ServiceDetailsViewModel>();
 
         public DealsViewModel DealsViewModel => ServiceLocator.Current.GetInstance<DealsViewModel>();
+        public DealDetailsViewModel DealDetailsViewModel => ServiceLocator.Current.GetInstance<DealDetailsViewModel>();
 
         public EmployeesViewModel EmployeesViewModel => ServiceLocator.Current.GetInstance<EmployeesViewModel>();
         public EmployeeDetailsViewModel EmployeeDetailsViewModel => ServiceLocator.Current.GetInstance<EmployeeDetailsViewModel>();
