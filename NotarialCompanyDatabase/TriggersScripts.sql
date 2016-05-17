@@ -1,8 +1,8 @@
-﻿IF OBJECT_ID ('[RolesTrigger]') IS NOT NULL
-    DROP TRIGGER [RolesTrigger];
+﻿IF OBJECT_ID ('[RolesAuditTrigger]') IS NOT NULL
+    DROP TRIGGER [RolesAuditTrigger];
 GO
 
-CREATE TRIGGER [RolesTrigger] 
+CREATE TRIGGER [RolesAuditTrigger] 
 ON [Roles]
 AFTER INSERT, UPDATE, DELETE
 AS 
@@ -10,9 +10,9 @@ BEGIN
 	SET NOCOUNT ON;
 
 	DECLARE @action as char(1);
-	DECLARE @outPath NVARCHAR(100) = 'D:\Logs\AuditNotarialCompany.txt';
-	DECLARE @outText NVARCHAR(100);
-	DECLARE @query NVARCHAR(1000);
+	DECLARE @Name NVARCHAR(30);
+	DECLARE @OldValue NVARCHAR(30);
+	DECLARE @NewValue NVARCHAR(30);
 
     SET @action = 'I';
     IF EXISTS(SELECT * FROM DELETED)
@@ -26,18 +26,33 @@ BEGIN
     ELSE 
         IF NOT EXISTS(SELECT * FROM INSERTED) RETURN;
 
+
 	IF @action = 'I'
-		SELECT @outText = 'inserted [id=' + CAST([Id] AS varchar) + ', Name= ' + [Name] + '] ' + CAST(GETDATE() AS varchar)
+	BEGIN
+		SELECT @Name = [Name], @NewValue = inserted.[Name], @OldValue = inserted.[Name]
 		FROM inserted
-	IF @action = 'U'
-		SELECT @outText = 'updated [id=' + CAST(inserted.[Id] AS varchar) + ', Name=' + deleted.[Name] + '(old) ' + inserted.[Name] + '(new)] ' + CAST(GETDATE() AS varchar)
+
+		INSERT INTO [dbo].[RolesAudit] (Type, FieldName, OldValue, NewValue)
+		VALUES (@action, N'Name', @OldValue, @NewValue)
+	END 
+	ELSE 
+	IF @action = 'U' 
+	BEGIN 
+		SELECT @Name = inserted.[Name], @OldValue = deleted.[Name], @NewValue = inserted.[Name] 
 		FROM inserted, deleted
 		WHERE inserted.Id = deleted.Id
+
+		INSERT INTO [dbo].[RolesAudit] (Type, FieldName, OldValue, NewValue)
+		VALUES (@action, N'Name', @OldValue, @NewValue)
+	END 
+	ELSE 
 	IF @action = 'D'
-		SELECT @outText = 'deleted [id=' + CAST([Id] AS varchar) + ', Name= ' + [Name] + '] ' + CAST(GETDATE() AS varchar)
+	BEGIN 
+		SELECT @Name = [Name]
 		FROM deleted
 
-	SET @query = 'master..xp_cmdshell ''echo ' + @outText + ' >> ' + @outPath + '' 
-	EXEC (@query)
+		INSERT INTO [dbo].[RolesAudit] (Type, FieldName, OldValue, NewValue)
+		VALUES (@action, N'Name', NULL, NULL)
+	END
 END
 GO

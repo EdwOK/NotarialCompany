@@ -12,9 +12,9 @@ namespace NotarialCompany.Security.Authorization
             User = user;
         }
 
-        public Type ResourceType { get; set; }
-
         public ResourceAction[] ResourceActions { get; set; }
+
+        public Type ResourceType { get; set; }
 
         public User User { get; set; }
     }

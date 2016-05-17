@@ -8,7 +8,6 @@ using NotarialCompany.Common;
 using NotarialCompany.Common.MessagesArgs;
 using NotarialCompany.DataAccess;
 using NotarialCompany.Models;
-using NotarialCompany.Security.Authentication;
 using NotarialCompany.Security.Authorization;
 using NotarialCompany.Utilities;
 
@@ -20,11 +19,12 @@ namespace NotarialCompany.Pages.ServicesPage
         private readonly IDialogCoordinator dialogCoordinator;
         private string searchText;
 
-        private ICollectionView servicesViews;
-
         private IList<Service> services;
 
-        public ServicesViewModel(DbScope dbScope, IAuthorizationService authorizationService, IDialogCoordinator dialogCoordinator) 
+        private ICollectionView servicesViews;
+
+        public ServicesViewModel(DbScope dbScope, IAuthorizationService authorizationService,
+            IDialogCoordinator dialogCoordinator)
             : base(dbScope)
         {
             this.authorizationService = authorizationService;
@@ -80,8 +80,8 @@ namespace NotarialCompany.Pages.ServicesPage
 
         protected override async void RemoveItemCommandExecute()
         {
-            MessageDialogResult result = await dialogCoordinator.ShowMessageAsync(
-                this, "Delete service", "Are you sure?",MessageDialogStyle.AffirmativeAndNegative);
+            var result = await dialogCoordinator.ShowMessageAsync(
+                this, "Delete service", "Are you sure?", MessageDialogStyle.AffirmativeAndNegative);
 
             if (result != MessageDialogResult.Affirmative)
             {

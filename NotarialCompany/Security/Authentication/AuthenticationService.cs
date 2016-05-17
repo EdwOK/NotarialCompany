@@ -9,6 +9,7 @@ namespace NotarialCompany.Security.Authentication
     public class AuthenticationService : IAuthenticationService
     {
         private readonly DbScope dbScope;
+
         private readonly Encoding encoding = Encoding.Default;
 
         public AuthenticationService(DbScope dbScope)
@@ -25,15 +26,9 @@ namespace NotarialCompany.Security.Authentication
             return user;
         }
 
-        public bool ValidatePassword(string username, string password)
+        public bool IsAuthenticated()
         {
-            User user = dbScope.GetUserByUsername(username);
-            if (user == null || !CompareHash(password, user.Password, user.Salt))
-            {
-                return false;
-            }
-            CurrentUser = user;
-            return true;
+            return CurrentUser != null;
         }
 
         public void Logout()
@@ -41,9 +36,16 @@ namespace NotarialCompany.Security.Authentication
             CurrentUser = null;
         }
 
-        public bool IsAuthenticated()
+        public bool ValidatePassword(string username, string password)
         {
-            return CurrentUser != null;
+            var user = dbScope.GetUserByUsername(username);
+            if (user == null || !CompareHash(password, user.Password, user.Salt))
+            {
+                return false;
+            }
+
+            CurrentUser = user;
+            return true;
         }
 
         private bool CompareHash(string attemptedPassword, string hash, string salt)

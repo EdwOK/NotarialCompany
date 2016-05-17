@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using AutoMapper;
 using NotarialCompany.Models;
 
@@ -69,7 +68,7 @@ namespace NotarialCompany.Configuration
                 .ForMember(u => u.Description, opts => opts.MapFrom(src => (string) src[2]))
                 .ForMember(u => u.Cost, opts => opts.MapFrom(src => (decimal) src[3]))
                 .ReverseMap()
-                .ConstructUsing(x => new object[] {x.Id, x.Name, x.Description, x.Cost});
+                .ConstructUsing(x => new object[] { x.Id, x.Name, x.Description, x.Cost });
         }
     }
 
@@ -106,8 +105,8 @@ namespace NotarialCompany.Configuration
         protected override void Configure()
         {
             CreateMap<object[], Role>()
-                .ForMember(u => u.Id, opts => opts.MapFrom(src => (int)src[0]))
-                .ForMember(u => u.Name, opts => opts.MapFrom(src => (string)src[1]))
+                .ForMember(u => u.Id, opts => opts.MapFrom(src => (int) src[0]))
+                .ForMember(u => u.Name, opts => opts.MapFrom(src => (string) src[1]))
                 .ReverseMap()
                 .ConstructUsing(x => new object[] { x.Id, x.Name });
         }
@@ -118,10 +117,10 @@ namespace NotarialCompany.Configuration
         protected override void Configure()
         {
             CreateMap<object[], EmployeesPosition>()
-                .ForMember(u => u.Id, opts => opts.MapFrom(src => (int)src[0]))
-                .ForMember(u => u.Position, opts => opts.MapFrom(src => (string)src[1]))
-                .ForMember(u => u.Salary, opts => opts.MapFrom(src => (decimal)src[2]))
-                .ForMember(u => u.Commission, opts => opts.MapFrom(src => (int)src[3]))
+                .ForMember(u => u.Id, opts => opts.MapFrom(src => (int) src[0]))
+                .ForMember(u => u.Position, opts => opts.MapFrom(src => (string) src[1]))
+                .ForMember(u => u.Salary, opts => opts.MapFrom(src => (decimal) src[2]))
+                .ForMember(u => u.Commission, opts => opts.MapFrom(src => (int) src[3]))
                 .ReverseMap()
                 .ConstructUsing(x => new object[] { x.Id, x.Position, x.Salary, x.Commission });
         }
@@ -186,25 +185,25 @@ namespace NotarialCompany.Configuration
                 .ForMember(u => u.Employee, opts => opts.MapFrom(src =>
                     new Employee
                     {
-                        Id = (int)src[9],
-                        FirstName = (string)src[10],
-                        LastName = (string)src[11],
-                        MiddleName = (string)src[12],
-                        Address = (string)src[13],
-                        PhoneNumber = (string)src[14],
-                        EmploymentDate = (DateTime)src[15],
-                        EmployeesPositionId = (int)src[16]
+                        Id = (int) src[9],
+                        FirstName = (string) src[10],
+                        LastName = (string) src[11],
+                        MiddleName = (string) src[12],
+                        Address = (string) src[13],
+                        PhoneNumber = (string) src[14],
+                        EmploymentDate = (DateTime) src[15],
+                        EmployeesPositionId = (int) src[16]
                     }))
                 .ForMember(u => u.Client, opts => opts.MapFrom(src =>
                     new Client
                     {
-                        Id = (int)src[17],
-                        FirstName = (string)src[18],
-                        SecondName = (string)src[19],
-                        MiddleName = (string)src[20],
-                        Occupation = (string)src[21],
-                        Address = (string)src[22],
-                        PhoneNumber = (string)src[23]
+                        Id = (int) src[17],
+                        FirstName = (string) src[18],
+                        SecondName = (string) src[19],
+                        MiddleName = (string) src[20],
+                        Occupation = (string) src[21],
+                        Address = (string) src[22],
+                        PhoneNumber = (string) src[23]
                     }))
                 .ReverseMap()
                 .ConstructUsing(x => new object[]

@@ -7,13 +7,14 @@ namespace NotarialCompany.Security.Authorization
 {
     public class AuthorizationService : IAuthorizationService
     {
-        private readonly IAuthenticationService authenticationService;
         private readonly IList<IAccessPolicy> accessPolicies;
+
+        private readonly IAuthenticationService authenticationService;
 
         public AuthorizationService(IAuthenticationService authenticationService)
         {
             this.authenticationService = authenticationService;
-            this.accessPolicies = GetAccessPolicies();
+            accessPolicies = GetAccessPolicies();
         }
 
         public bool CheckAccess(Type resource, params ResourceAction[] actions)
@@ -30,9 +31,14 @@ namespace NotarialCompany.Security.Authorization
         private IList<IAccessPolicy> GetAccessPolicies()
         {
             var accessPolicyType = typeof(IAccessPolicy);
-            var accessPoliciesTypes = GetType().Assembly.GetTypes().Where(t => t.GetInterfaces().Contains(accessPolicyType) && !t.IsAbstract);
+            var accessPoliciesTypes =
+                GetType()
+                    .Assembly.GetTypes()
+                    .Where(t => t.GetInterfaces().Contains(accessPolicyType) && !t.IsAbstract);
 
-            return accessPoliciesTypes.Select(accessPoliciesType => (IAccessPolicy) Activator.CreateInstance(accessPoliciesType)).ToList();
+            return
+                accessPoliciesTypes.Select(
+                    accessPoliciesType => (IAccessPolicy) Activator.CreateInstance(accessPoliciesType)).ToList();
         }
     }
 }

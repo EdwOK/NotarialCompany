@@ -2,7 +2,6 @@ using GalaSoft.MvvmLight.Ioc;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.ServiceLocation;
 using NotarialCompany.DataAccess;
-using NotarialCompany.Models;
 using NotarialCompany.Pages.ClientsPage;
 using NotarialCompany.Pages.DealsPage;
 using NotarialCompany.Pages.EmployeesPage;
@@ -10,7 +9,6 @@ using NotarialCompany.Pages.EmployeesPositionsPage;
 using NotarialCompany.Pages.LoginPage;
 using NotarialCompany.Pages.ServicesPage;
 using NotarialCompany.Pages.UsersPage;
-using NotarialCompany.Security;
 using NotarialCompany.Security.Authentication;
 using NotarialCompany.Security.Authorization;
 

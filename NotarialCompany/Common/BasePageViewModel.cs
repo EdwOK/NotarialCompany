@@ -11,7 +11,7 @@ namespace NotarialCompany.Common
 
         protected BasePageViewModel(DbScope dbScope)
         {
-            this.DbScope = dbScope;
+            DbScope = dbScope;
             OpenDetailsViewCommand = new RelayCommand(OpenDetailsViewCommandExecute);
             LoadedCommand = new RelayCommand(LoadedCommandExecute);
             AddNewItemCommand = new RelayCommand(AddNewItemCommandExecute);

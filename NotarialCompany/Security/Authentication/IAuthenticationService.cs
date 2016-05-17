@@ -8,10 +8,10 @@ namespace NotarialCompany.Security.Authentication
 
         User GenerateCredentials(User user);
 
-        bool ValidatePassword(string username, string password);
+        bool IsAuthenticated();
 
         void Logout();
 
-        bool IsAuthenticated();
+        bool ValidatePassword(string username, string password);
     }
 }

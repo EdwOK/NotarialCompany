@@ -3,8 +3,11 @@
     public enum ResourceAction
     {
         Create,
+
         Read,
+
         Update,
+
         Delete
     }
 }
