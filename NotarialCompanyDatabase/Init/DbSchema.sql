@@ -30,9 +30,9 @@ CREATE TABLE [dbo].[Deals] (
     [ClientId] [int] NOT NULL,
     CONSTRAINT [PK_dbo.Deals] PRIMARY KEY ([Id])
 )
+
 CREATE INDEX [IX_EmployeeId] ON [dbo].[Deals]([EmployeeId])
 CREATE INDEX [IX_ClientId] ON [dbo].[Deals]([ClientId])
-
 
 CREATE TABLE [dbo].[DealsAudit] (
     [Id] [int] NOT NULL IDENTITY,
@@ -128,9 +128,9 @@ CREATE TABLE [dbo].[Users] (
     [EmployeeId] [int] NOT NULL,
     CONSTRAINT [PK_dbo.Users] PRIMARY KEY ([Id])
 )
+
 CREATE INDEX [IX_RoleId] ON [dbo].[Users]([RoleId])
 CREATE INDEX [IX_EmployeeId] ON [dbo].[Users]([EmployeeId])
-
 
 CREATE TABLE [dbo].[UsersAudit] (
     [Id] [int] NOT NULL IDENTITY,

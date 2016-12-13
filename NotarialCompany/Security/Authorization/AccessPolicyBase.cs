@@ -15,8 +15,7 @@ namespace NotarialCompany.Security.Authorization
 
         public bool CheckStandartAction(ResourceInfo resourceInfo, Type resourceType, ResourceAction resourceAction)
         {
-            return resourceInfo.ResourceType == resourceType
-                   && resourceInfo.ResourceActions.Any(ra => ra == resourceAction);
+            return resourceInfo.ResourceType == resourceType && resourceInfo.ResourceActions.Any(ra => ra == resourceAction);
         }
 
         public bool IsInRole(ResourceInfo resourceInfo, RoleDefinition roleDefinition)
